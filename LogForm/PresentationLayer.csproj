@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bunifu.UI.WinForms" Version="7.0.0" />
+    <PackageReference Include="MaterialSkin.2" Version="2.3.1" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-namespace LogForm
+namespace PresentationLayer
 {
     internal static class Program
     {
@@ -11,7 +11,7 @@ namespace LogForm
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new LogForm());
+            Application.Run(new ProductManagementForm());
         }
     }
 }
