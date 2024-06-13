@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.Model
 {
-    public class Products
+    public class ProductsDTO
     {
         public int ProductsId { get; set; }
         public string ProductName { get; set; }
@@ -16,6 +16,6 @@ namespace BusinessLayer.Model
         public double Price {  get; set; }
         public int Lote { get; set; }
         public int Quantity { get; set; }
-        Categories Categories { get; set; } = new();
+        CategoriesDTO Categories { get; set; } = new();
     }
 }

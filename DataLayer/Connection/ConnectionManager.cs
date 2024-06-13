@@ -8,11 +8,13 @@ using System.Data.SqlClient;
 using System.Windows;
 
 
-namespace DataLayer.ConnectionManager
+namespace DataLayer.Connection
 {
     public class ConnectionManager
     {
         private readonly SQLiteConnection _connection;
+
+        // Class to manage de connection to sqlite
 
         public ConnectionManager()
         {
@@ -49,7 +51,7 @@ namespace DataLayer.ConnectionManager
         {
             try
             {
-                _connection.Close();
+                _connection?.Close();
             }
             catch (Exception ex)
             {

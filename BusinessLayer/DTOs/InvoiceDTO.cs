@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.Model
 {
-    public class Invoice
+    public class InvoiceDTO
     {
         public int InvoiceId { get; set; }
         public DateTime Date { get; set; }
@@ -14,6 +14,6 @@ namespace BusinessLayer.Model
         public int OrderNumber { get; set; }
         public string? Seller {  get; set; }
 
-        Client Client { get; set; } = new();
+        ClientDTO Client { get; set; } = new();
     }
 }

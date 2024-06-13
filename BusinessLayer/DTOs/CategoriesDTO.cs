@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.Model
 {
-    public class Status
+    public class CategoriesDTO
     {
-        public int StatusId { get; set; }
-        public string Descripcion { get; set; }
+        public int CategoryId { get; set; }
+        public string CategoryName { get; set; }
     }
 }

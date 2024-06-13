@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.Model
 {
-    public class InvoiceDetails
+    public class InvoiceDetailsDTO
     {
         public int DetailId { get; set; }
         public int Quantity { get; set; }
         public int UnitPrice { get; set; }
-        Products Products { get; set; } = new Products();
-        Invoice Invoice { get; set; } = new Invoice();
+        ProductsDTO Products { get; set; } = new ProductsDTO();
+        InvoiceDTO Invoice { get; set; } = new InvoiceDTO();
     }
 }
