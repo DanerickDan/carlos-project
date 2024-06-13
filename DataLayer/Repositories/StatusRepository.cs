@@ -1,21 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DataLayer.Connection;
 
 namespace DataLayer.Repositories
 {
     public class StatusRepository
     {
-        public StatusRepository() 
+        private ConnectionManager connection;
+        public StatusRepository()
         {
-            
+            connection = new();
         }
 
-        public void GetStatus(int id) 
+        public void GetStatus(int id)
         {
-            
+            try
+            {
+                connection.OpenConnection();
+                string query = "SELECT descripcion FROM EstadoPedido WHERE estado_id = @Id";
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
         public void UpdateStatus()
@@ -23,9 +28,5 @@ namespace DataLayer.Repositories
 
         }
 
-        public void ChangeStatus()
-        {
-
-        }
     }
 }
