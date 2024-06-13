@@ -16,6 +16,9 @@ namespace DomainLayer.Entities
         public double Price {  get; set; }
         public int Lote { get; set; }
         public int Quantity { get; set; }
-        Categories Categories { get; set; } = new();
+        public int CategoryId { get; set; }
+        public int StatusId { get; set; }
+        public Status Statu { get; set; }
+        public Categories Category { get; set; }
     }
 }
