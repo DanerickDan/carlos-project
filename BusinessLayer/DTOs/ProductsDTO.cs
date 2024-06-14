@@ -15,7 +15,6 @@ namespace BusinessLayer.Model
         public DateTime ExpirationDate { get; set; }
         public double Price {  get; set; }
         public int Lote { get; set; }
-        public int Quantity { get; set; }
         CategoriesDTO Categories { get; set; } = new();
     }
 }

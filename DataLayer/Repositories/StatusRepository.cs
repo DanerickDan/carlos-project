@@ -1,4 +1,6 @@
 ﻿using DataLayer.Connection;
+using DomainLayer.Entities;
+using System.Data.SQLite;
 
 namespace DataLayer.Repositories
 {
@@ -10,12 +12,31 @@ namespace DataLayer.Repositories
             connection = new();
         }
 
-        public void GetStatus(int id)
+        public List<Status> GetAllStatus()
         {
+            var statusList = new List<Status>();
             try
             {
                 connection.OpenConnection();
-                string query = "SELECT descripcion FROM EstadoPedido WHERE estado_id = @Id";
+                string query = "SELECT * FROM EstadoPedido";
+                using (var command = new SQLiteCommand(query, connection.GetConnection()))
+                {
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            statusList.Add(new Status
+                            {
+                                StatusId = reader.GetInt32(0),
+                                Descripcion = reader.GetString(1)
+                            });
+                        }
+                    }
+                    connection.CloseConnection();
+
+                }
+                return statusList;
+
             }
             catch (Exception e)
             {
@@ -23,9 +44,33 @@ namespace DataLayer.Repositories
             }
         }
 
-        public void UpdateStatus()
+        public Status GetStatusById(int id)
         {
+            try
+            {
+                connection.OpenConnection();
+                string query = "SELECT * FROM EstadoPedido WHERE estado_id = @Id";
+                using (var command = new SQLiteCommand(query, connection.GetConnection()))
+                {
+                    using (var reader = command.ExecuteReader())
+                    {
+                        command.Parameters.AddWithValue("@Id", id);
 
+                        return new Status
+                        {
+                            StatusId = reader.GetInt32(0),
+                            Descripcion = reader.GetString(1)
+                        };
+
+                    }
+
+                }
+
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
     }

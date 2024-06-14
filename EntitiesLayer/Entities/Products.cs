@@ -15,7 +15,6 @@ namespace DomainLayer.Entities
         public DateTime ExpirationDate { get; set; }
         public double Price {  get; set; }
         public int Lote { get; set; }
-        public int Quantity { get; set; }
         public int CategoryId { get; set; }
         public int StatusId { get; set; }
         public Status Statu { get; set; }

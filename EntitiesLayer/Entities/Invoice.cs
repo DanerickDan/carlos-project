@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DomainLayer.Entities
+﻿namespace DomainLayer.Entities
 {
     public class Invoice
     {
-        public int InvoiceId { get; set; }
+        public int InvoiceID { get; set; }
         public DateTime Date { get; set; }
-        public string? Tearms { get; set; }
-        public int OrderNumber { get; set; }
-        public string? Seller {  get; set; }
+        public string? Number { get; set; }
+        public string? NCF { get; set; }
+        public string Terms { get; set; } // Crédito o Contado
+        public string OrderNumer { get; set; }
+        public string? SellerName { get; set; }
+        public int ClientID { get; set; }
+        public List<InvoiceDetails> Details { get; set; }
 
         Client Client { get; set; } = new();
     }

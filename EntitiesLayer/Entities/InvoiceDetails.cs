@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DomainLayer.Entities
+﻿namespace DomainLayer.Entities
 {
     public class InvoiceDetails
     {
-        public int DetailId { get; set; }
-        public int Quantity { get; set; }
-        public int UnitPrice { get; set; }
+        public int InvoiceDetailsId { get; set; }
+        public int InvoiceId { get; set; }
+        public int ProductId { get; set; }
+        public string Lote { get; set; }
+        public int Quaity { get; set; }
+        public decimal Price { get; set; }
+        public decimal Neto { get; set; }
+        public double Total { get; set; }
         Products Products { get; set; } = new Products();
         Invoice Invoice { get; set; } = new Invoice();
     }
