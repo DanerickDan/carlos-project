@@ -7,11 +7,10 @@
         public string? Number { get; set; }
         public string? NCF { get; set; }
         public string Terms { get; set; } // Crédito o Contado
-        public string OrderNumer { get; set; }
+        public int OrderNumer { get; set; }
         public string? SellerName { get; set; }
         public int ClientID { get; set; }
         public List<InvoiceDetails> Details { get; set; }
-
         Client Client { get; set; } = new();
     }
 }

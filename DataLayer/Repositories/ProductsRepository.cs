@@ -142,7 +142,6 @@ namespace DataLayer.Repositories
                                     Descripcion = reader.GetString(reader.GetOrdinal("EstadoNombre"))
                                 }
                             });
-                            command.ExecuteNonQuery();
                         }
                     }
                 }
