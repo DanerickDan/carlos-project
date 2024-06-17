@@ -10,7 +10,7 @@
         public int OrderNumer { get; set; }
         public string? SellerName { get; set; }
         public int ClientID { get; set; }
-        public List<InvoiceDetails> Details { get; set; }
+        public List<InvoiceDetails> Details { get; set; } = new();
         Client Client { get; set; } = new();
     }
 }

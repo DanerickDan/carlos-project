@@ -13,12 +13,18 @@ namespace DataLayer.Connection
     public class ConnectionManager
     {
         private readonly SQLiteConnection _connection;
+        private readonly string ConnectionString = "Data Source= ./bd_sqlite.db";
 
         // Class to manage de connection to sqlite
 
         public ConnectionManager()
         {
             _connection = new("Data Source= ./bd_sqlite.db");
+        }
+
+        public String GetConnectionString()
+        {
+            return ConnectionString;
         }
 
         public SQLiteConnection GetConnection()
