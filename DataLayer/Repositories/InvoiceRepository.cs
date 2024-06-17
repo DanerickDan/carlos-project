@@ -182,56 +182,72 @@ namespace DataLayer.Repositories
             }
         }
 
-        public List<Invoice> GetAllInvoice(Invoice invoice)
+        public List<Invoice> GetAllInvoices()
         {
             var invoices = new List<Invoice>();
             try
             {
-                connection.OpenConnection();
-                string query = @"SELECT f.factura_id as InvoiceId, f.fecha as Fecha, f.terminos as Terminos, f.cliente_id,
+                using (var connection = new SQLiteConnection("your_database.db"))
+                {
+                    connection.Open();
+
+                    string query = @"SELECT f.factura_id as InvoiceId, f.fecha as Fecha, f.terminos as Terminos, f.cliente_id,
                                 f.num_pedido as NumPedido, f.vendedor as Vendedor, f.NCF as ncf, d.detalle_id as DetalleId, d.factura_id as FacturaId,
                                 d.producto_id as ProductoId, d.cantidad as Cantiadad, d.precio_unitario as Precio, d.lote as Lote,
                                 d.total as Total, d.sub_total as SubTotal, d.codigo as Codigo, d.neto as Neto
-                                FROM Facturas AS f
-                                INNER JOIN Detalle_Factura AS d ON f.factura_id = d.factura_id
-                                ORDER BY f.factura_id; 
-                                ";
-                using (connection.GetConnection())
-                {
-                    using (var command = new SQLiteCommand(query, connection.GetConnection()))
+                            FROM Facturas AS f
+                            INNER JOIN Detalle_Factura AS d ON f.factura_id = d.factura_id
+                            ORDER BY f.factura_id;";
+
+                    using (var command = new SQLiteCommand(query, connection))
                     {
                         using (var reader = command.ExecuteReader())
                         {
+                            Invoice currentInvoice = null; // Track the current invoice being processed
+
                             while (reader.Read())
                             {
-                                invoices.Add(new Invoice
+                                int invoiceId = reader.GetInt32(reader.GetOrdinal("InvoiceId"));
+
+                                // Check if it's a new invoice or the same one as before
+                                if (currentInvoice == null || currentInvoice.InvoiceID != invoiceId)
                                 {
-                                    InvoiceID = reader.GetInt32(reader.GetOrdinal("InvoiceId")),
-                                    Date = reader.GetDateTime(reader.GetOrdinal("Fecha")),
-                                    Terms = reader.GetString(reader.GetOrdinal("Terminos")),
-                                    ClientID = reader.GetInt32(reader.GetOrdinal("ClienteId")),
-                                    OrderNumer = reader.GetInt32(reader.GetOrdinal("NumPedido")),
-                                    SellerName = reader.GetString(reader.GetOrdinal("Vendedor")),
-                                    NCF = reader.GetString(reader.GetOrdinal("NCF")),
-                                    Details.Add(new InvoiceDetails
+                                    currentInvoice = new Invoice
                                     {
-                                        InvoiceDetailsId = reader.GetInt32(reader.GetOrdinal("DetalleId")),
-                                        InvoiceId = reader.GetInt32(reader.GetOrdinal("FacturaId")),
-                                        ProductId = reader.GetInt32(reader.GetOrdinal("ProductoId")),
-                                        Quantity = reader.GetInt32(reader.GetOrdinal("Cantiadad")),
-                                        Price = reader.GetDecimal(reader.GetOrdinal("Precio")),
-                                        Lote = reader.GetInt32(reader.GetOrdinal("Lote")),
-                                        Total = reader.GetDecimal(reader.GetOrdinal("Total")),
-                                        SubTotal =  reader.GetDecimal(reader.GetOrdinal("SubTotal")),
-                                        ProductCode = reader.GetString(reader.GetOrdinal("Codigo")),
-                                        Neto = reader.GetDecimal(reader.GetOrdinal("Neto"))
-                                    })
-                                });
+                                        InvoiceID = invoiceId,
+                                        Date = reader.GetDateTime(reader.GetOrdinal("Fecha")),
+                                        Terms = reader.GetString(reader.GetOrdinal("Terminos")),
+                                        ClientID = reader.GetInt32(reader.GetOrdinal("ClienteId")),
+                                        OrderNumer = reader.GetInt32(reader.GetOrdinal("NumPedido")),
+                                        SellerName = reader.GetString(reader.GetOrdinal("Vendedor")),
+                                        NCF = reader.GetString(reader.GetOrdinal("NCF")),
+                                        Details = new List<InvoiceDetails>() // Initialize a new Details list for the invoice
+                                    };
+                                    invoices.Add(currentInvoice); // Add the new invoice to the list
+                                }
+
+                                // Create a new InvoiceDetails object for each detail record
+                                InvoiceDetails detail = new InvoiceDetails
+                                {
+                                    InvoiceDetailsId = reader.GetInt32(reader.GetOrdinal("DetalleId")),
+                                    InvoiceId = reader.GetInt32(reader.GetOrdinal("FacturaId")),
+                                    ProductId = reader.GetInt32(reader.GetOrdinal("ProductoId")),
+                                    Quantity = reader.GetInt32(reader.GetOrdinal("Cantiadad")),
+                                    Price = reader.GetDecimal(reader.GetOrdinal("Precio")),
+                                    Lote = reader.GetString(reader.GetOrdinal("Lote")),
+                                    Total = reader.GetDecimal(reader.GetOrdinal("Total")),
+                                    SubTotal = reader.GetDecimal(reader.GetOrdinal("SubTotal")),
+                                    ProductCode = reader.GetString(reader.GetOrdinal("Codigo")),
+                                    Neto = reader.GetDecimal(reader.GetOrdinal("Neto"))
+                                };
+
+                                // Add the detail to the current invoice's Details list
+                                currentInvoice.Details.Add(detail);
                             }
                         }
                     }
-                    connection.CloseConnection();
                 }
+
                 return invoices;
             }
             catch (Exception ex)
@@ -239,6 +255,7 @@ namespace DataLayer.Repositories
                 throw new Exception(ex.Message);
             }
         }
+
 
         public Invoice GetInvoiceById(int id)
         {
