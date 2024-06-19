@@ -17,10 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="IRepository\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\EntitiesLayer\DomainLayer.csproj" />
   </ItemGroup>
 
