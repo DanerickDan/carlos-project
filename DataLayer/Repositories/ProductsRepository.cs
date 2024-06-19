@@ -84,7 +84,7 @@ namespace DataLayer.Repositories
                 {
 
                     string query = "DELETE FROM Productos WHERE producto_id = @Id";
-                    using (var command = new SQLiteCommand(query, connection.GetConnection()s))
+                    using (var command = new SQLiteCommand(query, connection.GetConnection()))
                     {
                         command.Parameters.AddWithValue("@Id", id);
                         command.ExecuteNonQuery();

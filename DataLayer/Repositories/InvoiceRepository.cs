@@ -1,9 +1,6 @@
 ﻿using DataLayer.Connection;
 using DomainLayer.Entities;
-using System.Data.Common;
 using System.Data.SQLite;
-using System.Linq.Expressions;
-using System.Transactions;
 
 namespace DataLayer.Repositories
 {
@@ -187,19 +184,19 @@ namespace DataLayer.Repositories
             var invoices = new List<Invoice>();
             try
             {
-                using (var connection = new SQLiteConnection("your_database.db"))
+                using (connection.GetConnection())
                 {
-                    connection.Open();
+                    connection.OpenConnection();
 
                     string query = @"SELECT f.factura_id as InvoiceId, f.fecha as Fecha, f.terminos as Terminos, f.cliente_id,
-                                f.num_pedido as NumPedido, f.vendedor as Vendedor, f.NCF as ncf, d.detalle_id as DetalleId, d.factura_id as FacturaId,
-                                d.producto_id as ProductoId, d.cantidad as Cantiadad, d.precio_unitario as Precio, d.lote as Lote,
-                                d.total as Total, d.sub_total as SubTotal, d.codigo as Codigo, d.neto as Neto
-                            FROM Facturas AS f
-                            INNER JOIN Detalle_Factura AS d ON f.factura_id = d.factura_id
-                            ORDER BY f.factura_id;";
+                                    f.num_pedido as NumPedido, f.vendedor as Vendedor, f.NCF as ncf, d.detalle_id as DetalleId, d.factura_id as FacturaId,
+                                    d.producto_id as ProductoId, d.cantidad as Cantiadad, d.precio_unitario as Precio, d.lote as Lote,
+                                    d.total as Total, d.sub_total as SubTotal, d.codigo as Codigo, d.neto as Neto
+                                    FROM Facturas AS f
+                                    INNER JOIN Detalle_Factura AS d ON f.factura_id = d.factura_id
+                                    ORDER BY f.factura_id;";
 
-                    using (var command = new SQLiteCommand(query, connection))
+                    using (var command = new SQLiteCommand(query, connection.GetConnection()))
                     {
                         using (var reader = command.ExecuteReader())
                         {
@@ -264,24 +261,57 @@ namespace DataLayer.Repositories
                 using (connection.GetConnection())
                 {
                     connection.OpenConnection();
-                    string query = "SELECT * FROM Facturas WHERE factura_id = @FacturaID";
+                    string query = @"SELECT f.factura_id as InvoiceId, f.fecha as Fecha, f.terminos as Terminos, f.cliente_id,
+                                    f.num_pedido as NumPedido, f.vendedor as Vendedor, f.NCF as ncf, d.detalle_id as DetalleId, d.factura_id as FacturaId,
+                                    d.producto_id as ProductoId, d.cantidad as Cantiadad, d.precio_unitario as Precio, d.lote as Lote,
+                                    d.total as Total, d.sub_total as SubTotal, d.codigo as Codigo, d.neto as Neto
+                                    FROM Facturas AS f
+                                    INNER JOIN Detalle_Factura AS d ON f.factura_id = d.factura_id
+                                    ORDER BY f.factura_id
+                                    WHERE f.facturas_id = @FacturaId";
                     using (var command = new SQLiteCommand(query, connection.GetConnection()))
                     {
-                        command.Parameters.AddWithValue("@FacturaID", id);
                         using (var reader = command.ExecuteReader())
                         {
-                            if (reader.Read())
+                            Invoice currentInvoice = null; // Track the current invoice being processed
+
+                            while (reader.Read())
                             {
-                                return new Invoice
+                                int invoiceId = reader.GetInt32(reader.GetOrdinal("InvoiceId"));
+
+                                // Check if it's a new invoice or the same one as before
+                                if (currentInvoice == null || currentInvoice.InvoiceID != invoiceId)
                                 {
-                                    InvoiceID = reader.GetInt32(0),
-                                    Date = reader.GetDateTime(1),
-                                    Terms = reader.GetString(2),
-                                    ClientID = reader.GetInt32(3),
-                                    OrderNumer = reader.GetInt32(4),
-                                    SellerName = reader.GetString(5),
-                                    NCF = reader.GetString(6)
+                                    return currentInvoice = new Invoice
+                                    {
+                                        InvoiceID = invoiceId,
+                                        Date = reader.GetDateTime(reader.GetOrdinal("Fecha")),
+                                        Terms = reader.GetString(reader.GetOrdinal("Terminos")),
+                                        ClientID = reader.GetInt32(reader.GetOrdinal("ClienteId")),
+                                        OrderNumer = reader.GetInt32(reader.GetOrdinal("NumPedido")),
+                                        SellerName = reader.GetString(reader.GetOrdinal("Vendedor")),
+                                        NCF = reader.GetString(reader.GetOrdinal("NCF")),
+                                        Details = new List<InvoiceDetails>() // Initialize a new Details list for the invoice
+                                    };
+                                }
+
+                                // Create a new InvoiceDetails object for each detail record
+                                InvoiceDetails detail = new InvoiceDetails
+                                {
+                                    InvoiceDetailsId = reader.GetInt32(reader.GetOrdinal("DetalleId")),
+                                    InvoiceId = reader.GetInt32(reader.GetOrdinal("FacturaId")),
+                                    ProductId = reader.GetInt32(reader.GetOrdinal("ProductoId")),
+                                    Quantity = reader.GetInt32(reader.GetOrdinal("Cantiadad")),
+                                    Price = reader.GetDecimal(reader.GetOrdinal("Precio")),
+                                    Lote = reader.GetString(reader.GetOrdinal("Lote")),
+                                    Total = reader.GetDecimal(reader.GetOrdinal("Total")),
+                                    SubTotal = reader.GetDecimal(reader.GetOrdinal("SubTotal")),
+                                    ProductCode = reader.GetString(reader.GetOrdinal("Codigo")),
+                                    Neto = reader.GetDecimal(reader.GetOrdinal("Neto"))
                                 };
+
+                                // Add the detail to the current invoice's Details list
+                                currentInvoice.Details.Add(detail);
                             }
                         }
                     }

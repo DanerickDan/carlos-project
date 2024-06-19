@@ -10,7 +10,7 @@ namespace DomainLayer.Entities
     {
         public int ClienstId { get; set; }
         public string ClientName { get; set; }
-        public int Address { get; set; }
+        public string Address { get; set; }
         public string City { get; set; }
         public string PhoneNumber { get; set; }
         public string? Fax { get; set; }
