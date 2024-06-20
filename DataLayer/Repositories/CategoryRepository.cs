@@ -2,7 +2,6 @@
 using DataLayer.IRepository;
 using DomainLayer.Entities;
 using System.Data.SQLite;
-using System.Runtime.CompilerServices;
 
 namespace DataLayer.Repositories
 {

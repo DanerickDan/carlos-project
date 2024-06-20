@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace BusinessLayer.Model
 {
@@ -13,8 +9,9 @@ namespace BusinessLayer.Model
         public int Code { get; set; }
         public string? Description { get; set; }
         public DateTime ExpirationDate { get; set; }
-        public double Price {  get; set; }
+        public double Price { get; set; }
         public int Lote { get; set; }
-        CategoriesDTO Categories { get; set; } = new();
+        public int CategoryId { get; set; }
+        public int StatusId { get; set; }
     }
 }
