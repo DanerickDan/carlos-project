@@ -1,10 +1,11 @@
 ﻿using DataLayer.Connection;
+using DataLayer.IRepository;
 using DomainLayer.Entities;
 using System.Data.SQLite;
 
 namespace DataLayer.Repositories
 {
-    public class StatusRepository
+    public class StatusRepository : IStatusRepository
     {
         private ConnectionManager connection;
         public StatusRepository()

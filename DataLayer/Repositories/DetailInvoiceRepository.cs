@@ -1,11 +1,12 @@
 ﻿using DataLayer.Connection;
+using DataLayer.IRepository;
 using DomainLayer.Entities;
 using System.Data.SQLite;
 using System.Data.SqlTypes;
 
-namespace DataLayer.Repositories
+namespace DataLayer.Repositories 
 {
-    public class DetailInvoiceRepository
+    public class DetailInvoiceRepository : IDetailInvoiceRepository
     {
         private readonly ConnectionManager connection;
         public DetailInvoiceRepository() 

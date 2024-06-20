@@ -1,11 +1,12 @@
 ﻿using DataLayer.Connection;
+using DataLayer.IRepository;
 using DomainLayer.Entities;
 using System.Data;
 using System.Data.SQLite;
 
 namespace DataLayer.Repositories
 {
-    public class ProductsRepository
+    public class ProductsRepository : IProductsRepository
     {
         private readonly ConnectionManager connection = new();
         public ProductsRepository()

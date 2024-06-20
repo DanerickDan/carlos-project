@@ -1,11 +1,12 @@
 ﻿using DataLayer.Connection;
+using DataLayer.IRepository;
 using DomainLayer.Entities;
 using System.Data.SQLite;
 using System.Runtime.CompilerServices;
 
 namespace DataLayer.Repositories
 {
-    public class CategoryRepository
+    public class CategoryRepository : ICategoryRepository
     {
         private readonly ConnectionManager connection;
         public CategoryRepository()
@@ -14,7 +15,7 @@ namespace DataLayer.Repositories
         }
 
 
-        public List<Categories> GetAllCategory()
+        public List<Categories> GetAllCategory() 
         {
             var categories = new List<Categories>();
             try
