@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PresentationLayer", "LogFor
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{D9352FEA-8EDB-47CD-B32F-AA7777ED6200}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainLayer", "EntitiesLayer\DomainLayer.csproj", "{2698614C-D8F9-478A-91F6-2C12B11E5389}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DomainLayer", "EntitiesLayer\DomainLayer.csproj", "{2698614C-D8F9-478A-91F6-2C12B11E5389}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
