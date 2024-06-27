@@ -32,11 +32,13 @@
             panelSuperior = new CustomComponents.MainFormComponents.CustomPanel();
             panelNav = new FlowLayoutPanel();
             panel1 = new Panel();
+            pictureBox1 = new PictureBox();
             btnInicio = new FontAwesome.Sharp.IconButton();
             btnProdutos = new FontAwesome.Sharp.IconButton();
             btnFacturas = new FontAwesome.Sharp.IconButton();
             btnClientes = new FontAwesome.Sharp.IconButton();
-            pictureBox1 = new PictureBox();
+            txtBuscar = new TextBox();
+            panelSuperior.SuspendLayout();
             panelNav.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -47,6 +49,7 @@
             panelSuperior.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panelSuperior.BackColor = Color.White;
             panelSuperior.BorderColor = Color.White;
+            panelSuperior.Controls.Add(txtBuscar);
             panelSuperior.Location = new Point(119, 1);
             panelSuperior.Name = "panelSuperior";
             panelSuperior.Radius = 15;
@@ -78,6 +81,17 @@
             panel1.Size = new Size(105, 69);
             panel1.TabIndex = 0;
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Dock = DockStyle.Fill;
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(0, 0);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(105, 69);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 0;
+            pictureBox1.TabStop = false;
+            // 
             // btnInicio
             // 
             btnInicio.Dock = DockStyle.Top;
@@ -90,8 +104,8 @@
             btnInicio.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnInicio.IconSize = 25;
             btnInicio.ImageAlign = ContentAlignment.MiddleLeft;
-            btnInicio.Location = new Point(0, 90);
-            btnInicio.Margin = new Padding(0, 15, 0, 12);
+            btnInicio.Location = new Point(0, 115);
+            btnInicio.Margin = new Padding(0, 40, 0, 15);
             btnInicio.Name = "btnInicio";
             btnInicio.Size = new Size(100, 34);
             btnInicio.TabIndex = 1;
@@ -99,6 +113,7 @@
             btnInicio.TextAlign = ContentAlignment.MiddleRight;
             btnInicio.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnInicio.UseVisualStyleBackColor = true;
+            btnInicio.Click += btnInicio_Click;
             // 
             // btnProdutos
             // 
@@ -112,8 +127,8 @@
             btnProdutos.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnProdutos.IconSize = 25;
             btnProdutos.ImageAlign = ContentAlignment.MiddleLeft;
-            btnProdutos.Location = new Point(0, 136);
-            btnProdutos.Margin = new Padding(0, 0, 0, 12);
+            btnProdutos.Location = new Point(0, 164);
+            btnProdutos.Margin = new Padding(0, 0, 0, 15);
             btnProdutos.Name = "btnProdutos";
             btnProdutos.Size = new Size(113, 34);
             btnProdutos.TabIndex = 2;
@@ -121,6 +136,7 @@
             btnProdutos.TextAlign = ContentAlignment.MiddleRight;
             btnProdutos.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnProdutos.UseVisualStyleBackColor = true;
+            btnProdutos.Click += btnProdutos_Click;
             // 
             // btnFacturas
             // 
@@ -134,8 +150,8 @@
             btnFacturas.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnFacturas.IconSize = 25;
             btnFacturas.ImageAlign = ContentAlignment.MiddleLeft;
-            btnFacturas.Location = new Point(0, 182);
-            btnFacturas.Margin = new Padding(0, 0, 0, 12);
+            btnFacturas.Location = new Point(0, 213);
+            btnFacturas.Margin = new Padding(0, 0, 0, 15);
             btnFacturas.Name = "btnFacturas";
             btnFacturas.Padding = new Padding(2, 0, 0, 0);
             btnFacturas.Size = new Size(105, 34);
@@ -157,7 +173,7 @@
             btnClientes.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnClientes.IconSize = 25;
             btnClientes.ImageAlign = ContentAlignment.MiddleLeft;
-            btnClientes.Location = new Point(3, 231);
+            btnClientes.Location = new Point(3, 265);
             btnClientes.Name = "btnClientes";
             btnClientes.Size = new Size(100, 34);
             btnClientes.TabIndex = 4;
@@ -166,16 +182,14 @@
             btnClientes.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnClientes.UseVisualStyleBackColor = true;
             // 
-            // pictureBox1
+            // txtBuscar
             // 
-            pictureBox1.Dock = DockStyle.Fill;
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(0, 0);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(105, 69);
-            pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
-            pictureBox1.TabIndex = 0;
-            pictureBox1.TabStop = false;
+            txtBuscar.BackColor = Color.Silver;
+            txtBuscar.BorderStyle = BorderStyle.None;
+            txtBuscar.Location = new Point(23, 9);
+            txtBuscar.Name = "txtBuscar";
+            txtBuscar.Size = new Size(100, 16);
+            txtBuscar.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -189,9 +203,10 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MainForm";
             Load += MainForm_Load;
+            panelSuperior.ResumeLayout(false);
+            panelSuperior.PerformLayout();
             panelNav.ResumeLayout(false);
             panel1.ResumeLayout(false);
-            panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
@@ -206,5 +221,6 @@
         private FontAwesome.Sharp.IconButton btnClientes;
         private FontAwesome.Sharp.IconButton btnInicio;
         private PictureBox pictureBox1;
+        private TextBox txtBuscar;
     }
 }

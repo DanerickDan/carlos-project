@@ -23,5 +23,15 @@ namespace PresentationLayer
         {
 
         }
+
+        private void btnProdutos_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnInicio_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
