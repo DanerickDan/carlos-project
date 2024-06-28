@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             panelSuperior = new CustomComponents.MainFormComponents.CustomPanel();
+            txtBuscar = new TextBox();
             panelNav = new FlowLayoutPanel();
             panel1 = new Panel();
             pictureBox1 = new PictureBox();
@@ -37,7 +38,11 @@
             btnProdutos = new FontAwesome.Sharp.IconButton();
             btnFacturas = new FontAwesome.Sharp.IconButton();
             btnClientes = new FontAwesome.Sharp.IconButton();
-            txtBuscar = new TextBox();
+            panel2 = new Panel();
+            label1 = new Label();
+            panel3 = new Panel();
+            panel4 = new Panel();
+            dateTimePicker1 = new DateTimePicker();
             panelSuperior.SuspendLayout();
             panelNav.SuspendLayout();
             panel1.SuspendLayout();
@@ -56,6 +61,15 @@
             panelSuperior.Size = new Size(724, 28);
             panelSuperior.TabIndex = 4;
             panelSuperior.Thickness = 5F;
+            // 
+            // txtBuscar
+            // 
+            txtBuscar.BackColor = Color.Silver;
+            txtBuscar.BorderStyle = BorderStyle.None;
+            txtBuscar.Location = new Point(16, 6);
+            txtBuscar.Name = "txtBuscar";
+            txtBuscar.Size = new Size(100, 16);
+            txtBuscar.TabIndex = 0;
             // 
             // panelNav
             // 
@@ -182,14 +196,46 @@
             btnClientes.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnClientes.UseVisualStyleBackColor = true;
             // 
-            // txtBuscar
+            // panel2
             // 
-            txtBuscar.BackColor = Color.Silver;
-            txtBuscar.BorderStyle = BorderStyle.None;
-            txtBuscar.Location = new Point(23, 9);
-            txtBuscar.Name = "txtBuscar";
-            txtBuscar.Size = new Size(100, 16);
-            txtBuscar.TabIndex = 0;
+            panel2.BackColor = Color.Silver;
+            panel2.Location = new Point(135, 99);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(288, 118);
+            panel2.TabIndex = 6;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.Location = new Point(119, 36);
+            label1.Name = "label1";
+            label1.Size = new Size(146, 37);
+            label1.TabIndex = 7;
+            label1.Text = "DashBoard";
+            // 
+            // panel3
+            // 
+            panel3.BackColor = Color.Silver;
+            panel3.Location = new Point(504, 99);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(288, 118);
+            panel3.TabIndex = 6;
+            // 
+            // panel4
+            // 
+            panel4.BackColor = Color.Silver;
+            panel4.Location = new Point(135, 266);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(657, 185);
+            panel4.TabIndex = 6;
+            // 
+            // dateTimePicker1
+            // 
+            dateTimePicker1.Location = new Point(591, 230);
+            dateTimePicker1.Name = "dateTimePicker1";
+            dateTimePicker1.Size = new Size(200, 23);
+            dateTimePicker1.TabIndex = 8;
             // 
             // MainForm
             // 
@@ -197,22 +243,26 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(215, 217, 221);
             ClientSize = new Size(834, 513);
+            Controls.Add(dateTimePicker1);
+            Controls.Add(label1);
+            Controls.Add(panel3);
+            Controls.Add(panel4);
+            Controls.Add(panel2);
             Controls.Add(panelNav);
             Controls.Add(panelSuperior);
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MainForm";
-            Load += MainForm_Load;
             panelSuperior.ResumeLayout(false);
             panelSuperior.PerformLayout();
             panelNav.ResumeLayout(false);
             panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
-        private CustomComponents.MainFormComponents.CustomPanel customPanel1;
         private CustomComponents.MainFormComponents.CustomPanel panelSuperior;
         private FlowLayoutPanel panelNav;
         private Panel panel1;
@@ -222,5 +272,10 @@
         private FontAwesome.Sharp.IconButton btnInicio;
         private PictureBox pictureBox1;
         private TextBox txtBuscar;
+        private Panel panel2;
+        private Label label1;
+        private Panel panel3;
+        private Panel panel4;
+        private DateTimePicker dateTimePicker1;
     }
 }
