@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            panelSuperior = new CustomComponents.MainFormComponents.CustomPanel();
             txtBuscar = new TextBox();
             panelNav = new FlowLayoutPanel();
             panel1 = new Panel();
@@ -42,25 +41,16 @@
             label1 = new Label();
             panel3 = new Panel();
             panel4 = new Panel();
-            dateTimePicker1 = new DateTimePicker();
-            panelSuperior.SuspendLayout();
+            flowLayoutPanel1 = new FlowLayoutPanel();
+            customDatePicker1 = new CustomComponents.MainFormComponents.CustomDatePicker();
+            customPanel1 = new CustomComponents.MainFormComponents.CustomPanel();
+            customTextBox1 = new CustomComponents.MainFormComponents.CustomTextBox();
             panelNav.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            flowLayoutPanel1.SuspendLayout();
+            customPanel1.SuspendLayout();
             SuspendLayout();
-            // 
-            // panelSuperior
-            // 
-            panelSuperior.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            panelSuperior.BackColor = Color.White;
-            panelSuperior.BorderColor = Color.White;
-            panelSuperior.Controls.Add(txtBuscar);
-            panelSuperior.Location = new Point(119, 1);
-            panelSuperior.Name = "panelSuperior";
-            panelSuperior.Radius = 15;
-            panelSuperior.Size = new Size(724, 28);
-            panelSuperior.TabIndex = 4;
-            panelSuperior.Thickness = 5F;
             // 
             // txtBuscar
             // 
@@ -82,7 +72,7 @@
             panelNav.Controls.Add(btnClientes);
             panelNav.Location = new Point(1, 1);
             panelNav.Name = "panelNav";
-            panelNav.Size = new Size(112, 514);
+            panelNav.Size = new Size(112, 640);
             panelNav.TabIndex = 5;
             panelNav.Paint += panelNav_Paint;
             // 
@@ -199,7 +189,8 @@
             // panel2
             // 
             panel2.BackColor = Color.Silver;
-            panel2.Location = new Point(135, 99);
+            panel2.Location = new Point(20, 20);
+            panel2.Margin = new Padding(20, 20, 70, 0);
             panel2.Name = "panel2";
             panel2.Size = new Size(288, 118);
             panel2.TabIndex = 6;
@@ -208,7 +199,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(119, 36);
+            label1.Location = new Point(119, 47);
             label1.Name = "label1";
             label1.Size = new Size(146, 37);
             label1.TabIndex = 7;
@@ -217,7 +208,8 @@
             // panel3
             // 
             panel3.BackColor = Color.Silver;
-            panel3.Location = new Point(504, 99);
+            panel3.Location = new Point(378, 20);
+            panel3.Margin = new Padding(0, 20, 10, 0);
             panel3.Name = "panel3";
             panel3.Size = new Size(288, 118);
             panel3.TabIndex = 6;
@@ -225,39 +217,92 @@
             // panel4
             // 
             panel4.BackColor = Color.Silver;
-            panel4.Location = new Point(135, 266);
+            panel4.Location = new Point(17, 204);
+            panel4.Margin = new Padding(17, 25, 0, 0);
             panel4.Name = "panel4";
-            panel4.Size = new Size(657, 185);
+            panel4.Size = new Size(657, 211);
             panel4.TabIndex = 6;
             // 
-            // dateTimePicker1
+            // flowLayoutPanel1
             // 
-            dateTimePicker1.Location = new Point(591, 230);
-            dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(200, 23);
-            dateTimePicker1.TabIndex = 8;
+            flowLayoutPanel1.Anchor = AnchorStyles.None;
+            flowLayoutPanel1.BackColor = Color.FromArgb(224, 224, 224);
+            flowLayoutPanel1.Controls.Add(panel2);
+            flowLayoutPanel1.Controls.Add(panel3);
+            flowLayoutPanel1.Controls.Add(customDatePicker1);
+            flowLayoutPanel1.Controls.Add(panel4);
+            flowLayoutPanel1.Location = new Point(244, 138);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            flowLayoutPanel1.Size = new Size(691, 426);
+            flowLayoutPanel1.TabIndex = 9;
+            // 
+            // customDatePicker1
+            // 
+            customDatePicker1.BorderColor = Color.PaleVioletRed;
+            customDatePicker1.BorderSize = 0;
+            customDatePicker1.Font = new Font("Segoe UI", 9.5F);
+            customDatePicker1.Location = new Point(3, 141);
+            customDatePicker1.MinimumSize = new Size(0, 35);
+            customDatePicker1.Name = "customDatePicker1";
+            customDatePicker1.Size = new Size(200, 35);
+            customDatePicker1.SkinColor = Color.White;
+            customDatePicker1.TabIndex = 7;
+            customDatePicker1.TextColor = Color.DimGray;
+            // 
+            // customPanel1
+            // 
+            customPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            customPanel1.BackColor = Color.White;
+            customPanel1.BorderColor = Color.White;
+            customPanel1.Controls.Add(customTextBox1);
+            customPanel1.Location = new Point(131, 1);
+            customPanel1.Name = "customPanel1";
+            customPanel1.Radius = 10;
+            customPanel1.Size = new Size(930, 43);
+            customPanel1.TabIndex = 10;
+            customPanel1.Thickness = 5F;
+            // 
+            // customTextBox1
+            // 
+            customTextBox1.BackColor = Color.White;
+            customTextBox1.BorderColor = Color.MediumSlateBlue;
+            customTextBox1.BorderFocusColor = Color.HotPink;
+            customTextBox1.BorderRadius = 15;
+            customTextBox1.BorderSize = 2;
+            customTextBox1.Font = new Font("Segoe UI", 9.5F);
+            customTextBox1.ForeColor = Color.DimGray;
+            customTextBox1.Location = new Point(26, 7);
+            customTextBox1.Multiline = false;
+            customTextBox1.Name = "customTextBox1";
+            customTextBox1.Padding = new Padding(7);
+            customTextBox1.PasswordChar = false;
+            customTextBox1.PlaceholderColor = Color.DarkGray;
+            customTextBox1.PlaceholderText = "";
+            customTextBox1.Size = new Size(173, 32);
+            customTextBox1.TabIndex = 11;
+            customTextBox1.Texts = "";
+            customTextBox1.UnderlinedStyle = false;
+            customTextBox1._TextChanged += customTextBox1__TextChanged;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(215, 217, 221);
-            ClientSize = new Size(834, 513);
-            Controls.Add(dateTimePicker1);
+            ClientSize = new Size(1061, 639);
+            Controls.Add(customPanel1);
             Controls.Add(label1);
-            Controls.Add(panel3);
-            Controls.Add(panel4);
-            Controls.Add(panel2);
             Controls.Add(panelNav);
-            Controls.Add(panelSuperior);
+            Controls.Add(flowLayoutPanel1);
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MainForm";
-            panelSuperior.ResumeLayout(false);
-            panelSuperior.PerformLayout();
+            Load += MainForm_Load;
             panelNav.ResumeLayout(false);
             panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            flowLayoutPanel1.ResumeLayout(false);
+            customPanel1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -276,6 +321,10 @@
         private Label label1;
         private Panel panel3;
         private Panel panel4;
-        private DateTimePicker dateTimePicker1;
+        private FlowLayoutPanel flowLayoutPanel1;
+        private CustomComponents.MainFormComponents.CustomDatePicker customDatePicker1;
+        private CustomComponents.MainFormComponents.CustomPanel customPanel1;
+        private CustomComponents.MainFormComponents.CustomTextBox customTextBox1;
+        private Guna.UI2.WinForms.Guna2DataGridView guna2DataGridView1;
     }
 }
