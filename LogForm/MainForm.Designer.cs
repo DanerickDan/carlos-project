@@ -38,18 +38,20 @@
             btnFacturas = new FontAwesome.Sharp.IconButton();
             btnClientes = new FontAwesome.Sharp.IconButton();
             panel2 = new Panel();
-            label1 = new Label();
+            lblPrincipal = new Label();
             panel3 = new Panel();
             panel4 = new Panel();
             flowLayoutPanel1 = new FlowLayoutPanel();
             customDatePicker1 = new CustomComponents.MainFormComponents.CustomDatePicker();
-            customPanel1 = new CustomComponents.MainFormComponents.CustomPanel();
+            topPanel = new CustomComponents.MainFormComponents.CustomPanel();
             customTextBox1 = new CustomComponents.MainFormComponents.CustomTextBox();
+            CenterPanel = new Panel();
             panelNav.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             flowLayoutPanel1.SuspendLayout();
-            customPanel1.SuspendLayout();
+            topPanel.SuspendLayout();
+            CenterPanel.SuspendLayout();
             SuspendLayout();
             // 
             // txtBuscar
@@ -74,7 +76,6 @@
             panelNav.Name = "panelNav";
             panelNav.Size = new Size(112, 640);
             panelNav.TabIndex = 5;
-            panelNav.Paint += panelNav_Paint;
             // 
             // panel1
             // 
@@ -90,7 +91,9 @@
             pictureBox1.Dock = DockStyle.Fill;
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
             pictureBox1.Location = new Point(0, 0);
+            pictureBox1.Margin = new Padding(3, 10, 3, 3);
             pictureBox1.Name = "pictureBox1";
+            pictureBox1.Padding = new Padding(0, 10, 0, 0);
             pictureBox1.Size = new Size(105, 69);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 0;
@@ -164,6 +167,7 @@
             btnFacturas.TextAlign = ContentAlignment.MiddleRight;
             btnFacturas.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnFacturas.UseVisualStyleBackColor = true;
+            btnFacturas.Click += btnFacturas_Click;
             // 
             // btnClientes
             // 
@@ -185,6 +189,7 @@
             btnClientes.TextAlign = ContentAlignment.MiddleRight;
             btnClientes.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnClientes.UseVisualStyleBackColor = true;
+            btnClientes.Click += btnClientes_Click;
             // 
             // panel2
             // 
@@ -195,15 +200,15 @@
             panel2.Size = new Size(288, 118);
             panel2.TabIndex = 6;
             // 
-            // label1
+            // lblPrincipal
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(119, 47);
-            label1.Name = "label1";
-            label1.Size = new Size(146, 37);
-            label1.TabIndex = 7;
-            label1.Text = "DashBoard";
+            lblPrincipal.AutoSize = true;
+            lblPrincipal.Font = new Font("Segoe UI", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblPrincipal.Location = new Point(119, 47);
+            lblPrincipal.Name = "lblPrincipal";
+            lblPrincipal.Size = new Size(146, 37);
+            lblPrincipal.TabIndex = 7;
+            lblPrincipal.Text = "DashBoard";
             // 
             // panel3
             // 
@@ -217,7 +222,7 @@
             // panel4
             // 
             panel4.BackColor = Color.Silver;
-            panel4.Location = new Point(17, 204);
+            panel4.Location = new Point(17, 163);
             panel4.Margin = new Padding(17, 25, 0, 0);
             panel4.Name = "panel4";
             panel4.Size = new Size(657, 211);
@@ -225,15 +230,15 @@
             // 
             // flowLayoutPanel1
             // 
-            flowLayoutPanel1.Anchor = AnchorStyles.None;
             flowLayoutPanel1.BackColor = Color.FromArgb(224, 224, 224);
             flowLayoutPanel1.Controls.Add(panel2);
             flowLayoutPanel1.Controls.Add(panel3);
             flowLayoutPanel1.Controls.Add(customDatePicker1);
             flowLayoutPanel1.Controls.Add(panel4);
-            flowLayoutPanel1.Location = new Point(244, 138);
+            flowLayoutPanel1.Dock = DockStyle.Fill;
+            flowLayoutPanel1.Location = new Point(0, 0);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(691, 426);
+            flowLayoutPanel1.Size = new Size(903, 540);
             flowLayoutPanel1.TabIndex = 9;
             // 
             // customDatePicker1
@@ -241,7 +246,7 @@
             customDatePicker1.BorderColor = Color.PaleVioletRed;
             customDatePicker1.BorderSize = 0;
             customDatePicker1.Font = new Font("Segoe UI", 9.5F);
-            customDatePicker1.Location = new Point(3, 141);
+            customDatePicker1.Location = new Point(679, 3);
             customDatePicker1.MinimumSize = new Size(0, 35);
             customDatePicker1.Name = "customDatePicker1";
             customDatePicker1.Size = new Size(200, 35);
@@ -249,18 +254,18 @@
             customDatePicker1.TabIndex = 7;
             customDatePicker1.TextColor = Color.DimGray;
             // 
-            // customPanel1
+            // topPanel
             // 
-            customPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            customPanel1.BackColor = Color.White;
-            customPanel1.BorderColor = Color.White;
-            customPanel1.Controls.Add(customTextBox1);
-            customPanel1.Location = new Point(131, 1);
-            customPanel1.Name = "customPanel1";
-            customPanel1.Radius = 10;
-            customPanel1.Size = new Size(930, 43);
-            customPanel1.TabIndex = 10;
-            customPanel1.Thickness = 5F;
+            topPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            topPanel.BackColor = Color.White;
+            topPanel.BorderColor = Color.White;
+            topPanel.Controls.Add(customTextBox1);
+            topPanel.Location = new Point(131, 1);
+            topPanel.Name = "topPanel";
+            topPanel.Radius = 10;
+            topPanel.Size = new Size(930, 43);
+            topPanel.TabIndex = 10;
+            topPanel.Thickness = 5F;
             // 
             // customTextBox1
             // 
@@ -281,8 +286,16 @@
             customTextBox1.Size = new Size(173, 32);
             customTextBox1.TabIndex = 11;
             customTextBox1.Texts = "";
-            customTextBox1.UnderlinedStyle = false;
+            customTextBox1.UnderlinedStyle = true;
             customTextBox1._TextChanged += customTextBox1__TextChanged;
+            // 
+            // CenterPanel
+            // 
+            CenterPanel.Controls.Add(flowLayoutPanel1);
+            CenterPanel.Location = new Point(131, 87);
+            CenterPanel.Name = "CenterPanel";
+            CenterPanel.Size = new Size(903, 540);
+            CenterPanel.TabIndex = 11;
             // 
             // MainForm
             // 
@@ -290,19 +303,19 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(215, 217, 221);
             ClientSize = new Size(1061, 639);
-            Controls.Add(customPanel1);
-            Controls.Add(label1);
+            Controls.Add(topPanel);
+            Controls.Add(lblPrincipal);
             Controls.Add(panelNav);
-            Controls.Add(flowLayoutPanel1);
+            Controls.Add(CenterPanel);
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MainForm";
-            Load += MainForm_Load;
             panelNav.ResumeLayout(false);
             panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             flowLayoutPanel1.ResumeLayout(false);
-            customPanel1.ResumeLayout(false);
+            topPanel.ResumeLayout(false);
+            CenterPanel.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -318,13 +331,13 @@
         private PictureBox pictureBox1;
         private TextBox txtBuscar;
         private Panel panel2;
-        private Label label1;
+        private Label lblPrincipal;
         private Panel panel3;
         private Panel panel4;
         private FlowLayoutPanel flowLayoutPanel1;
         private CustomComponents.MainFormComponents.CustomDatePicker customDatePicker1;
-        private CustomComponents.MainFormComponents.CustomPanel customPanel1;
+        private CustomComponents.MainFormComponents.CustomPanel topPanel;
         private CustomComponents.MainFormComponents.CustomTextBox customTextBox1;
-        private Guna.UI2.WinForms.Guna2DataGridView guna2DataGridView1;
+        private Panel CenterPanel;
     }
 }
