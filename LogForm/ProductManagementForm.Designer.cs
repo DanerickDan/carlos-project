@@ -33,20 +33,17 @@
             // 
             // panel1
             // 
-            panel1.BackColor = Color.White;
-            panel1.BackgroundImageLayout = ImageLayout.Center;
-            panel1.BorderStyle = BorderStyle.FixedSingle;
-            panel1.Location = new Point(12, 6);
+            panel1.BackColor = SystemColors.ActiveCaptionText;
+            panel1.Location = new Point(452, 40);
             panel1.Name = "panel1";
-            panel1.Size = new Size(87, 570);
+            panel1.Size = new Size(200, 100);
             panel1.TabIndex = 0;
-            panel1.Paint += panel1_Paint;
             // 
             // ProductManagementForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1365, 632);
+            ClientSize = new Size(695, 371);
             Controls.Add(panel1);
             Name = "ProductManagementForm";
             Text = "ProductManagementForm";

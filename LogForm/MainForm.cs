@@ -35,7 +35,7 @@ namespace PresentationLayer
 
         private void btnInicio_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new MainForm(), sender);
+            ActiveForm.Close();
         }
 
         private void btnFacturas_Click(object sender, EventArgs e)
@@ -58,8 +58,8 @@ namespace PresentationLayer
 
         private void Reset()
         {
-            DisableButton();
-            lblPrincipal = "DashBoard";
+            //DisableButton();
+            //lblPrincipal = "DashBoard";
 
         }
 
