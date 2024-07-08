@@ -301,6 +301,7 @@
             btnImprimir.Text = "Imprimir";
             btnImprimir.TextColor = Color.White;
             btnImprimir.UseVisualStyleBackColor = false;
+            btnImprimir.Click += btnImprimir_Click;
             // 
             // panel5
             // 
@@ -335,7 +336,7 @@
             // 
             // CenterPanel
             // 
-            CenterPanel.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            CenterPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             CenterPanel.Controls.Add(customDatePicker1);
             CenterPanel.Controls.Add(panel6);
             CenterPanel.Controls.Add(panel4);
@@ -401,7 +402,8 @@
             Controls.Add(panelNav);
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "MainForm";
+            Text = "DashBoard";
+            Load += MainForm_Load;
             panelNav.ResumeLayout(false);
             panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
