@@ -1,6 +1,4 @@
-﻿
-
-namespace PresentationLayer
+﻿namespace PresentationLayer
 {
     public partial class MainForm : Form
     {
@@ -34,6 +32,8 @@ namespace PresentationLayer
             btnBorrar.Visible = true;
             btnEditar.Visible = true;
             btnImprimir.Visible = false;
+            txtBuscar2.Texts = "Buscar producto";
+            txtBuscar2.Visible = true;
             OpenChildForm(new ProductManagementForm(), sender);
         }
 
@@ -44,6 +44,7 @@ namespace PresentationLayer
             btnEditar.Visible = false;
             btnImprimir.Visible = false;
             ActiveForm.Close();
+            txtBuscar2.Visible = false;
             lblPrincipal.Text = "DashBoard";
         }
 
@@ -52,7 +53,9 @@ namespace PresentationLayer
             btnAnadir.Visible = true;
             btnBorrar.Visible = true;
             btnEditar.Visible = true;
-            btnImprimir.Visible = false;
+            btnImprimir.Visible = true;
+            txtBuscar2.Texts = "Buscar factura";
+            txtBuscar2.Visible = true;
             OpenChildForm(new InvoiceForm(), sender);
         }
 
@@ -61,6 +64,9 @@ namespace PresentationLayer
             btnAnadir.Visible = true;
             btnBorrar.Visible = true;
             btnEditar.Visible = true;
+            btnImprimir.Visible= false;;
+            txtBuscar2.Texts = "Buscar cliente";
+            txtBuscar2.Visible = true;
             OpenChildForm(new ClientManagementForm(), sender);
         }
         private void btnCloseChildForm(object sender, EventArgs e)
@@ -94,6 +100,7 @@ namespace PresentationLayer
             btnAnadir.Visible = false;
             btnBorrar.Visible = false;
             btnEditar.Visible = false;
+            txtBuscar2.Visible = false;
         }
     }
 }

@@ -253,6 +253,7 @@
             btnBorrar.Image = (Image)resources.GetObject("btnBorrar.Image");
             btnBorrar.ImageAlign = ContentAlignment.MiddleLeft;
             btnBorrar.Location = new Point(280, 5);
+            btnBorrar.Margin = new Padding(8, 3, 3, 3);
             btnBorrar.Name = "btnBorrar";
             btnBorrar.Size = new Size(127, 37);
             btnBorrar.TabIndex = 0;
@@ -274,6 +275,7 @@
             btnEditar.Image = (Image)resources.GetObject("btnEditar.Image");
             btnEditar.ImageAlign = ContentAlignment.MiddleLeft;
             btnEditar.Location = new Point(147, 5);
+            btnEditar.Margin = new Padding(8, 3, 3, 3);
             btnEditar.Name = "btnEditar";
             btnEditar.Size = new Size(127, 37);
             btnEditar.TabIndex = 0;
@@ -295,6 +297,7 @@
             btnImprimir.Image = (Image)resources.GetObject("btnImprimir.Image");
             btnImprimir.ImageAlign = ContentAlignment.MiddleLeft;
             btnImprimir.Location = new Point(14, 5);
+            btnImprimir.Margin = new Padding(8, 3, 3, 3);
             btnImprimir.Name = "btnImprimir";
             btnImprimir.Size = new Size(127, 37);
             btnImprimir.TabIndex = 0;
