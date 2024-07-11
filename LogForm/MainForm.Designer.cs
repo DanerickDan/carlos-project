@@ -37,13 +37,8 @@
             btnProdutos = new FontAwesome.Sharp.IconButton();
             btnFacturas = new FontAwesome.Sharp.IconButton();
             btnClientes = new FontAwesome.Sharp.IconButton();
-            lblPrincipal = new Label();
-            btnPanel = new Panel();
-            btnAnadir = new CustomComponents.MainFormComponents.CustomButton();
-            btnBorrar = new CustomComponents.MainFormComponents.CustomButton();
-            btnEditar = new CustomComponents.MainFormComponents.CustomButton();
-            btnImprimir = new CustomComponents.MainFormComponents.CustomButton();
             panel5 = new Panel();
+            materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
             txtBuscar2 = new CustomComponents.MainFormComponents.CustomTextBox();
             CenterPanel = new Panel();
             customDatePicker1 = new CustomComponents.MainFormComponents.CustomDatePicker();
@@ -53,7 +48,6 @@
             panelNav.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            btnPanel.SuspendLayout();
             panel5.SuspendLayout();
             CenterPanel.SuspendLayout();
             SuspendLayout();
@@ -195,126 +189,30 @@
             btnClientes.UseVisualStyleBackColor = true;
             btnClientes.Click += btnClientes_Click;
             // 
-            // lblPrincipal
-            // 
-            lblPrincipal.AutoSize = true;
-            lblPrincipal.Font = new Font("Segoe UI", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblPrincipal.Location = new Point(131, 47);
-            lblPrincipal.Name = "lblPrincipal";
-            lblPrincipal.Size = new Size(146, 37);
-            lblPrincipal.TabIndex = 7;
-            lblPrincipal.Text = "DashBoard";
-            // 
-            // btnPanel
-            // 
-            btnPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            btnPanel.BackColor = Color.FromArgb(215, 217, 221);
-            btnPanel.Controls.Add(btnAnadir);
-            btnPanel.Controls.Add(btnBorrar);
-            btnPanel.Controls.Add(btnEditar);
-            btnPanel.Controls.Add(btnImprimir);
-            btnPanel.Location = new Point(424, 39);
-            btnPanel.Name = "btnPanel";
-            btnPanel.Size = new Size(610, 45);
-            btnPanel.TabIndex = 12;
-            // 
-            // btnAnadir
-            // 
-            btnAnadir.Anchor = AnchorStyles.Left;
-            btnAnadir.BackColor = Color.FromArgb(243, 156, 76);
-            btnAnadir.BackgroundColor = Color.FromArgb(243, 156, 76);
-            btnAnadir.BorderColor = Color.PaleVioletRed;
-            btnAnadir.BorderRadius = 5;
-            btnAnadir.BorderSize = 0;
-            btnAnadir.FlatAppearance.BorderSize = 0;
-            btnAnadir.FlatStyle = FlatStyle.Flat;
-            btnAnadir.ForeColor = Color.White;
-            btnAnadir.Image = (Image)resources.GetObject("btnAnadir.Image");
-            btnAnadir.ImageAlign = ContentAlignment.MiddleLeft;
-            btnAnadir.Location = new Point(413, 5);
-            btnAnadir.Name = "btnAnadir";
-            btnAnadir.Size = new Size(127, 37);
-            btnAnadir.TabIndex = 0;
-            btnAnadir.Text = "Añadir";
-            btnAnadir.TextColor = Color.White;
-            btnAnadir.UseVisualStyleBackColor = false;
-            // 
-            // btnBorrar
-            // 
-            btnBorrar.Anchor = AnchorStyles.Left;
-            btnBorrar.BackColor = Color.FromArgb(243, 156, 76);
-            btnBorrar.BackgroundColor = Color.FromArgb(243, 156, 76);
-            btnBorrar.BorderColor = Color.PaleVioletRed;
-            btnBorrar.BorderRadius = 5;
-            btnBorrar.BorderSize = 0;
-            btnBorrar.FlatAppearance.BorderSize = 0;
-            btnBorrar.FlatStyle = FlatStyle.Flat;
-            btnBorrar.ForeColor = Color.White;
-            btnBorrar.Image = (Image)resources.GetObject("btnBorrar.Image");
-            btnBorrar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnBorrar.Location = new Point(280, 5);
-            btnBorrar.Margin = new Padding(8, 3, 3, 3);
-            btnBorrar.Name = "btnBorrar";
-            btnBorrar.Size = new Size(127, 37);
-            btnBorrar.TabIndex = 0;
-            btnBorrar.Text = "Eliminar";
-            btnBorrar.TextColor = Color.White;
-            btnBorrar.UseVisualStyleBackColor = false;
-            // 
-            // btnEditar
-            // 
-            btnEditar.Anchor = AnchorStyles.Left;
-            btnEditar.BackColor = Color.FromArgb(243, 156, 76);
-            btnEditar.BackgroundColor = Color.FromArgb(243, 156, 76);
-            btnEditar.BorderColor = Color.PaleVioletRed;
-            btnEditar.BorderRadius = 5;
-            btnEditar.BorderSize = 0;
-            btnEditar.FlatAppearance.BorderSize = 0;
-            btnEditar.FlatStyle = FlatStyle.Flat;
-            btnEditar.ForeColor = Color.White;
-            btnEditar.Image = (Image)resources.GetObject("btnEditar.Image");
-            btnEditar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnEditar.Location = new Point(147, 5);
-            btnEditar.Margin = new Padding(8, 3, 3, 3);
-            btnEditar.Name = "btnEditar";
-            btnEditar.Size = new Size(127, 37);
-            btnEditar.TabIndex = 0;
-            btnEditar.Text = "Editar";
-            btnEditar.TextColor = Color.White;
-            btnEditar.UseVisualStyleBackColor = false;
-            // 
-            // btnImprimir
-            // 
-            btnImprimir.Anchor = AnchorStyles.Left;
-            btnImprimir.BackColor = Color.FromArgb(243, 156, 76);
-            btnImprimir.BackgroundColor = Color.FromArgb(243, 156, 76);
-            btnImprimir.BorderColor = Color.PaleVioletRed;
-            btnImprimir.BorderRadius = 5;
-            btnImprimir.BorderSize = 0;
-            btnImprimir.FlatAppearance.BorderSize = 0;
-            btnImprimir.FlatStyle = FlatStyle.Flat;
-            btnImprimir.ForeColor = Color.White;
-            btnImprimir.Image = (Image)resources.GetObject("btnImprimir.Image");
-            btnImprimir.ImageAlign = ContentAlignment.MiddleLeft;
-            btnImprimir.Location = new Point(14, 5);
-            btnImprimir.Margin = new Padding(8, 3, 3, 3);
-            btnImprimir.Name = "btnImprimir";
-            btnImprimir.Size = new Size(127, 37);
-            btnImprimir.TabIndex = 0;
-            btnImprimir.Text = "Imprimir";
-            btnImprimir.TextColor = Color.White;
-            btnImprimir.UseVisualStyleBackColor = false;
-            btnImprimir.Click += btnImprimir_Click;
-            // 
             // panel5
             // 
             panel5.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel5.BackColor = Color.White;
+            panel5.Controls.Add(materialLabel1);
             panel5.Controls.Add(txtBuscar2);
-            panel5.Location = new Point(131, 4);
+            panel5.Location = new Point(131, 1);
             panel5.Name = "panel5";
-            panel5.Size = new Size(930, 37);
+            panel5.Size = new Size(930, 40);
             panel5.TabIndex = 13;
+            // 
+            // materialLabel1
+            // 
+            materialLabel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+            materialLabel1.AutoSize = true;
+            materialLabel1.Depth = 0;
+            materialLabel1.Font = new Font("Roboto", 24F, FontStyle.Bold, GraphicsUnit.Pixel);
+            materialLabel1.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
+            materialLabel1.Location = new Point(801, 5);
+            materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
+            materialLabel1.Name = "materialLabel1";
+            materialLabel1.Size = new Size(119, 29);
+            materialLabel1.TabIndex = 1;
+            materialLabel1.Text = "DashBoard";
             // 
             // txtBuscar2
             // 
@@ -325,7 +223,7 @@
             txtBuscar2.BorderSize = 1;
             txtBuscar2.Font = new Font("Segoe UI", 9.5F);
             txtBuscar2.ForeColor = Color.FromArgb(40, 40, 48);
-            txtBuscar2.Location = new Point(20, 2);
+            txtBuscar2.Location = new Point(18, 4);
             txtBuscar2.Multiline = false;
             txtBuscar2.Name = "txtBuscar2";
             txtBuscar2.Padding = new Padding(10, 7, 10, 7);
@@ -344,9 +242,9 @@
             CenterPanel.Controls.Add(panel6);
             CenterPanel.Controls.Add(panel4);
             CenterPanel.Controls.Add(panel3);
-            CenterPanel.Location = new Point(144, 102);
+            CenterPanel.Location = new Point(131, 58);
             CenterPanel.Name = "CenterPanel";
-            CenterPanel.Size = new Size(890, 525);
+            CenterPanel.Size = new Size(918, 569);
             CenterPanel.TabIndex = 14;
             // 
             // customDatePicker1
@@ -356,7 +254,7 @@
             customDatePicker1.BorderSize = 0;
             customDatePicker1.CalendarForeColor = Color.Black;
             customDatePicker1.Font = new Font("Segoe UI", 9.5F);
-            customDatePicker1.Location = new Point(666, 144);
+            customDatePicker1.Location = new Point(696, 155);
             customDatePicker1.MinimumSize = new Size(0, 35);
             customDatePicker1.Name = "customDatePicker1";
             customDatePicker1.Size = new Size(200, 35);
@@ -368,16 +266,16 @@
             // 
             panel6.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel6.BackColor = Color.Silver;
-            panel6.Location = new Point(21, 185);
+            panel6.Location = new Point(21, 200);
             panel6.Name = "panel6";
-            panel6.Size = new Size(857, 323);
+            panel6.Size = new Size(885, 352);
             panel6.TabIndex = 0;
             // 
             // panel4
             // 
             panel4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             panel4.BackColor = Color.Silver;
-            panel4.Location = new Point(462, 14);
+            panel4.Location = new Point(490, 14);
             panel4.MaximumSize = new Size(950, 200);
             panel4.Name = "panel4";
             panel4.Size = new Size(416, 122);
@@ -400,8 +298,6 @@
             ClientSize = new Size(1061, 639);
             Controls.Add(CenterPanel);
             Controls.Add(panel5);
-            Controls.Add(btnPanel);
-            Controls.Add(lblPrincipal);
             Controls.Add(panelNav);
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
@@ -410,11 +306,10 @@
             panelNav.ResumeLayout(false);
             panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            btnPanel.ResumeLayout(false);
             panel5.ResumeLayout(false);
+            panel5.PerformLayout();
             CenterPanel.ResumeLayout(false);
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -427,18 +322,13 @@
         private FontAwesome.Sharp.IconButton btnInicio;
         private PictureBox pictureBox1;
         private TextBox txtBuscar;
-        private Label lblPrincipal;
-        private Panel btnPanel;
-        private CustomComponents.MainFormComponents.CustomButton btnImprimir;
         private Panel panel5;
         private CustomComponents.MainFormComponents.CustomTextBox txtBuscar2;
-        private CustomComponents.MainFormComponents.CustomButton btnAnadir;
-        private CustomComponents.MainFormComponents.CustomButton btnBorrar;
-        private CustomComponents.MainFormComponents.CustomButton btnEditar;
         private Panel CenterPanel;
         private Panel panel4;
         private Panel panel3;
         private Panel panel6;
         private CustomComponents.MainFormComponents.CustomDatePicker customDatePicker1;
+        private MaterialSkin.Controls.MaterialLabel materialLabel1;
     }
 }
