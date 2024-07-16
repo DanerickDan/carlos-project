@@ -141,6 +141,7 @@
             btnAnadir.Text = "Añadir";
             btnAnadir.TextColor = Color.White;
             btnAnadir.UseVisualStyleBackColor = false;
+            btnAnadir.Click += btnAnadir_Click;
             // 
             // btnBorrar
             // 
@@ -163,6 +164,7 @@
             btnBorrar.Text = "Eliminar";
             btnBorrar.TextColor = Color.White;
             btnBorrar.UseVisualStyleBackColor = false;
+            btnBorrar.Click += btnBorrar_Click;
             // 
             // btnEditar
             // 
@@ -185,6 +187,7 @@
             btnEditar.Text = "Editar";
             btnEditar.TextColor = Color.White;
             btnEditar.UseVisualStyleBackColor = false;
+            btnEditar.Click += btnEditar_Click;
             // 
             // lblPrincipal
             // 

@@ -30,7 +30,6 @@ namespace PresentationLayer
                 int lote = Convert.ToInt32(selectedRow.Cells[6].Value);
                 ProductsDTO productsDTO = new ProductsDTO
                 {
-                    ProductsId = productId,
                     ProductName = productName,
                     Code = code,
                     Description = description,

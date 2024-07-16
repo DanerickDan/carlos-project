@@ -189,7 +189,7 @@ namespace DataLayer.Repositories
                 {
                     connection.OpenConnection();
 
-                    string query = @"SELECT f.factura_id as InvoiceId, f.fecha as Fecha, f.terminos as Terminos, f.cliente_id,
+                    string query = @"SELECT f.factura_id as InvoiceId, f.fecha as Fecha, f.terminos as Terminos, f.cliente_id as ClienteId, f.numero as Number
                                     f.num_pedido as NumPedido, f.vendedor as Vendedor, f.NCF as ncf, d.detalle_id as DetalleId, d.factura_id as FacturaId,
                                     d.producto_id as ProductoId, d.cantidad as Cantiadad, d.precio_unitario as Precio, d.lote as Lote,
                                     d.total as Total, d.sub_total as SubTotal, d.codigo as Codigo, d.neto as Neto
@@ -218,6 +218,7 @@ namespace DataLayer.Repositories
                                         ClientID = reader.GetInt32(reader.GetOrdinal("ClienteId")),
                                         OrderNumer = reader.GetInt32(reader.GetOrdinal("NumPedido")),
                                         SellerName = reader.GetString(reader.GetOrdinal("Vendedor")),
+                                        Number = reader.GetString(reader.GetOrdinal("Number")),
                                         NCF = reader.GetString(reader.GetOrdinal("NCF")),
                                         Details = new List<InvoiceDetails>() // Initialize a new Details list for the invoice
                                     };
@@ -263,7 +264,7 @@ namespace DataLayer.Repositories
                 {
                     connection.OpenConnection();
                     string query = @"SELECT f.factura_id as InvoiceId, f.fecha as Fecha, f.terminos as Terminos, f.cliente_id,
-                                    f.num_pedido as NumPedido, f.vendedor as Vendedor, f.NCF as ncf, d.detalle_id as DetalleId, d.factura_id as FacturaId,
+                                    f.num_pedido as NumPedido, f.vendedor as Vendedor, f.NCF as ncf, f.numero as Numero d.detalle_id as DetalleId, d.factura_id as FacturaId,
                                     d.producto_id as ProductoId, d.cantidad as Cantiadad, d.precio_unitario as Precio, d.lote as Lote,
                                     d.total as Total, d.sub_total as SubTotal, d.codigo as Codigo, d.neto as Neto
                                     FROM Facturas AS f
@@ -292,6 +293,7 @@ namespace DataLayer.Repositories
                                         OrderNumer = reader.GetInt32(reader.GetOrdinal("NumPedido")),
                                         SellerName = reader.GetString(reader.GetOrdinal("Vendedor")),
                                         NCF = reader.GetString(reader.GetOrdinal("NCF")),
+                                        Number = reader.GetString(reader.GetOrdinal("Numero")),
                                         Details = new List<InvoiceDetails>() // Initialize a new Details list for the invoice
                                     };
                                 }
