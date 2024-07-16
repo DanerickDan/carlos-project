@@ -1,6 +1,13 @@
-﻿namespace BusinessLayer.Interfaces.IServices
+﻿using BusinessLayer.Model;
+
+namespace BusinessLayer.Interfaces.IServices
 {
-    public class IProductService
+    public interface IProductService
     {
+        public void AddProduct(ProductsDTO productDTO);
+        public void UpdateProduct(ProductsDTO productDTO);
+        public void DeleteProduct(int id);
+        public List<ProductsDTO> GetAllProduct();
+        public ProductsDTO GetByIdProduct(int id);
     }
 }

@@ -1,5 +1,7 @@
 ﻿
 
+using DomainLayer.Entities;
+
 namespace BusinessLayer.Model
 {
     public class ProductsDTO
@@ -11,7 +13,7 @@ namespace BusinessLayer.Model
         public DateTime ExpirationDate { get; set; }
         public double Price { get; set; }
         public int Lote { get; set; }
-        public int CategoryId { get; set; }
-        public int StatusId { get; set; }
+        //public int CategoryId { get; set; }
+        //public int StatusId { get; set; }
     }
 }

@@ -1,11 +1,12 @@
-﻿using BusinessLayer.Model;
+﻿using BusinessLayer.Interfaces.IServices;
+using BusinessLayer.Model;
 using DataLayer.IRepository;
 using DataLayer.Repositories;
 using DomainLayer.Entities;
 
 namespace BusinessLayer.Services
 {
-    public class ProductServices
+    public class ProductServices : IProductService
     {
         private readonly IProductsRepository _repository;
         public ProductServices() 

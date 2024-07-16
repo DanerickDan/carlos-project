@@ -41,7 +41,6 @@
             btnAnadir = new CustomComponents.MainFormComponents.CustomButton();
             btnBorrar = new CustomComponents.MainFormComponents.CustomButton();
             btnEditar = new CustomComponents.MainFormComponents.CustomButton();
-            btnImprimir = new CustomComponents.MainFormComponents.CustomButton();
             lblPrincipal = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             panel1.SuspendLayout();
@@ -116,7 +115,6 @@
             btnPanel.Controls.Add(btnAnadir);
             btnPanel.Controls.Add(btnBorrar);
             btnPanel.Controls.Add(btnEditar);
-            btnPanel.Controls.Add(btnImprimir);
             btnPanel.Dock = DockStyle.Right;
             btnPanel.Location = new Point(188, 0);
             btnPanel.Name = "btnPanel";
@@ -188,28 +186,6 @@
             btnEditar.TextColor = Color.White;
             btnEditar.UseVisualStyleBackColor = false;
             // 
-            // btnImprimir
-            // 
-            btnImprimir.Anchor = AnchorStyles.Left;
-            btnImprimir.BackColor = Color.FromArgb(243, 156, 76);
-            btnImprimir.BackgroundColor = Color.FromArgb(243, 156, 76);
-            btnImprimir.BorderColor = Color.PaleVioletRed;
-            btnImprimir.BorderRadius = 5;
-            btnImprimir.BorderSize = 0;
-            btnImprimir.FlatAppearance.BorderSize = 0;
-            btnImprimir.FlatStyle = FlatStyle.Flat;
-            btnImprimir.ForeColor = Color.White;
-            btnImprimir.Image = (Image)resources.GetObject("btnImprimir.Image");
-            btnImprimir.ImageAlign = ContentAlignment.MiddleLeft;
-            btnImprimir.Location = new Point(39, 7);
-            btnImprimir.Margin = new Padding(8, 3, 3, 3);
-            btnImprimir.Name = "btnImprimir";
-            btnImprimir.Size = new Size(127, 37);
-            btnImprimir.TabIndex = 0;
-            btnImprimir.Text = "Imprimir";
-            btnImprimir.TextColor = Color.White;
-            btnImprimir.UseVisualStyleBackColor = false;
-            // 
             // lblPrincipal
             // 
             lblPrincipal.AutoSize = true;
@@ -250,7 +226,6 @@
         private CustomComponents.MainFormComponents.CustomButton btnAnadir;
         private CustomComponents.MainFormComponents.CustomButton btnBorrar;
         private CustomComponents.MainFormComponents.CustomButton btnEditar;
-        private CustomComponents.MainFormComponents.CustomButton btnImprimir;
         private Label lblPrincipal;
     }
 }

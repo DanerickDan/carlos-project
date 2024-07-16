@@ -1,11 +1,12 @@
-﻿using BusinessLayer.Model;
+﻿using BusinessLayer.Interfaces.IServices;
+using BusinessLayer.Model;
 using DataLayer.IRepository;
 using DataLayer.Repositories;
 using DomainLayer.Entities;
 
 namespace BusinessLayer.Services
 {
-    public class InvoiceServices
+    public class InvoiceServices : IInvoiceServices
     {
         private readonly IInvoiceRepository _repository;
         public InvoiceServices()
