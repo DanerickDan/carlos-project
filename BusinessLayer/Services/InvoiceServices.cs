@@ -66,7 +66,20 @@ namespace BusinessLayer.Services
                     Terms = item.Terms,
                     OrderNumer = item.OrderNumer,
                     SellerName = item.SellerName,
-                    ClientID = item.ClientID
+                    ClientID = item.ClientID,
+                    Details = item.Details.Select(detail => new InvoiceDetailsDTO
+                    {
+                        InvoiceDetailsId = detail.InvoiceDetailsId,
+                        InvoiceId = detail.InvoiceId,
+                        ProductId = detail.ProductId,
+                        Quantity = detail.Quantity,
+                        Price = detail.Price,
+                        Lote = detail.Lote,
+                        Total = detail.Total,
+                        SubTotal = detail.SubTotal,
+                        ProductCode = detail.ProductCode,
+                        Neto = detail.Neto
+                    }).ToList()
                 });
             }
             return invoiceDTO;
@@ -84,7 +97,20 @@ namespace BusinessLayer.Services
                 Terms = invoice.Terms,
                 OrderNumer = invoice.OrderNumer,
                 SellerName = invoice.SellerName,
-                ClientID = invoice.ClientID
+                ClientID = invoice.ClientID,
+                Details = invoice.Details.Select(detail => new InvoiceDetailsDTO
+                {
+                    InvoiceDetailsId = detail.InvoiceDetailsId,
+                    InvoiceId = detail.InvoiceId,
+                    ProductId = detail.ProductId,
+                    Quantity = detail.Quantity,
+                    Price = detail.Price,
+                    Lote = detail.Lote,
+                    Total = detail.Total,
+                    SubTotal = detail.SubTotal,
+                    ProductCode = detail.ProductCode,
+                    Neto = detail.Neto
+                }).ToList()
             };
             return invoiceDTO;
         }

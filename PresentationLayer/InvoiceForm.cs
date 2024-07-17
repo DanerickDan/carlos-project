@@ -82,6 +82,11 @@ namespace PresentationLayer
             }
         }
 
+        private void DataGridSettings()
+        {
+
+        }
+
 
         // Print Invoice
         private void btnImprimir_Click(object sender, EventArgs e)
@@ -94,7 +99,7 @@ namespace PresentationLayer
         {
             if(dataGridView1 == null)
             {
-
+                
             }
         }
 

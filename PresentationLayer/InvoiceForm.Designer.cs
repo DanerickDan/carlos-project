@@ -30,11 +30,12 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InvoiceForm));
             dataGridView1 = new DataGridView();
-            NumberColumn = new DataGridViewTextBoxColumn();
-            ClientColumn = new DataGridViewTextBoxColumn();
-            DescriptionColumn = new DataGridViewTextBoxColumn();
-            DateColumn = new DataGridViewTextBoxColumn();
-            QuatityColumn = new DataGridViewTextBoxColumn();
+            InvoiceID = new DataGridViewTextBoxColumn();
+            OrderNumber = new DataGridViewTextBoxColumn();
+            ClientID = new DataGridViewTextBoxColumn();
+            Terms = new DataGridViewTextBoxColumn();
+            Date = new DataGridViewTextBoxColumn();
+            SellerName = new DataGridViewTextBoxColumn();
             NetoColumn = new DataGridViewTextBoxColumn();
             TotalColumn = new DataGridViewTextBoxColumn();
             panel1 = new Panel();
@@ -58,42 +59,49 @@
             dataGridView1.BackgroundColor = Color.White;
             dataGridView1.BorderStyle = BorderStyle.None;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { NumberColumn, ClientColumn, DescriptionColumn, DateColumn, QuatityColumn, NetoColumn, TotalColumn });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { InvoiceID, OrderNumber, ClientID, Terms, Date, SellerName, NetoColumn, TotalColumn });
             dataGridView1.Location = new Point(0, 58);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
             dataGridView1.Size = new Size(800, 392);
             dataGridView1.TabIndex = 0;
             // 
-            // NumberColumn
+            // InvoiceID
             // 
-            NumberColumn.HeaderText = "Número";
-            NumberColumn.Name = "NumberColumn";
-            NumberColumn.ReadOnly = true;
+            InvoiceID.HeaderText = "Id";
+            InvoiceID.Name = "InvoiceID";
+            InvoiceID.ReadOnly = true;
+            InvoiceID.Visible = false;
             // 
-            // ClientColumn
+            // OrderNumber
             // 
-            ClientColumn.HeaderText = "Cliente";
-            ClientColumn.Name = "ClientColumn";
-            ClientColumn.ReadOnly = true;
+            OrderNumber.HeaderText = "Número";
+            OrderNumber.Name = "OrderNumber";
+            OrderNumber.ReadOnly = true;
             // 
-            // DescriptionColumn
+            // ClientID
             // 
-            DescriptionColumn.HeaderText = "Descripción";
-            DescriptionColumn.Name = "DescriptionColumn";
-            DescriptionColumn.ReadOnly = true;
+            ClientID.HeaderText = "Cliente";
+            ClientID.Name = "ClientID";
+            ClientID.ReadOnly = true;
             // 
-            // DateColumn
+            // Terms
             // 
-            DateColumn.HeaderText = "Fecha";
-            DateColumn.Name = "DateColumn";
-            DateColumn.ReadOnly = true;
+            Terms.HeaderText = "Descripción";
+            Terms.Name = "Terms";
+            Terms.ReadOnly = true;
             // 
-            // QuatityColumn
+            // Date
             // 
-            QuatityColumn.HeaderText = "Cantidad";
-            QuatityColumn.Name = "QuatityColumn";
-            QuatityColumn.ReadOnly = true;
+            Date.HeaderText = "Fecha";
+            Date.Name = "Date";
+            Date.ReadOnly = true;
+            // 
+            // SellerName
+            // 
+            SellerName.HeaderText = "Vendedor";
+            SellerName.Name = "SellerName";
+            SellerName.ReadOnly = true;
             // 
             // NetoColumn
             // 
@@ -250,13 +258,6 @@
         #endregion
 
         private DataGridView dataGridView1;
-        private DataGridViewTextBoxColumn NumberColumn;
-        private DataGridViewTextBoxColumn ClientColumn;
-        private DataGridViewTextBoxColumn DescriptionColumn;
-        private DataGridViewTextBoxColumn DateColumn;
-        private DataGridViewTextBoxColumn QuatityColumn;
-        private DataGridViewTextBoxColumn NetoColumn;
-        private DataGridViewTextBoxColumn TotalColumn;
         private Panel panel1;
         private Panel btnPanel;
         private CustomComponents.MainFormComponents.CustomButton btnAnadir;
@@ -264,5 +265,13 @@
         private CustomComponents.MainFormComponents.CustomButton btnEditar;
         private CustomComponents.MainFormComponents.CustomButton btnImprimir;
         private Label lblPrincipal;
+        private DataGridViewTextBoxColumn InvoiceID;
+        private DataGridViewTextBoxColumn OrderNumber;
+        private DataGridViewTextBoxColumn ClientID;
+        private DataGridViewTextBoxColumn Terms;
+        private DataGridViewTextBoxColumn Date;
+        private DataGridViewTextBoxColumn SellerName;
+        private DataGridViewTextBoxColumn NetoColumn;
+        private DataGridViewTextBoxColumn TotalColumn;
     }
 }
