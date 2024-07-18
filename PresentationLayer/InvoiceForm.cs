@@ -25,6 +25,7 @@ namespace PresentationLayer
                 string terms = selectedRow.Cells[4].Value.ToString();
                 int orderNumer = Convert.ToInt32(selectedRow.Cells[5].Value);
                 string sellerName = selectedRow.Cells[6].Value.ToString();
+
                 // TODO: thinking about the foreings in the logic
 
                 InvoiceDTO invoice = new InvoiceDTO
@@ -35,7 +36,11 @@ namespace PresentationLayer
                     Terms = terms,
                     OrderNumer = orderNumer,
                     SellerName = sellerName,
-                    
+                    // TODO: finish add invoice
+                    //Details = new List<InvoiceDetailsDTO>
+                    //{
+
+                    //}
                 };
                 invoiceServices.AddInvoice(invoice);
             }
