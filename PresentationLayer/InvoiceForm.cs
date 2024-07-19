@@ -19,12 +19,21 @@ namespace PresentationLayer
             if (dataGridView1.SelectedRows.Count > 0)
             {
                 DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
+                int invoiceId = Convert.ToInt32(selectedRow.Cells[0].Value);
                 DateTime date = Convert.ToDateTime(selectedRow.Cells[1].Value);
                 string number = selectedRow.Cells[2].Value.ToString();
                 string ncf = selectedRow.Cells[3].Value.ToString();
                 string terms = selectedRow.Cells[4].Value.ToString();
                 int orderNumer = Convert.ToInt32(selectedRow.Cells[5].Value);
                 string sellerName = selectedRow.Cells[6].Value.ToString();
+                decimal Neto = Convert.ToDecimal(selectedRow.Cells[7].Value);
+                decimal price = Convert.ToDecimal(selectedRow.Cells[8].Value);
+                decimal total = Convert.ToDecimal(selectedRow.Cells[9].Value);
+                string lote = selectedRow.Cells[10].Value.ToString();
+                int quantity = Convert.ToInt32(selectedRow.Cells[11].Value);
+                string productCode = selectedRow.Cells[12].ToString();
+                decimal subTotal = Convert.ToDecimal(selectedRow.Cells[13].Value);
+
 
                 // TODO: thinking about the foreings in the logic
 
@@ -37,10 +46,11 @@ namespace PresentationLayer
                     OrderNumer = orderNumer,
                     SellerName = sellerName,
                     // TODO: finish add invoice
-                    //Details = new List<InvoiceDetailsDTO>
-                    //{
+                    Details = new List<InvoiceDetailsDTO>
+                    {
+                        InvoiceId = invoiceId,
 
-                    //}
+                    }
                 };
                 invoiceServices.AddInvoice(invoice);
             }
