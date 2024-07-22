@@ -23,7 +23,7 @@ namespace BusinessLayer.Services
                 Number = invoiceDTO.Number,
                 NCF = invoiceDTO.NCF,
                 Terms = invoiceDTO.Terms,
-                OrderNumer = invoiceDTO.OrderNumer,
+                OrderNumber = invoiceDTO.OrderNumber,
                 SellerName = invoiceDTO.SellerName,
                 ClientID = invoiceDTO.ClientID,
             };
@@ -39,7 +39,7 @@ namespace BusinessLayer.Services
                 Number = invoiceDTO.Number,
                 NCF = invoiceDTO.NCF,
                 Terms = invoiceDTO.Terms,
-                OrderNumer = invoiceDTO.OrderNumer,
+                OrderNumber = invoiceDTO.OrderNumber,
                 SellerName = invoiceDTO.SellerName,
                 ClientID = invoiceDTO.ClientID,
             };
@@ -64,7 +64,7 @@ namespace BusinessLayer.Services
                     Number = item.Number,
                     NCF = item.NCF,
                     Terms = item.Terms,
-                    OrderNumer = item.OrderNumer,
+                    OrderNumber = item.OrderNumber,
                     SellerName = item.SellerName,
                     ClientID = item.ClientID,
                     Details = item.Details.Select(detail => new InvoiceDetailsDTO
@@ -95,7 +95,7 @@ namespace BusinessLayer.Services
                 Number = invoice.Number,
                 NCF = invoice.NCF,
                 Terms = invoice.Terms,
-                OrderNumer = invoice.OrderNumer,
+                OrderNumber = invoice.OrderNumber,
                 SellerName = invoice.SellerName,
                 ClientID = invoice.ClientID,
                 Details = invoice.Details.Select(detail => new InvoiceDetailsDTO

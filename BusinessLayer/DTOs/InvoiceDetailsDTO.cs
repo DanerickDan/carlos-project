@@ -12,7 +12,5 @@
         public decimal Neto { get; set; }
         public decimal SubTotal { get; set; }
         public decimal Total { get; set; }
-        ProductsDTO Products { get; set; } = new ProductsDTO();
-        InvoiceDTO Invoice { get; set; } = new InvoiceDTO();
     }
 }

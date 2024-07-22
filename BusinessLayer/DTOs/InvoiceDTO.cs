@@ -1,6 +1,4 @@
-﻿
-
-namespace BusinessLayer.Model
+﻿namespace BusinessLayer.Model
 {
     public class InvoiceDTO
     {
@@ -9,7 +7,7 @@ namespace BusinessLayer.Model
         public string? Number { get; set; }
         public string? NCF { get; set; }
         public string Terms { get; set; } // Crédito o Contado
-        public int OrderNumer { get; set; }
+        public int OrderNumber { get; set; }
         public string? SellerName { get; set; }
         public List<InvoiceDetailsDTO> Details { get; set; } = new();
         public int ClientID { get; set; }

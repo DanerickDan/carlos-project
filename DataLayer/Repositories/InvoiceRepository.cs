@@ -34,7 +34,7 @@ namespace DataLayer.Repositories
                             command.Parameters.AddWithValue("@Fecha", invoice.Date);
                             command.Parameters.AddWithValue("@Terminos", invoice.Terms);
                             command.Parameters.AddWithValue("@ClienteId", invoice.ClientID);
-                            command.Parameters.AddWithValue("@NumPedido", invoice.OrderNumer);
+                            command.Parameters.AddWithValue("@NumPedido", invoice.OrderNumber);
                             command.Parameters.AddWithValue("@Vendedor", invoice.SellerName);
                             command.Parameters.AddWithValue("@NCF", invoice.NCF);
 
@@ -86,7 +86,7 @@ namespace DataLayer.Repositories
                 var connectionT = new SQLiteConnection("Data Source= ./bd_sqlite.db");
                 connectionT.Open();
                 string query = "UPDATE Facturas SET fecha = @Fecha, terminos = @Terminos,cliente_id = @ClienteId" +
-                                "num_pedido = @NumPedido, vendedor = @Vendedor, NCF = @ncf" +
+                                "num_pedido = @NumPedido, vendedor = @Vendedor, NCF = @ncf, numero = @NumFactura" +
                                 "WHERE factura_id = @FacturaID";
                 using (var transaction = connectionT.BeginTransaction())
                 {
@@ -97,15 +97,13 @@ namespace DataLayer.Repositories
                         {
                             using (command)
                             {
-                                command.Parameters.AddWithValue("@FacturaID", invoice.InvoiceID);
                                 command.Parameters.AddWithValue("@Fecha", invoice.Date);
                                 command.Parameters.AddWithValue("@NumeroFactura", invoice.Number);
                                 command.Parameters.AddWithValue("@NCF", invoice.NCF);
                                 command.Parameters.AddWithValue("@Terminos", invoice.Terms);
-                                command.Parameters.AddWithValue("@NumeroPedido", invoice.OrderNumer);
-                                command.Parameters.AddWithValue("@NombreVendedor", invoice.SellerName);
+                                command.Parameters.AddWithValue("@NumeroPedido", invoice.OrderNumber);
+                                command.Parameters.AddWithValue("@Vendedor", invoice.SellerName);
                                 command.Parameters.AddWithValue("@ClienteID", invoice.ClientID);
-                                command.Parameters.AddWithValue("@Subtotal", invoice.NCF);
 
                                 command.ExecuteNonQuery();
                             }
@@ -119,8 +117,7 @@ namespace DataLayer.Repositories
                             foreach (var details in invoice.Details)
                             {
                                 using (var command3 = new SQLiteCommand(
-                                    "INSERT INTO Detalles_Factura (factura_id, producto_id, cantidad, precio_unitario, lote, total) " +
-                                    "sub_total, codigo, neto" +
+                                    "INSERT INTO Detalles_Factura (factura_id, producto_id, cantidad, precio_unitario, lote, total, sub_total,neto) " +
                                     "VALUES (@FacturaID, @ProductoID, @Cantidad, @PrecioUnitario, @Lote, @Total, @SubTotal, @Codigo, @Neto)", connection.GetConnection()))
                                 {
                                     command3.Parameters.AddWithValue("@FacturaId", details.InvoiceId);
@@ -130,7 +127,6 @@ namespace DataLayer.Repositories
                                     command3.Parameters.AddWithValue("@Lote", details.Lote);
                                     command3.Parameters.AddWithValue("@Total", details.Total);
                                     command3.Parameters.AddWithValue("@SubTotal", details.SubTotal);
-                                    command3.Parameters.AddWithValue("@Codigo", details.ProductCode);
                                     command3.Parameters.AddWithValue("@Neto", details.Neto);
 
 
@@ -191,8 +187,8 @@ namespace DataLayer.Repositories
 
                     string query = @"SELECT f.factura_id as InvoiceId, f.fecha as Fecha, f.terminos as Terminos, f.cliente_id as ClienteId, f.numero as Number
                                     f.num_pedido as NumPedido, f.vendedor as Vendedor, f.NCF as ncf, d.detalle_id as DetalleId, d.factura_id as FacturaId,
-                                    d.producto_id as ProductoId, d.cantidad as Cantiadad, d.precio_unitario as Precio, d.lote as Lote,
-                                    d.total as Total, d.sub_total as SubTotal, d.codigo as Codigo, d.neto as Neto
+                                    d.producto_id as ProductoId, d.cantidad as Cantidad, d.precio_unitario as Precio, d.lote as Lote,
+                                    d.total as Total, d.sub_total as SubTotal, d.neto as Neto
                                     FROM Facturas AS f
                                     INNER JOIN Detalle_Factura AS d ON f.factura_id = d.factura_id
                                     ORDER BY f.factura_id;";
@@ -216,7 +212,7 @@ namespace DataLayer.Repositories
                                         Date = reader.GetDateTime(reader.GetOrdinal("Fecha")),
                                         Terms = reader.GetString(reader.GetOrdinal("Terminos")),
                                         ClientID = reader.GetInt32(reader.GetOrdinal("ClienteId")),
-                                        OrderNumer = reader.GetInt32(reader.GetOrdinal("NumPedido")),
+                                        OrderNumber = reader.GetInt32(reader.GetOrdinal("NumPedido")),
                                         SellerName = reader.GetString(reader.GetOrdinal("Vendedor")),
                                         Number = reader.GetString(reader.GetOrdinal("Number")),
                                         NCF = reader.GetString(reader.GetOrdinal("NCF")),
@@ -231,12 +227,11 @@ namespace DataLayer.Repositories
                                     InvoiceDetailsId = reader.GetInt32(reader.GetOrdinal("DetalleId")),
                                     InvoiceId = reader.GetInt32(reader.GetOrdinal("FacturaId")),
                                     ProductId = reader.GetInt32(reader.GetOrdinal("ProductoId")),
-                                    Quantity = reader.GetInt32(reader.GetOrdinal("Cantiadad")),
+                                    Quantity = reader.GetInt32(reader.GetOrdinal("Cantidad")),
                                     Price = reader.GetDecimal(reader.GetOrdinal("Precio")),
                                     Lote = reader.GetString(reader.GetOrdinal("Lote")),
                                     Total = reader.GetDecimal(reader.GetOrdinal("Total")),
                                     SubTotal = reader.GetDecimal(reader.GetOrdinal("SubTotal")),
-                                    ProductCode = reader.GetString(reader.GetOrdinal("Codigo")),
                                     Neto = reader.GetDecimal(reader.GetOrdinal("Neto"))
                                 };
 
@@ -265,8 +260,8 @@ namespace DataLayer.Repositories
                     connection.OpenConnection();
                     string query = @"SELECT f.factura_id as InvoiceId, f.fecha as Fecha, f.terminos as Terminos, f.cliente_id,
                                     f.num_pedido as NumPedido, f.vendedor as Vendedor, f.NCF as ncf, f.numero as Numero d.detalle_id as DetalleId, d.factura_id as FacturaId,
-                                    d.producto_id as ProductoId, d.cantidad as Cantiadad, d.precio_unitario as Precio, d.lote as Lote,
-                                    d.total as Total, d.sub_total as SubTotal, d.codigo as Codigo, d.neto as Neto
+                                    d.producto_id as ProductoId, d.cantidad as Cantidad, d.precio_unitario as Precio, d.lote as Lote,
+                                    d.total as Total, d.sub_total as SubTotal, d.neto as Neto
                                     FROM Facturas AS f
                                     INNER JOIN Detalle_Factura AS d ON f.factura_id = d.factura_id
                                     ORDER BY f.factura_id
@@ -290,7 +285,7 @@ namespace DataLayer.Repositories
                                         Date = reader.GetDateTime(reader.GetOrdinal("Fecha")),
                                         Terms = reader.GetString(reader.GetOrdinal("Terminos")),
                                         ClientID = reader.GetInt32(reader.GetOrdinal("ClienteId")),
-                                        OrderNumer = reader.GetInt32(reader.GetOrdinal("NumPedido")),
+                                        OrderNumber = reader.GetInt32(reader.GetOrdinal("NumPedido")),
                                         SellerName = reader.GetString(reader.GetOrdinal("Vendedor")),
                                         NCF = reader.GetString(reader.GetOrdinal("NCF")),
                                         Number = reader.GetString(reader.GetOrdinal("Numero")),
@@ -304,12 +299,11 @@ namespace DataLayer.Repositories
                                     InvoiceDetailsId = reader.GetInt32(reader.GetOrdinal("DetalleId")),
                                     InvoiceId = reader.GetInt32(reader.GetOrdinal("FacturaId")),
                                     ProductId = reader.GetInt32(reader.GetOrdinal("ProductoId")),
-                                    Quantity = reader.GetInt32(reader.GetOrdinal("Cantiadad")),
+                                    Quantity = reader.GetInt32(reader.GetOrdinal("Cantidad")),
                                     Price = reader.GetDecimal(reader.GetOrdinal("Precio")),
                                     Lote = reader.GetString(reader.GetOrdinal("Lote")),
                                     Total = reader.GetDecimal(reader.GetOrdinal("Total")),
                                     SubTotal = reader.GetDecimal(reader.GetOrdinal("SubTotal")),
-                                    ProductCode = reader.GetString(reader.GetOrdinal("Codigo")),
                                     Neto = reader.GetDecimal(reader.GetOrdinal("Neto"))
                                 };
 

@@ -10,6 +10,7 @@ namespace PresentationLayer
         public InvoiceForm()
         {
             InitializeComponent();
+            this.Load += new System.EventHandler(this.InvoiceForm_Load);
             invoiceServices = new InvoiceServices();
         }
 
@@ -20,37 +21,49 @@ namespace PresentationLayer
             {
                 DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
                 int invoiceId = Convert.ToInt32(selectedRow.Cells[0].Value);
-                DateTime date = Convert.ToDateTime(selectedRow.Cells[1].Value);
-                string number = selectedRow.Cells[2].Value.ToString();
-                string ncf = selectedRow.Cells[3].Value.ToString();
-                string terms = selectedRow.Cells[4].Value.ToString();
-                int orderNumer = Convert.ToInt32(selectedRow.Cells[5].Value);
-                string sellerName = selectedRow.Cells[6].Value.ToString();
-                decimal Neto = Convert.ToDecimal(selectedRow.Cells[7].Value);
-                decimal price = Convert.ToDecimal(selectedRow.Cells[8].Value);
-                decimal total = Convert.ToDecimal(selectedRow.Cells[9].Value);
-                string lote = selectedRow.Cells[10].Value.ToString();
+                int orderNumber = Convert.ToInt32(selectedRow.Cells[1].Value);
+                DateTime date = Convert.ToDateTime(selectedRow.Cells[2].Value);
+                string terms = selectedRow.Cells[3].Value.ToString();
+                int clientId = Convert.ToInt32(selectedRow.Cells[4].Value);
+                string sellerName = selectedRow.Cells[5].Value.ToString();
+                decimal neto = Convert.ToDecimal(selectedRow.Cells[6].Value);
+                decimal price = Convert.ToDecimal(selectedRow.Cells[7].Value);
+                decimal total = Convert.ToDecimal(selectedRow.Cells[8].Value);
+                string lote = selectedRow.Cells[9].Value.ToString();
+                string ncf = selectedRow.Cells[10].Value.ToString();
                 int quantity = Convert.ToInt32(selectedRow.Cells[11].Value);
                 string productCode = selectedRow.Cells[12].ToString();
                 decimal subTotal = Convert.ToDecimal(selectedRow.Cells[13].Value);
+                int productId = Convert.ToInt32(selectedRow.Cells[14].Value);
+                string invoiceNumber = selectedRow.Cells[15].Value.ToString();
 
+                // TODO: rethink this 
+                List<InvoiceDetailsDTO> details = new List<InvoiceDetailsDTO>();
+                InvoiceDetailsDTO detailsItem = new InvoiceDetailsDTO();
+
+                detailsItem.InvoiceId = invoiceId;
+                detailsItem.ProductId = productId;
+                detailsItem.Lote = lote;
+                detailsItem.Quantity = quantity;
+                detailsItem.ProductCode = productCode;
+                detailsItem.Price = price;
+                detailsItem.Neto = neto;
+                detailsItem.SubTotal = subTotal;
+                detailsItem.Total = total;
+                details.Add(detailsItem);
 
                 // TODO: thinking about the foreings in the logic
 
                 InvoiceDTO invoice = new InvoiceDTO
                 {
                     Date = date,
-                    Number = number,
                     NCF = ncf,
                     Terms = terms,
-                    OrderNumer = orderNumer,
+                    OrderNumber = orderNumber,
                     SellerName = sellerName,
-                    // TODO: finish add invoice
-                    Details = new List<InvoiceDetailsDTO>
-                    {
-                        InvoiceId = invoiceId,
-
-                    }
+                    ClientID = clientId,
+                    Details = details,
+                    Number = invoiceNumber
                 };
                 invoiceServices.AddInvoice(invoice);
             }
@@ -59,7 +72,7 @@ namespace PresentationLayer
         // Delete Invoice
         private void btnBorrar_Click(object sender, EventArgs e)
         {
-            if(dataGridView1.SelectedRows.Count > 0) 
+            if (dataGridView1.SelectedRows.Count > 0)
             {
                 DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
                 int invoiceId = Convert.ToInt32(selectedRow.Cells[0].Value);
@@ -74,23 +87,47 @@ namespace PresentationLayer
             {
                 DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
                 int invoiceId = Convert.ToInt32(selectedRow.Cells[0].Value);
-                DateTime date = Convert.ToDateTime(selectedRow.Cells[1].Value);
-                string number = selectedRow.Cells[2].Value.ToString();
-                string ncf = selectedRow.Cells[3].Value.ToString();
-                string terms = selectedRow.Cells[4].Value.ToString();
-                int orderNumer = Convert.ToInt32(selectedRow.Cells[5].Value);
-                string sellerName = selectedRow.Cells[6].Value.ToString();
-                // TODO: thinking about the foreings in the logic
+                int orderNumber = Convert.ToInt32(selectedRow.Cells[1].Value);
+                DateTime date = Convert.ToDateTime(selectedRow.Cells[2].Value);
+                string terms = selectedRow.Cells[3].Value.ToString();
+                int clientId = Convert.ToInt32(selectedRow.Cells[4].Value);
+                string sellerName = selectedRow.Cells[5].Value.ToString();
+                decimal neto = Convert.ToDecimal(selectedRow.Cells[6].Value);
+                decimal price = Convert.ToDecimal(selectedRow.Cells[7].Value);
+                decimal total = Convert.ToDecimal(selectedRow.Cells[8].Value);
+                string lote = selectedRow.Cells[9].Value.ToString();
+                string ncf = selectedRow.Cells[10].Value.ToString();
+                int quantity = Convert.ToInt32(selectedRow.Cells[11].Value);
+                string productCode = selectedRow.Cells[12].ToString();
+                decimal subTotal = Convert.ToDecimal(selectedRow.Cells[13].Value);
+                int productId = Convert.ToInt32(selectedRow.Cells[14].Value);
+                string invoiceNumber = selectedRow.Cells[15].Value.ToString();
+
+                // TODO: rethink this 
+                List<InvoiceDetailsDTO> details = new List<InvoiceDetailsDTO>();
+                InvoiceDetailsDTO detailsItem = new InvoiceDetailsDTO();
+
+                detailsItem.InvoiceId = invoiceId;
+                detailsItem.ProductId = productId;
+                detailsItem.Lote = lote;
+                detailsItem.Quantity = quantity;
+                detailsItem.ProductCode = productCode;
+                detailsItem.Price = price;
+                detailsItem.Neto = neto;
+                detailsItem.SubTotal = subTotal;
+                detailsItem.Total = total;
+                details.Add(detailsItem);
 
                 InvoiceDTO invoice = new InvoiceDTO
                 {
                     InvoiceID = invoiceId,
                     Date = date,
-                    Number = number,
+                    Number = invoiceNumber,
                     NCF = ncf,
                     Terms = terms,
-                    OrderNumer = orderNumer,
+                    OrderNumber = orderNumber,
                     SellerName = sellerName,
+                    ClientID = clientId
 
                 };
                 invoiceServices.UpdateInvoice(invoice);
@@ -99,7 +136,7 @@ namespace PresentationLayer
 
         private void DataGridSettings()
         {
-
+            dataGridView1.AutoGenerateColumns = false;
         }
 
 
@@ -112,9 +149,9 @@ namespace PresentationLayer
         // Get all invoices
         private void GetAllInvoice()
         {
-            if(dataGridView1 == null)
+            if (dataGridView1 == null)
             {
-                
+                dataGridView1.DataSource = invoiceServices.GetAllInvoices();
             }
         }
 
@@ -122,12 +159,17 @@ namespace PresentationLayer
         // Get invoice By ids
         private void GetInvoiceById()
         {
-            if(dataGridView1 == null)
+            if (dataGridView1 == null)
             {
-
+                // For the search system
+                //dataGridView1.DataSource = invoiceServices.GetInvoiceById();
             }
         }
 
-
+        private void InvoiceForm_Load(object sender, EventArgs e)
+        {
+            DataGridSettings();
+            GetAllInvoice();
+        }
     }
 }
