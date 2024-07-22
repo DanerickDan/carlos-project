@@ -26,14 +26,14 @@ namespace PresentationLayer
                 string terms = selectedRow.Cells[3].Value.ToString();
                 int clientId = Convert.ToInt32(selectedRow.Cells[4].Value);
                 string sellerName = selectedRow.Cells[5].Value.ToString();
-                decimal neto = Convert.ToDecimal(selectedRow.Cells[6].Value);
-                decimal price = Convert.ToDecimal(selectedRow.Cells[7].Value);
-                decimal total = Convert.ToDecimal(selectedRow.Cells[8].Value);
-                string lote = selectedRow.Cells[9].Value.ToString();
+                double neto = Convert.ToDouble(selectedRow.Cells[6].Value);
+                double price = Convert.ToDouble(selectedRow.Cells[7].Value);
+                double total = Convert.ToDouble(selectedRow.Cells[8].Value);
+                int lote = Convert.ToInt32(selectedRow.Cells[9].Value);
                 string ncf = selectedRow.Cells[10].Value.ToString();
                 int quantity = Convert.ToInt32(selectedRow.Cells[11].Value);
                 string productCode = selectedRow.Cells[12].ToString();
-                decimal subTotal = Convert.ToDecimal(selectedRow.Cells[13].Value);
+                double subTotal = Convert.ToDouble(selectedRow.Cells[13].Value);
                 int productId = Convert.ToInt32(selectedRow.Cells[14].Value);
                 string invoiceNumber = selectedRow.Cells[15].Value.ToString();
 
@@ -92,14 +92,14 @@ namespace PresentationLayer
                 string terms = selectedRow.Cells[3].Value.ToString();
                 int clientId = Convert.ToInt32(selectedRow.Cells[4].Value);
                 string sellerName = selectedRow.Cells[5].Value.ToString();
-                decimal neto = Convert.ToDecimal(selectedRow.Cells[6].Value);
-                decimal price = Convert.ToDecimal(selectedRow.Cells[7].Value);
-                decimal total = Convert.ToDecimal(selectedRow.Cells[8].Value);
-                string lote = selectedRow.Cells[9].Value.ToString();
+                double neto = Convert.ToDouble(selectedRow.Cells[6].Value);
+                double price = Convert.ToDouble(selectedRow.Cells[7].Value);
+                double total = Convert.ToDouble(selectedRow.Cells[8].Value);
+                int lote = Convert.ToInt32(selectedRow.Cells[9].Value);
                 string ncf = selectedRow.Cells[10].Value.ToString();
                 int quantity = Convert.ToInt32(selectedRow.Cells[11].Value);
                 string productCode = selectedRow.Cells[12].ToString();
-                decimal subTotal = Convert.ToDecimal(selectedRow.Cells[13].Value);
+                double subTotal = Convert.ToDouble(selectedRow.Cells[13].Value);
                 int productId = Convert.ToInt32(selectedRow.Cells[14].Value);
                 string invoiceNumber = selectedRow.Cells[15].Value.ToString();
 
@@ -149,7 +149,7 @@ namespace PresentationLayer
         // Get all invoices
         private void GetAllInvoice()
         {
-            if (dataGridView1 == null)
+            if (dataGridView1 != null)
             {
                 dataGridView1.DataSource = invoiceServices.GetAllInvoices();
             }

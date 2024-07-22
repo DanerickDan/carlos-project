@@ -35,12 +35,12 @@ namespace DataLayer.Repositories
                                     InvoiceId = reader.GetInt32(reader.GetOrdinal("FacturaId")),
                                     ProductId = reader.GetInt32(reader.GetOrdinal("ProductoId")),
                                     Quantity = reader.GetInt32(reader.GetOrdinal("Cantiadad")),
-                                    Price = reader.GetDecimal(reader.GetOrdinal("Precio")),
-                                    Lote = reader.GetString(reader.GetOrdinal("Lote")),
-                                    Total = reader.GetDecimal(reader.GetOrdinal("Total")),
-                                    SubTotal = reader.GetDecimal(reader.GetOrdinal("SubTotal")),
+                                    Price = reader.GetDouble(reader.GetOrdinal("Precio")),
+                                    Lote = reader.GetInt32(reader.GetOrdinal("Lote")),
+                                    Total = reader.GetDouble(reader.GetOrdinal("Total")),
+                                    SubTotal = reader.GetDouble(reader.GetOrdinal("SubTotal")),
                                     ProductCode = reader.GetString(reader.GetOrdinal("Codigo")),
-                                    Neto = reader.GetDecimal(reader.GetOrdinal("Neto"))
+                                    Neto = reader.GetDouble(reader.GetOrdinal("Neto"))
                                 });
                             }
                         }
@@ -75,12 +75,12 @@ namespace DataLayer.Repositories
                                     InvoiceId = reader.GetInt32(reader.GetOrdinal("FacturaId")),
                                     ProductId = reader.GetInt32(reader.GetOrdinal("ProductoId")),
                                     Quantity = reader.GetInt32(reader.GetOrdinal("Cantiadad")),
-                                    Price = reader.GetDecimal(reader.GetOrdinal("Precio")),
-                                    Lote = reader.GetString(reader.GetOrdinal("Lote")),
-                                    Total = reader.GetDecimal(reader.GetOrdinal("Total")),
-                                    SubTotal = reader.GetDecimal(reader.GetOrdinal("SubTotal")),
+                                    Price = reader.GetDouble(reader.GetOrdinal("Precio")),
+                                    Lote = reader.GetInt32(reader.GetOrdinal("Lote")),
+                                    Total = reader.GetDouble(reader.GetOrdinal("Total")),
+                                    SubTotal = reader.GetDouble(reader.GetOrdinal("SubTotal")),
                                     ProductCode = reader.GetString(reader.GetOrdinal("Codigo")),
-                                    Neto = reader.GetDecimal(reader.GetOrdinal("Neto"))
+                                    Neto = reader.GetDouble(reader.GetOrdinal("Neto"))
                                 };
                             }
                         }
