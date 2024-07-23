@@ -35,7 +35,7 @@ namespace PresentationLayer
                 string productCode = selectedRow.Cells[12].ToString();
                 double subTotal = Convert.ToDouble(selectedRow.Cells[13].Value);
                 int productId = Convert.ToInt32(selectedRow.Cells[14].Value);
-                string invoiceNumber = selectedRow.Cells[15].Value.ToString();
+                int invoiceNumber = Convert.ToInt32(selectedRow.Cells[15].Value);
 
                 // TODO: rethink this 
                 List<InvoiceDetailsDTO> details = new List<InvoiceDetailsDTO>();
@@ -101,7 +101,7 @@ namespace PresentationLayer
                 string productCode = selectedRow.Cells[12].ToString();
                 double subTotal = Convert.ToDouble(selectedRow.Cells[13].Value);
                 int productId = Convert.ToInt32(selectedRow.Cells[14].Value);
-                string invoiceNumber = selectedRow.Cells[15].Value.ToString();
+                int invoiceNumber = Convert.ToInt32(selectedRow.Cells[15].Value);
 
                 // TODO: rethink this 
                 List<InvoiceDetailsDTO> details = new List<InvoiceDetailsDTO>();

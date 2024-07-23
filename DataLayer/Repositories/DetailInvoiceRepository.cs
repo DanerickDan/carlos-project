@@ -8,10 +8,10 @@ namespace DataLayer.Repositories
 {
     public class DetailInvoiceRepository : IDetailInvoiceRepository
     {
-        private readonly ConnectionManager connection;
+        private readonly ConnectionManager connectionManager;
         public DetailInvoiceRepository() 
         {
-            connection = new();
+            connectionManager = new();
         }
 
         public List<InvoiceDetails> GetAllInvoiceDetail()
@@ -19,11 +19,11 @@ namespace DataLayer.Repositories
             var details = new List<InvoiceDetails>();
             try
             {
-                connection.OpenConnection();
-                using(connection.GetConnection())
+                using(var connection = connectionManager.GetConnection())
                 {
+                    connectionManager.OpenConnection();
                     string query = "SELECT * FROM Detalle_Factura;";
-                    using(var command = new SQLiteCommand(query, connection.GetConnection()))
+                    using(var command = new SQLiteCommand(query, connectionManager.GetConnection()))
                     {
                         using (var reader = command.ExecuteReader())
                         {
@@ -58,11 +58,11 @@ namespace DataLayer.Repositories
         {
             try
             {
-                connection.OpenConnection();
-                using (connection.GetConnection())
+                using (var connectionn = connectionManager.GetConnection())
                 {
+                    connectionManager.OpenConnection();
                     string query = "SELECT * FROM Detalle_Factura WHEREN detalle_id = @Id;";
-                    using (var command = new SQLiteCommand(query, connection.GetConnection()))
+                    using (var command = new SQLiteCommand(query, connectionManager.GetConnection()))
                     {
                         command.Parameters.AddWithValue("@Id", id);
                         using (var reader = command.ExecuteReader())

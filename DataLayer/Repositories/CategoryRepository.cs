@@ -7,10 +7,10 @@ namespace DataLayer.Repositories
 {
     public class CategoryRepository : ICategoryRepository
     {
-        private readonly ConnectionManager connection;
+        private readonly ConnectionManager connectionManager;
         public CategoryRepository()
         {
-            connection = new();
+            connectionManager = new();
         }
 
 
@@ -19,11 +19,11 @@ namespace DataLayer.Repositories
             var categories = new List<Categories>();
             try
             {
-                connection.OpenConnection();
-                using (connection.GetConnection())
+                using (var connection = connectionManager.GetConnection())
                 {
+                    connectionManager.OpenConnection();
                     string query = "SELECT * FROM   Categorias";
-                    using (var command = new SQLiteCommand(query, connection.GetConnection()))
+                    using (var command = new SQLiteCommand(query, connectionManager.GetConnection()))
                     {
                         using(var reader = command.ExecuteReader())
                         {
@@ -50,11 +50,11 @@ namespace DataLayer.Repositories
         {
             try
             {
-                connection.OpenConnection();
-                using(connection.GetConnection())
+                using(var connection = connectionManager.GetConnection())
                 {
+                    connectionManager.OpenConnection();
                     string query = "SELECT * FROM Categorias WHERE category_id = @Id";
-                    using(var command = new SQLiteCommand(query, connection.GetConnection()))
+                    using(var command = new SQLiteCommand(query, connectionManager.GetConnection()))
                     {
                         command.Parameters.AddWithValue("@Id", id);
                         using(var reader = command.ExecuteReader())

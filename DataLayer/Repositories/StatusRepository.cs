@@ -7,10 +7,10 @@ namespace DataLayer.Repositories
 {
     public class StatusRepository : IStatusRepository
     {
-        private ConnectionManager connection;
+        private ConnectionManager connectionManager;
         public StatusRepository()
         {
-            connection = new();
+            connectionManager = new();
         }
 
         public List<Status> GetAllStatus()
@@ -18,25 +18,27 @@ namespace DataLayer.Repositories
             var statusList = new List<Status>();
             try
             {
-                connection.OpenConnection();
-                string query = "SELECT * FROM EstadoPedido";
-                using (var command = new SQLiteCommand(query, connection.GetConnection()))
+                using(var connection = connectionManager.GetConnection())
                 {
-                    using (var reader = command.ExecuteReader())
+                    connectionManager.OpenConnection();
+                    string query = "SELECT * FROM EstadoPedido";
+                    using (var command = new SQLiteCommand(query, connectionManager.GetConnection()))
                     {
-                        while (reader.Read())
+                        using (var reader = command.ExecuteReader())
                         {
-                            statusList.Add(new Status
+                            while (reader.Read())
                             {
-                                StatusId = reader.GetInt32(0),
-                                Descripcion = reader.GetString(1)
-                            });
+                                statusList.Add(new Status
+                                {
+                                    StatusId = reader.GetInt32(0),
+                                    Descripcion = reader.GetString(1)
+                                });
+                            }
                         }
-                    }
-                    connection.CloseConnection();
 
+                    }
+                    return statusList;
                 }
-                return statusList;
 
             }
             catch (Exception e)
@@ -49,22 +51,26 @@ namespace DataLayer.Repositories
         {
             try
             {
-                connection.OpenConnection();
-                string query = "SELECT * FROM EstadoPedido WHERE estado_id = @Id";
-                using (var command = new SQLiteCommand(query, connection.GetConnection()))
+                using( var connection = connectionManager.GetConnection())
                 {
-                    using (var reader = command.ExecuteReader())
-                    {
-                        command.Parameters.AddWithValue("@Id", id);
+                    connectionManager.OpenConnection();
 
-                        return new Status
+                    string query = "SELECT * FROM EstadoPedido WHERE estado_id = @Id";
+                    using (var command = new SQLiteCommand(query, connectionManager.GetConnection()))
+                    {
+                        using (var reader = command.ExecuteReader())
                         {
-                            StatusId = reader.GetInt32(0),
-                            Descripcion = reader.GetString(1)
-                        };
+                            command.Parameters.AddWithValue("@Id", id);
+
+                            return new Status
+                            {
+                                StatusId = reader.GetInt32(0),
+                                Descripcion = reader.GetString(1)
+                            };
+
+                        }
 
                     }
-
                 }
 
             }

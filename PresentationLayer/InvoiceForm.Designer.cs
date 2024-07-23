@@ -28,8 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InvoiceForm));
             dataGridView1 = new DataGridView();
+            panel1 = new Panel();
+            btnPanel = new Panel();
+            btnAnadir = new CustomComponents.MainFormComponents.CustomButton();
+            btnBorrar = new CustomComponents.MainFormComponents.CustomButton();
+            btnEditar = new CustomComponents.MainFormComponents.CustomButton();
+            btnImprimir = new CustomComponents.MainFormComponents.CustomButton();
+            lblPrincipal = new Label();
             InvoiceID = new DataGridViewTextBoxColumn();
             OrderNumber = new DataGridViewTextBoxColumn();
             Terms = new DataGridViewTextBoxColumn();
@@ -46,13 +55,6 @@
             SubTotal = new DataGridViewTextBoxColumn();
             ProductId = new DataGridViewTextBoxColumn();
             Number = new DataGridViewTextBoxColumn();
-            panel1 = new Panel();
-            btnPanel = new Panel();
-            btnAnadir = new CustomComponents.MainFormComponents.CustomButton();
-            btnBorrar = new CustomComponents.MainFormComponents.CustomButton();
-            btnEditar = new CustomComponents.MainFormComponents.CustomButton();
-            btnImprimir = new CustomComponents.MainFormComponents.CustomButton();
-            lblPrincipal = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             panel1.SuspendLayout();
             btnPanel.SuspendLayout();
@@ -66,134 +68,31 @@
             dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dataGridView1.BackgroundColor = Color.White;
             dataGridView1.BorderStyle = BorderStyle.None;
+            dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.None;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = SystemColors.Control;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(243, 156, 76);
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { InvoiceID, OrderNumber, Terms, Date, ClientID, SellerName, Neto, Price, Total, Lote, NCF, Quantity, ProductCode, SubTotal, ProductId, Number });
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(243, 156, 76);
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridView1.GridColor = Color.FromArgb(243, 156, 76);
             dataGridView1.Location = new Point(0, 58);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
             dataGridView1.Size = new Size(800, 392);
             dataGridView1.TabIndex = 0;
-            // 
-            // InvoiceID
-            // 
-            InvoiceID.DataPropertyName = "InvoiceID";
-            InvoiceID.HeaderText = "Id";
-            InvoiceID.Name = "InvoiceID";
-            InvoiceID.ReadOnly = true;
-            InvoiceID.Visible = false;
-            // 
-            // OrderNumber
-            // 
-            OrderNumber.DataPropertyName = "OrderNumber";
-            OrderNumber.HeaderText = "Número";
-            OrderNumber.Name = "OrderNumber";
-            OrderNumber.ReadOnly = true;
-            // 
-            // Terms
-            // 
-            Terms.DataPropertyName = "Terms";
-            Terms.HeaderText = "Terminos";
-            Terms.Name = "Terms";
-            Terms.ReadOnly = true;
-            // 
-            // Date
-            // 
-            Date.DataPropertyName = "Date";
-            Date.HeaderText = "Fecha";
-            Date.Name = "Date";
-            Date.ReadOnly = true;
-            // 
-            // ClientID
-            // 
-            ClientID.DataPropertyName = "ClientID";
-            ClientID.HeaderText = "Cliente";
-            ClientID.Name = "ClientID";
-            ClientID.ReadOnly = true;
-            // 
-            // SellerName
-            // 
-            SellerName.DataPropertyName = "SellerName";
-            SellerName.HeaderText = "Vendedor";
-            SellerName.Name = "SellerName";
-            SellerName.ReadOnly = true;
-            // 
-            // Neto
-            // 
-            Neto.DataPropertyName = "Neto";
-            Neto.HeaderText = "Neto";
-            Neto.Name = "Neto";
-            Neto.ReadOnly = true;
-            // 
-            // Price
-            // 
-            Price.DataPropertyName = "Price";
-            Price.HeaderText = "Precio";
-            Price.Name = "Price";
-            Price.ReadOnly = true;
-            Price.Visible = false;
-            // 
-            // Total
-            // 
-            Total.DataPropertyName = "Total";
-            Total.HeaderText = "Total";
-            Total.Name = "Total";
-            Total.ReadOnly = true;
-            // 
-            // Lote
-            // 
-            Lote.DataPropertyName = "Lote";
-            Lote.HeaderText = "Lote";
-            Lote.Name = "Lote";
-            Lote.ReadOnly = true;
-            Lote.Visible = false;
-            // 
-            // NCF
-            // 
-            NCF.DataPropertyName = "NCF";
-            NCF.HeaderText = "NCF";
-            NCF.Name = "NCF";
-            NCF.ReadOnly = true;
-            NCF.Visible = false;
-            // 
-            // Quantity
-            // 
-            Quantity.DataPropertyName = "Quantity";
-            Quantity.HeaderText = "Cantidad";
-            Quantity.Name = "Quantity";
-            Quantity.ReadOnly = true;
-            Quantity.Visible = false;
-            // 
-            // ProductCode
-            // 
-            ProductCode.DataPropertyName = "ProductCode";
-            ProductCode.HeaderText = "Codigo";
-            ProductCode.Name = "ProductCode";
-            ProductCode.ReadOnly = true;
-            ProductCode.Visible = false;
-            // 
-            // SubTotal
-            // 
-            SubTotal.DataPropertyName = "SubTotal";
-            SubTotal.HeaderText = "SubTotal";
-            SubTotal.Name = "SubTotal";
-            SubTotal.ReadOnly = true;
-            SubTotal.Visible = false;
-            // 
-            // ProductId
-            // 
-            ProductId.DataPropertyName = "ProductId";
-            ProductId.HeaderText = "ProductId";
-            ProductId.Name = "ProductId";
-            ProductId.ReadOnly = true;
-            ProductId.Visible = false;
-            // 
-            // Number
-            // 
-            Number.DataPropertyName = "Number";
-            Number.HeaderText = "NumeroFactura";
-            Number.Name = "Number";
-            Number.ReadOnly = true;
-            Number.Visible = false;
             // 
             // panel1
             // 
@@ -318,6 +217,127 @@
             lblPrincipal.Size = new Size(113, 37);
             lblPrincipal.TabIndex = 8;
             lblPrincipal.Text = "Facturas";
+            // 
+            // InvoiceID
+            // 
+            InvoiceID.DataPropertyName = "InvoiceID";
+            InvoiceID.HeaderText = "Id";
+            InvoiceID.Name = "InvoiceID";
+            InvoiceID.ReadOnly = true;
+            InvoiceID.Visible = false;
+            // 
+            // OrderNumber
+            // 
+            OrderNumber.DataPropertyName = "OrderNumber";
+            OrderNumber.HeaderText = "Número";
+            OrderNumber.Name = "OrderNumber";
+            OrderNumber.ReadOnly = true;
+            // 
+            // Terms
+            // 
+            Terms.DataPropertyName = "Terms";
+            Terms.HeaderText = "Terminos";
+            Terms.Name = "Terms";
+            Terms.ReadOnly = true;
+            // 
+            // Date
+            // 
+            Date.DataPropertyName = "Date";
+            Date.HeaderText = "Fecha";
+            Date.Name = "Date";
+            Date.ReadOnly = true;
+            // 
+            // ClientID
+            // 
+            ClientID.DataPropertyName = "ClientID";
+            ClientID.HeaderText = "Cliente";
+            ClientID.Name = "ClientID";
+            ClientID.ReadOnly = true;
+            // 
+            // SellerName
+            // 
+            SellerName.DataPropertyName = "SellerName";
+            SellerName.HeaderText = "Vendedor";
+            SellerName.Name = "SellerName";
+            SellerName.ReadOnly = true;
+            // 
+            // Neto
+            // 
+            Neto.DataPropertyName = "Neto";
+            Neto.HeaderText = "Neto";
+            Neto.Name = "Neto";
+            Neto.ReadOnly = true;
+            // 
+            // Price
+            // 
+            Price.DataPropertyName = "Price";
+            Price.HeaderText = "Precio";
+            Price.Name = "Price";
+            Price.ReadOnly = true;
+            Price.Visible = false;
+            // 
+            // Total
+            // 
+            Total.DataPropertyName = "Total";
+            Total.HeaderText = "Total";
+            Total.Name = "Total";
+            Total.ReadOnly = true;
+            // 
+            // Lote
+            // 
+            Lote.DataPropertyName = "Lote";
+            Lote.HeaderText = "Lote";
+            Lote.Name = "Lote";
+            Lote.ReadOnly = true;
+            Lote.Visible = false;
+            // 
+            // NCF
+            // 
+            NCF.DataPropertyName = "NCF";
+            NCF.HeaderText = "NCF";
+            NCF.Name = "NCF";
+            NCF.ReadOnly = true;
+            NCF.Visible = false;
+            // 
+            // Quantity
+            // 
+            Quantity.DataPropertyName = "Quantity";
+            Quantity.HeaderText = "Cantidad";
+            Quantity.Name = "Quantity";
+            Quantity.ReadOnly = true;
+            Quantity.Visible = false;
+            // 
+            // ProductCode
+            // 
+            ProductCode.DataPropertyName = "ProductCode";
+            ProductCode.HeaderText = "Codigo";
+            ProductCode.Name = "ProductCode";
+            ProductCode.ReadOnly = true;
+            ProductCode.Visible = false;
+            // 
+            // SubTotal
+            // 
+            SubTotal.DataPropertyName = "SubTotal";
+            SubTotal.HeaderText = "SubTotal";
+            SubTotal.Name = "SubTotal";
+            SubTotal.ReadOnly = true;
+            SubTotal.Visible = false;
+            // 
+            // ProductId
+            // 
+            ProductId.DataPropertyName = "ProductId";
+            ProductId.HeaderText = "ProductId";
+            ProductId.Name = "ProductId";
+            ProductId.ReadOnly = true;
+            ProductId.Visible = false;
+            // 
+            // Number
+            // 
+            Number.DataPropertyName = "Number";
+            Number.HeaderText = "NumeroFactura";
+            Number.Name = "Number";
+            Number.ReadOnly = true;
+            Number.Visible = false;
             // 
             // InvoiceForm
             // 

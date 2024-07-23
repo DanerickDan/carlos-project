@@ -7,22 +7,22 @@ namespace DataLayer.Repositories
 {
     public class ClientRepository : IClientRepository
     {
-        private readonly ConnectionManager connection;
+        private readonly ConnectionManager connectionManager;
         public ClientRepository() 
         {
-            connection = new();
+           connectionManager = new();
         }
 
         public void AddClient(Client client)
         {
             try
             {
-                connection.OpenConnection();
-                using (connection.GetConnection())
+                using (var connection = connectionManager.GetConnection())
                 {
+                    connectionManager.OpenConnection();
                     string query = "INSERT INTO Clientes(nombre, direccion, ciudad, telefono, fax, RNC)" +
                         "VALUES(@Nombre, @Direcccion, @Ciudad, @Telefono, @Fax, @RNC)";
-                    using (var command = new SQLiteCommand(query, connection.GetConnection()))
+                    using (var command = new SQLiteCommand(query, connectionManager.GetConnection()))
                     {
                         command.Parameters.AddWithValue("@Nombre", client.ClientName);
                         command.Parameters.AddWithValue("@Direccion", client.Address);
@@ -45,12 +45,12 @@ namespace DataLayer.Repositories
         {
             try
             {
-                connection.CloseConnection();
-                using (connection.GetConnection())
+                using (var connection = connectionManager.GetConnection())
                 {
+                    connectionManager.OpenConnection();
                     string query = "UPDATE Clientes SET nombre = @Nombre, direccion = @Direccion, ciudad = @Ciudad, telefono = @Telefono" +
                         ", fax = @Fax, RNC = @rnc WHERE clientes_id = @ClienteId";
-                    using(var command = new SQLiteCommand(query, connection.GetConnection()))
+                    using(var command = new SQLiteCommand(query, connectionManager.GetConnection()))
                     {
                         command.Parameters.AddWithValue("@Nombre", client.ClientName);
                         command.Parameters.AddWithValue("@Direccion", client.Address);
@@ -62,7 +62,6 @@ namespace DataLayer.Repositories
 
                         command.ExecuteNonQuery();
                     }
-                    connection.CloseConnection();
                 }
             }
             catch (Exception ex)
@@ -75,17 +74,16 @@ namespace DataLayer.Repositories
         {
             try
             {
-                connection.OpenConnection();
-                using(connection.GetConnection())
+                using(var connection = connectionManager.GetConnection())
                 {
+                    connectionManager.OpenConnection();
                     string query = "DELETE FROM Clientes WHERE clientes_id = @ClientId";
-                    using (var command = new SQLiteCommand(query, connection.GetConnection()))
+                    using (var command = new SQLiteCommand(query, connectionManager.GetConnection()))
                     {
                         command.Parameters.AddWithValue("@ClientId", id);
                         command.ExecuteNonQuery();
                     }
                 }
-                connection.CloseConnection();
             }
             catch(Exception e)
             {
@@ -96,11 +94,11 @@ namespace DataLayer.Repositories
         public List<Client> GetAllCLient()
         {
             var clients = new List<Client>();
-            connection.OpenConnection();
-            using (connection.GetConnection())
+            using (var connection = connectionManager.GetConnection())
             {
+                connectionManager.OpenConnection();
                 string query = "SELECT * FROM Clientes";
-                using(var command = new SQLiteCommand(query, connection.GetConnection()))
+                using(var command = new SQLiteCommand(query, connectionManager.GetConnection()))
                 {
                     using(var reader = command.ExecuteReader())
                     {
@@ -118,7 +116,7 @@ namespace DataLayer.Repositories
                             });
                         }
                     }
-                    connection.CloseConnection();
+                    
                 }
                 return clients;
             }
@@ -128,11 +126,11 @@ namespace DataLayer.Repositories
         {
             try
             {
-                connection.OpenConnection();
-                using (connection.GetConnection())
+                using (var connection = connectionManager.GetConnection())
                 {
+                    connectionManager.OpenConnection();
                     string query = "SELECT * FROM Clientes WHERE clientes_id = @ClientId";
-                    using (var command = new SQLiteCommand(query, connection.GetConnection()))
+                    using (var command = new SQLiteCommand(query, connectionManager.GetConnection()))
                     {
                         using (var reader = command.ExecuteReader())
                         {
@@ -150,7 +148,7 @@ namespace DataLayer.Repositories
                                 };
                             }
                         }
-                        connection.CloseConnection();
+                        
                     }
                 }
                 return null;
