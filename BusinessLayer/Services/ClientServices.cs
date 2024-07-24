@@ -18,13 +18,16 @@ namespace BusinessLayer.Services
         {
             var client = new Client
             {
-                ClienstId = clientDTO.ClienstId,
+                ClientId = clientDTO.ClientId,
                 ClientName = clientDTO.ClientName,
                 Address = clientDTO.Address,
                 City = clientDTO.City,
                 PhoneNumber = clientDTO.PhoneNumber,
                 Fax = clientDTO.Fax,
-                Rnc = clientDTO.Rnc
+                Rnc = clientDTO.Rnc,
+                Code = clientDTO.Code,
+                Email = clientDTO.Email
+
             };
             _clientRepository.AddClient(client);
         }
@@ -33,13 +36,15 @@ namespace BusinessLayer.Services
         {
             var client = new Client
             {
-                ClienstId = clientDTO.ClienstId,
+                ClientId = clientDTO.ClientId,
                 ClientName = clientDTO.ClientName,
                 Address = clientDTO.Address,
                 City = clientDTO.City,
                 PhoneNumber = clientDTO.PhoneNumber,
                 Fax = clientDTO.Fax,
-                Rnc = clientDTO.Rnc
+                Rnc = clientDTO.Rnc,
+                Code = clientDTO.Code,
+                Email = clientDTO.Email
             };
             _clientRepository.UpdateClient(client);
         }
@@ -57,13 +62,15 @@ namespace BusinessLayer.Services
             {
                 clientDTO.Add(new ClientDTO
                 {
-                    ClienstId=clients.ClienstId,
+                    ClientId=clients.ClientId,
                     ClientName = clients.ClientName,
                     Address = clients.Address,
                     City = clients.City,
                     PhoneNumber = clients.PhoneNumber,
                     Fax = clients.Fax,
-                    Rnc = clients.Rnc
+                    Rnc = clients.Rnc,
+                    Code = clients.Code,
+                    Email = clients.Email
 
                 });
             }
@@ -75,13 +82,15 @@ namespace BusinessLayer.Services
             var client = _clientRepository.GetByIdClient();
             var clientDTO = new ClientDTO
             {
-                ClienstId = client.ClienstId,
+                ClientId = client.ClientId,
                 ClientName = client.ClientName,
                 Address = client.Address,
                 City = client.City,
                 PhoneNumber = client.PhoneNumber,
                 Fax = client.Fax,
-                Rnc = client.Rnc
+                Rnc = client.Rnc,
+                Code = client.Code,
+                Email = client.Email
             };
 
             return clientDTO;

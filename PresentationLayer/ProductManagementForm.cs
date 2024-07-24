@@ -12,6 +12,7 @@ namespace PresentationLayer
         {
             InitializeComponent();
             productService = new ProductServices();
+            this.Load += new EventHandler(this.ProductManagementForm_Load);
         }
 
 
@@ -78,6 +79,25 @@ namespace PresentationLayer
                 productService.UpdateProduct(productsDTO);
             }
 
+        }
+
+        private void DataGridSettings()
+        {
+            dataGridView1.AutoGenerateColumns = false;
+        }
+
+        private void LoadData()
+        {
+            if(dataGridView1 == null)
+            {
+                dataGridView1.DataSource = productService.GetAllProduct();
+            }
+        }
+
+        private void ProductManagementForm_Load(object sender, EventArgs e)
+        {
+            DataGridSettings();
+            LoadData();
         }
     }
 }

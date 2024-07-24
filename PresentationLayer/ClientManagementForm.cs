@@ -11,11 +11,12 @@ namespace PresentationLayer
         {
             clientService = new ClientServices();
             InitializeComponent();
+            this.Load += new EventHandler(this.ClientManagementForm_Load);
         }
 
         private void btnAnadir_Click(object sender, EventArgs e)
         {
-            if(dataGridView1.Rows.Count > 0)
+            if (dataGridView1.Rows.Count > 0)
             {
                 DataGridViewRow selectedRow = dataGridView1.Rows[0];
                 string clientName = selectedRow.Cells[1].Value.ToString();
@@ -39,7 +40,7 @@ namespace PresentationLayer
 
         private void btnBorrar_Click(object sender, EventArgs e)
         {
-            if( dataGridView1.Rows.Count > 0)
+            if (dataGridView1.Rows.Count > 0)
             {
                 DataGridViewRow selectedRow = dataGridView1.Rows[0];
                 int clientId = Convert.ToInt32(selectedRow.Cells[0].Value);
@@ -61,7 +62,7 @@ namespace PresentationLayer
                 string rnc = selectedRow.Cells[6].Value.ToString();
                 ClientDTO clientDTO = new ClientDTO
                 {
-                    ClienstId = clientId,
+                    ClientId = clientId,
                     ClientName = clientName,
                     Address = address,
                     City = city,
@@ -71,6 +72,25 @@ namespace PresentationLayer
                 };
                 clientService.AddClient(clientDTO);
             }
+        }
+
+        private void DataGridSettings()
+        {
+            dataGridView1.AutoGenerateColumns = false;
+        }
+
+        public void LoadData()
+        {
+           if(dataGridView1 != null)
+            {
+                dataGridView1.DataSource = clientService.GetAllCLient();
+            }
+        }
+
+        private void ClientManagementForm_Load(object sender, EventArgs e)
+        {
+            LoadData();
+            DataGridSettings();
         }
     }
 }

@@ -12,7 +12,7 @@ namespace PresentationLayer
         public InvoiceForm()
         {
             InitializeComponent();
-            this.Load += new System.EventHandler(this.InvoiceForm_Load);
+            this.Load += new EventHandler(this.InvoiceForm_Load);
             invoiceServices = new InvoiceServices();
             mapping = new();
         }
@@ -173,6 +173,11 @@ namespace PresentationLayer
         {
             DataGridSettings();
             GetAllInvoice();
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

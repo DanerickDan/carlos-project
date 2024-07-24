@@ -6,20 +6,12 @@ namespace DataLayer.Connection
     public class ConnectionManager
     {
         private readonly string ConnectionString = "Data Source=C:\\Users\\pasantetic\\source\\repos\\ProyectoCarlos\\DataLayer\\databasePrueba2.db";
-        private readonly SQLiteConnection _connection;
-        // Class to manage the connection to SQLite
-
-        public ConnectionManager()
-        {
-            _connection = new SQLiteConnection(ConnectionString);
-        }
-
 
         public SQLiteConnection GetConnection()
         {
             try
             {
-                return _connection;
+                return new SQLiteConnection(ConnectionString);
             }
             catch (Exception ex)
             {
@@ -27,30 +19,33 @@ namespace DataLayer.Connection
             }
         }
 
-        public void OpenConnection()
+        public void OpenConnection(SQLiteConnection connection)
         {
             try
             {
-                if (_connection.State != System.Data.ConnectionState.Open)
+                if (connection.State != System.Data.ConnectionState.Open)
                 {
-                    _connection.Open();
+                    connection.Open();
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception($"Error opening connection: {ex.Message} at {ex.StackTrace}", ex);
             }
         }
 
-        public void CloseConnection()
+        public void CloseConnection(SQLiteConnection connection)
         {
             try
             {
-                _connection?.Close();
+                if (connection.State != System.Data.ConnectionState.Closed)
+                {
+                    connection.Close();
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception($"Error closing connection: {ex.Message} at {ex.StackTrace}", ex);
             }
         }
     }

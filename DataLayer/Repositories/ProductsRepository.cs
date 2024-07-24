@@ -20,10 +20,10 @@ namespace DataLayer.Repositories
             {
                 using(var connection = connectionManager.GetConnection())
                 {
-                    connectionManager.OpenConnection();
+                    connectionManager.OpenConnection(connection);
                     using (var command = new SQLiteCommand(
-                    "INSERT INTO Productos (nombre, codigo, descripcion, fecha_vencimiento, precio,lote,category_id, estado_id" +
-                    ") VALUES (@Nombre, @Codigo, @Descripcion, @FechaVencimiento, @Precio,@Lote, @Categoria, @Estado)",
+                    "INSERT INTO Productos (nombre, codigo, descripcion, fecha_vencimiento, precio,lote,cantidad,category_id, estado_id" +
+                    ") VALUES (@Nombre, @Codigo, @Descripcion, @FechaVencimiento, @Precio,@Lote, @Cantidad, @Categoria, @Estado)",
                     connectionManager.GetConnection()))
                     {
 
@@ -33,6 +33,7 @@ namespace DataLayer.Repositories
                         command.Parameters.AddWithValue("@FechaVencimiento", product.ExpirationDate);
                         command.Parameters.AddWithValue("@Precio", product.Price);
                         command.Parameters.AddWithValue("@Lote", product.Lote);
+                        command.Parameters.AddWithValue("@Cantidad", product.Quantity);
                         command.Parameters.AddWithValue("@Categoria", product.CategoryId);
                         command.Parameters.AddWithValue("@Estado", product.StatusId);
 
@@ -54,9 +55,9 @@ namespace DataLayer.Repositories
             {
                 using (var connection = connectionManager.GetConnection())
                 {
-                    connectionManager.OpenConnection();
+                    connectionManager.OpenConnection(connection);
                     string query = "UPDATE Productos SET nombre = @Nombre, codigo = @Codigo, descripcion = @Descripcion, " +
-                        "fecha_vencimiento = @FechaVencimiento, precio = @Precio, lote = @Lote, category_id = Category, estado_id = @Estado WHERE product_id = @Id";
+                        "fecha_vencimiento = @FechaVencimiento, precio = @Precio, lote = @Lote, cantidad = @Cantidad, category_id = Category, estado_id = @Estado WHERE product_id = @Id";
                     using (var command = new SQLiteCommand(query, connectionManager.GetConnection()))
                     {
                         command.Parameters.AddWithValue("@Id", product.ProductsId);
@@ -66,6 +67,7 @@ namespace DataLayer.Repositories
                         command.Parameters.AddWithValue("@FechaVencimiento", product.ExpirationDate);
                         command.Parameters.AddWithValue("@Precio", product.Price);
                         command.Parameters.AddWithValue("@Lote", product.Lote);
+                        command.Parameters.AddWithValue("@Cantidad", product.Quantity);
                         command.Parameters.AddWithValue("@Category", product.CategoryId);
                         command.Parameters.AddWithValue("@Estado", product.StatusId);
                         command.ExecuteNonQuery();
@@ -85,7 +87,7 @@ namespace DataLayer.Repositories
             {
                 using (var connection = connectionManager.GetConnection())
                 {
-                    connectionManager.OpenConnection();
+                    connectionManager.OpenConnection(connection);
 
                     string query = "DELETE FROM Productos WHERE producto_id = @Id";
                     using (var command = new SQLiteCommand(query, connectionManager.GetConnection()))
@@ -108,7 +110,7 @@ namespace DataLayer.Repositories
             {
                 using (var connection = connectionManager.GetConnection())
                 {
-                    connectionManager.OpenConnection();
+                    connectionManager.OpenConnection(connection);
                     string query = @"
                 SELECT p.producto_id as ProductoId, p.nombre as ProductoNombre, p.codigo as Codigo,
 	            p.descripcion as Descripcion, p.fecha_vencimiento as Vencimiento,p.precio as ProductoPrecio,
@@ -133,6 +135,7 @@ namespace DataLayer.Repositories
                                     ExpirationDate = reader.GetDateTime(reader.GetOrdinal("Vencimiento")),
                                     Price = reader.GetInt32(reader.GetOrdinal("ProductoPrecio")),
                                     Lote = reader.GetInt32(reader.GetOrdinal("Lote")),
+                                    Quantity = reader.GetInt32(reader.GetOrdinal("Cantidad")),
                                     CategoryId = reader.GetInt32(reader.GetOrdinal("ProductoCategoriaId")),
                                     StatusId = reader.GetInt32(reader.GetOrdinal("ProductoEstadoId")),
                                     Category = new Categories
@@ -166,11 +169,11 @@ namespace DataLayer.Repositories
             {
                 using (var connection = connectionManager.GetConnection())
                 {
-                    connectionManager.OpenConnection();
+                    connectionManager.OpenConnection(connection);
                     string query = @"
                 SELECT p.producto_id as ProductoId, p.nombre as ProductoNombre, p.codigo as Codigo,
 	            p.descripcion as Descripcion, p.fecha_vencimiento as Vencimiento,p.precio as ProductoPrecio,
-	            p.lote as Lote, p.category_id as ProductoCategoriaId,
+	            p.lote as Lote, p.cantidad as Cantidad, p.category_id as ProductoCategoriaId,
 	            c.category_id as CategoriaId, c.nombre_categoria as CategoriaNombre,
                 p.estado_id as ProductoEstadoId, e.estado_id as EstadoId, e.descripcion as EstadoNombre
                 FROM Productos p 
@@ -193,6 +196,7 @@ namespace DataLayer.Repositories
                                     ExpirationDate = reader.GetDateTime(reader.GetOrdinal("Vencimiento")),
                                     Price = reader.GetInt32(reader.GetOrdinal("ProductoPrecio")),
                                     Lote = reader.GetInt32(reader.GetOrdinal("Lote")),
+                                    Quantity = reader.GetInt32(reader.GetOrdinal("Cantidad")),
                                     CategoryId = reader.GetInt32(reader.GetOrdinal("ProductoCategoriaId")),
                                     StatusId = reader.GetInt32(reader.GetOrdinal("ProductoEstadoId")),
                                     Category = new Categories

@@ -62,7 +62,7 @@ namespace DataLayer.Repositories
                             }
                         }
                         transaction.Commit();
-                        connectionManager.CloseConnection();
+                        connectionManager.CloseConnection(connectionT);
                     }
                     catch (Exception ex)
                     {
@@ -137,7 +137,7 @@ namespace DataLayer.Repositories
 
                             transaction.Commit();
                         }
-                        connectionManager.CloseConnection();
+                        connectionManager.CloseConnection(connectionT);
                     }
                     catch (Exception ex)
                     {
@@ -160,7 +160,7 @@ namespace DataLayer.Repositories
 
                 using (var connection = connectionManager.GetConnection())
                 {
-                    connectionManager.OpenConnection();
+                    connectionManager.OpenConnection(connection);
                     string query = "DELETE FROM Facturas WHERE facturas_id = @Id";
                     using (var command = new SQLiteCommand(query, connectionManager.GetConnection()))
                     {
@@ -184,7 +184,7 @@ namespace DataLayer.Repositories
             {
                 using (var connection = connectionManager.GetConnection())
                 {
-                    connectionManager.OpenConnection();
+                    connectionManager.OpenConnection(connection);
 
                     string query = @"SELECT f.factura_id as InvoiceId, f.fecha as Fecha, f.terminos as Terminos, f.cliente_id as ClienteId, f.numero as Number,
                             f.num_pedido as NumPedido, f.vendedor as Vendedor, f.NCF as ncf, d.detalle_id as DetalleId, d.factura_id as FacturaId,
@@ -248,7 +248,7 @@ namespace DataLayer.Repositories
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception($"Error in GetAllInvoices: {ex.Message} at {ex.StackTrace}", ex);
             }
         }
 
@@ -260,7 +260,7 @@ namespace DataLayer.Repositories
             {
                 using (var connection = connectionManager.GetConnection())
                 {
-                    connectionManager.OpenConnection();
+                    connectionManager.OpenConnection(connection);
                     string query = @"SELECT f.factura_id as InvoiceId, f.fecha as Fecha, f.terminos as Terminos, f.cliente_id,
                                     f.num_pedido as NumPedido, f.vendedor as Vendedor, f.NCF as ncf, f.numero as Numero d.detalle_id as DetalleId, d.factura_id as FacturaId,
                                     d.producto_id as ProductoId, d.cantidad as Cantidad, d.precio_unitario as Precio, d.lote as Lote,

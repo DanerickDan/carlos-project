@@ -17,6 +17,7 @@ namespace DomainLayer.Entities
         public int Lote { get; set; }
         public int CategoryId { get; set; }
         public int StatusId { get; set; }
+        public int Quantity { get; set; }
         public Status Statu { get; set; }
         public Categories Category { get; set; }
     }

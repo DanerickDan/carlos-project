@@ -93,6 +93,7 @@
             dataGridView1.ReadOnly = true;
             dataGridView1.Size = new Size(800, 392);
             dataGridView1.TabIndex = 0;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
             // panel1
             // 
@@ -236,7 +237,7 @@
             // Terms
             // 
             Terms.DataPropertyName = "Terms";
-            Terms.HeaderText = "Terminos";
+            Terms.HeaderText = "Termino";
             Terms.Name = "Terms";
             Terms.ReadOnly = true;
             // 
