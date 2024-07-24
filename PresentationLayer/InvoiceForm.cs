@@ -1,17 +1,20 @@
 ﻿using BusinessLayer.Interfaces.IServices;
 using BusinessLayer.Model;
 using BusinessLayer.Services;
+using BusinessLayer.Utils;
 
 namespace PresentationLayer
 {
     public partial class InvoiceForm : Form
     {
         private readonly IInvoiceServices invoiceServices;
+        private readonly Mapping mapping;
         public InvoiceForm()
         {
             InitializeComponent();
             this.Load += new System.EventHandler(this.InvoiceForm_Load);
             invoiceServices = new InvoiceServices();
+            mapping = new();
         }
 
         // Add Invoice
@@ -151,7 +154,7 @@ namespace PresentationLayer
         {
             if (dataGridView1 != null)
             {
-                dataGridView1.DataSource = invoiceServices.GetAllInvoices();
+                dataGridView1.DataSource = mapping.GetInvoiceView();
             }
         }
 
