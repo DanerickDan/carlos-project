@@ -14,6 +14,7 @@ namespace PresentationLayer
             InitializeComponent();
             this.Load += new EventHandler(this.InvoiceForm_Load);
             invoiceServices = new InvoiceServices();
+            dataGridView1.MouseWheel += DataGridView1_MouseWheel;
             mapping = new();
         }
 
@@ -175,9 +176,36 @@ namespace PresentationLayer
             GetAllInvoice();
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void materialScrollBar1_Scroll(object sender, ScrollEventArgs e)
         {
-
+            dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows[e.NewValue].Index;
         }
+
+        private void dataGridView1_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            materialScrollBar1.Maximum = dataGridView1.RowCount;
+        }
+
+
+        private void DataGridView1_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (e.Delta > 0 && materialScrollBar1.Value > materialScrollBar1.Minimum)
+            {
+                materialScrollBar1.Value--;
+            }
+            else if (e.Delta < 0 && materialScrollBar1.Value < materialScrollBar1.Maximum)
+            {
+                materialScrollBar1.Value++;
+            }
+
+            dataGridView1.FirstDisplayedScrollingRowIndex = materialScrollBar1.Value;
+        }
+
+
+        private void dataGridView1_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        {
+            materialScrollBar1.Maximum = dataGridView1.RowCount;
+        }
+
     }
 }

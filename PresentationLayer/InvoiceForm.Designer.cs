@@ -28,10 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InvoiceForm));
-            dataGridView1 = new DataGridView();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             panel1 = new Panel();
             btnPanel = new Panel();
             btnAnadir = new CustomComponents.MainFormComponents.CustomButton();
@@ -39,6 +40,7 @@
             btnEditar = new CustomComponents.MainFormComponents.CustomButton();
             btnImprimir = new CustomComponents.MainFormComponents.CustomButton();
             lblPrincipal = new Label();
+            dataGridView1 = new DataGridView();
             InvoiceID = new DataGridViewTextBoxColumn();
             OrderNumber = new DataGridViewTextBoxColumn();
             Terms = new DataGridViewTextBoxColumn();
@@ -55,45 +57,15 @@
             SubTotal = new DataGridViewTextBoxColumn();
             ProductId = new DataGridViewTextBoxColumn();
             Number = new DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            panel2 = new Panel();
+            cltTxtRegistros = new Label();
+            cltTxtFiltrados = new Label();
+            materialScrollBar1 = new MaterialSkin.Controls.MaterialScrollBar();
             panel1.SuspendLayout();
             btnPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            panel2.SuspendLayout();
             SuspendLayout();
-            // 
-            // dataGridView1
-            // 
-            dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.AllowUserToDeleteRows = false;
-            dataGridView1.AllowUserToOrderColumns = true;
-            dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            dataGridView1.BackgroundColor = Color.White;
-            dataGridView1.BorderStyle = BorderStyle.None;
-            dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = SystemColors.Control;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(243, 156, 76);
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { InvoiceID, OrderNumber, Terms, Date, ClientID, SellerName, Neto, Price, Total, Lote, NCF, Quantity, ProductCode, SubTotal, ProductId, Number });
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(243, 156, 76);
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
-            dataGridView1.GridColor = Color.FromArgb(243, 156, 76);
-            dataGridView1.Location = new Point(0, 58);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.ReadOnly = true;
-            dataGridView1.Size = new Size(800, 392);
-            dataGridView1.TabIndex = 0;
-            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
             // panel1
             // 
@@ -219,6 +191,58 @@
             lblPrincipal.TabIndex = 8;
             lblPrincipal.Text = "Facturas";
             // 
+            // dataGridView1
+            // 
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.AllowUserToOrderColumns = true;
+            dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.BackgroundColor = Color.White;
+            dataGridView1.BorderStyle = BorderStyle.None;
+            dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.None;
+            dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(248, 196, 96);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(243, 156, 76);
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridView1.ColumnHeadersHeight = 30;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { InvoiceID, OrderNumber, Terms, Date, ClientID, SellerName, Neto, Price, Total, Lote, NCF, Quantity, ProductCode, SubTotal, ProductId, Number });
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = SystemColors.Window;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle3.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(243, 156, 76);
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            dataGridView1.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridView1.EnableHeadersVisualStyles = false;
+            dataGridView1.GridColor = Color.LightGray;
+            dataGridView1.Location = new Point(0, 58);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.ReadOnly = true;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = SystemColors.Control;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(255, 128, 128);
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridView1.RowHeadersVisible = false;
+            dataGridView1.RowTemplate.Height = 50;
+            dataGridView1.ScrollBars = ScrollBars.None;
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView1.Size = new Size(787, 358);
+            dataGridView1.TabIndex = 0;
+            dataGridView1.RowsAdded += dataGridView1_RowsAdded;
+            dataGridView1.RowsRemoved += dataGridView1_RowsRemoved;
+            // 
             // InvoiceID
             // 
             InvoiceID.DataPropertyName = "InvoiceID";
@@ -280,6 +304,8 @@
             // Total
             // 
             Total.DataPropertyName = "Total";
+            dataGridViewCellStyle2.ForeColor = Color.MediumSeaGreen;
+            Total.DefaultCellStyle = dataGridViewCellStyle2;
             Total.HeaderText = "Total";
             Total.Name = "Total";
             Total.ReadOnly = true;
@@ -340,26 +366,74 @@
             Number.ReadOnly = true;
             Number.Visible = false;
             // 
+            // panel2
+            // 
+            panel2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            panel2.Controls.Add(cltTxtRegistros);
+            panel2.Controls.Add(cltTxtFiltrados);
+            panel2.Location = new Point(32, 422);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(262, 23);
+            panel2.TabIndex = 6;
+            // 
+            // cltTxtRegistros
+            // 
+            cltTxtRegistros.AutoSize = true;
+            cltTxtRegistros.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            cltTxtRegistros.ForeColor = Color.Gray;
+            cltTxtRegistros.Location = new Point(19, 3);
+            cltTxtRegistros.Name = "cltTxtRegistros";
+            cltTxtRegistros.Size = new Size(63, 17);
+            cltTxtRegistros.TabIndex = 4;
+            cltTxtRegistros.Text = "Registros";
+            // 
+            // cltTxtFiltrados
+            // 
+            cltTxtFiltrados.AutoSize = true;
+            cltTxtFiltrados.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            cltTxtFiltrados.ForeColor = Color.Gray;
+            cltTxtFiltrados.Location = new Point(167, 3);
+            cltTxtFiltrados.Name = "cltTxtFiltrados";
+            cltTxtFiltrados.Size = new Size(58, 17);
+            cltTxtFiltrados.TabIndex = 4;
+            cltTxtFiltrados.Text = "Filtrados";
+            // 
+            // materialScrollBar1
+            // 
+            materialScrollBar1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+            materialScrollBar1.Depth = 0;
+            materialScrollBar1.Location = new Point(787, 88);
+            materialScrollBar1.MouseState = MaterialSkin.MouseState.HOVER;
+            materialScrollBar1.Name = "materialScrollBar1";
+            materialScrollBar1.Orientation = MaterialSkin.Controls.MaterialScrollOrientation.Vertical;
+            materialScrollBar1.ScrollbarSize = 13;
+            materialScrollBar1.Size = new Size(13, 328);
+            materialScrollBar1.TabIndex = 7;
+            materialScrollBar1.Text = "materialScrollBar1";
+            materialScrollBar1.Scroll += materialScrollBar1_Scroll;
+            // 
             // InvoiceForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(materialScrollBar1);
+            Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(dataGridView1);
             Name = "InvoiceForm";
             Text = "Facturas";
             Load += InvoiceForm_Load;
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             btnPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
-
-        private DataGridView dataGridView1;
         private Panel panel1;
         private Panel btnPanel;
         private CustomComponents.MainFormComponents.CustomButton btnAnadir;
@@ -367,6 +441,7 @@
         private CustomComponents.MainFormComponents.CustomButton btnEditar;
         private CustomComponents.MainFormComponents.CustomButton btnImprimir;
         private Label lblPrincipal;
+        private DataGridView dataGridView1;
         private DataGridViewTextBoxColumn InvoiceID;
         private DataGridViewTextBoxColumn OrderNumber;
         private DataGridViewTextBoxColumn Terms;
@@ -383,5 +458,9 @@
         private DataGridViewTextBoxColumn SubTotal;
         private DataGridViewTextBoxColumn ProductId;
         private DataGridViewTextBoxColumn Number;
+        private Panel panel2;
+        private Label cltTxtRegistros;
+        private Label cltTxtFiltrados;
+        private MaterialSkin.Controls.MaterialScrollBar materialScrollBar1;
     }
 }

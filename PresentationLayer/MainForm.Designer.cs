@@ -228,11 +228,11 @@
             txtBuscar2.Name = "txtBuscar2";
             txtBuscar2.Padding = new Padding(10, 7, 10, 7);
             txtBuscar2.PasswordChar = false;
-            txtBuscar2.PlaceholderColor = Color.DarkGray;
-            txtBuscar2.PlaceholderText = "";
+            txtBuscar2.PlaceholderColor = Color.Black;
+            txtBuscar2.PlaceholderText = "Buscar";
             txtBuscar2.Size = new Size(220, 32);
             txtBuscar2.TabIndex = 0;
-            txtBuscar2.Texts = "Buscar";
+            txtBuscar2.Texts = "";
             txtBuscar2.UnderlinedStyle = false;
             // 
             // CenterPanel

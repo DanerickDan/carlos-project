@@ -12,6 +12,8 @@ namespace PresentationLayer
             clientService = new ClientServices();
             InitializeComponent();
             this.Load += new EventHandler(this.ClientManagementForm_Load);
+            // Maneja el evento MouseWheel del DataGridView
+            dataGridView1.MouseWheel += DataGridView1_MouseWheel;
         }
 
         private void btnAnadir_Click(object sender, EventArgs e)
@@ -81,7 +83,7 @@ namespace PresentationLayer
 
         public void LoadData()
         {
-           if(dataGridView1 != null)
+            if (dataGridView1 != null)
             {
                 dataGridView1.DataSource = clientService.GetAllCLient();
             }
@@ -92,5 +94,37 @@ namespace PresentationLayer
             LoadData();
             DataGridSettings();
         }
+
+        private void materialScrollBar1_Scroll(object sender, ScrollEventArgs e)
+        {
+            dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows[e.NewValue].Index;
+        }
+
+        private void dataGridView1_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            materialScrollBar1.Maximum = dataGridView1.RowCount;
+        }
+
+
+        private void DataGridView1_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (e.Delta > 0 && materialScrollBar1.Value > materialScrollBar1.Minimum)
+            {
+                materialScrollBar1.Value--;
+            }
+            else if (e.Delta < 0 && materialScrollBar1.Value < materialScrollBar1.Maximum)
+            {
+                materialScrollBar1.Value++;
+            }
+
+            dataGridView1.FirstDisplayedScrollingRowIndex = materialScrollBar1.Value;
+        }
+
+
+        private void dataGridView1_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        {
+            materialScrollBar1.Maximum = dataGridView1.RowCount;
+        }
+
     }
 }
