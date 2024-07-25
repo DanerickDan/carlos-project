@@ -120,7 +120,7 @@ namespace DataLayer.Repositories
                 FROM Productos p
                 INNER JOIN Categorias c ON p.category_id = c.category_id
                 INNER JOIN EstadoPedido e ON p.estado_id = e.estado_id";
-                    using (var command = new SQLiteCommand(query, connectionManager.GetConnection()))
+                    using (var command = new SQLiteCommand(query, connection))
                     {
                         using (var reader = command.ExecuteReader())
                         {
@@ -129,11 +129,11 @@ namespace DataLayer.Repositories
                                 products.Add(new Products
                                 {
                                     ProductsId = reader.GetInt32(reader.GetOrdinal("ProductoId")),
-                                    ProductName = reader.GetString(reader.GetOrdinal("ProductoId")),
+                                    ProductName = reader.GetString(reader.GetOrdinal("ProductoNombre")),
                                     Code = reader.GetInt32(reader.GetOrdinal("Codigo")),
                                     Description = reader.GetString(reader.GetOrdinal("Descripcion")),
-                                    ExpirationDate = reader.GetDateTime(reader.GetOrdinal("Vencimiento")),
-                                    Price = reader.GetInt32(reader.GetOrdinal("ProductoPrecio")),
+                                    ExpirationDate = DateTime.Parse(reader.GetString(reader.GetOrdinal("Vencimiento"))),
+                                    Price = reader.GetDouble(reader.GetOrdinal("ProductoPrecio")),
                                     Lote = reader.GetInt32(reader.GetOrdinal("Lote")),
                                     Quantity = reader.GetInt32(reader.GetOrdinal("Cantidad")),
                                     CategoryId = reader.GetInt32(reader.GetOrdinal("ProductoCategoriaId")),
@@ -159,7 +159,7 @@ namespace DataLayer.Repositories
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception($"Error in GetAllInvoices: {ex.Message} at {ex.StackTrace}", ex);
             }
         }
 
@@ -180,7 +180,7 @@ namespace DataLayer.Repositories
                 INNER JOIN Categorias c ON p.category_id = c.category_id
                 INNER JOIN EstadoPedido e ON p.estado_id = e.estado_id
                 WHERE p.producto_id = @Id;";
-                    using (var command = new SQLiteCommand(query, connectionManager.GetConnection()))
+                    using (var command = new SQLiteCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@Id", id);
                         using (var reader = command.ExecuteReader())

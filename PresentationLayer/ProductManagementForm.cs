@@ -88,7 +88,7 @@ namespace PresentationLayer
 
         private void LoadData()
         {
-            if(dataGridView1 == null)
+            if(dataGridView1 != null)
             {
                 dataGridView1.DataSource = productService.GetAllProduct();
             }

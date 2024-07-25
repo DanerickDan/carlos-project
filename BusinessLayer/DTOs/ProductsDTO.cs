@@ -1,8 +1,4 @@
-﻿
-
-using DomainLayer.Entities;
-
-namespace BusinessLayer.Model
+﻿namespace BusinessLayer.Model
 {
     public class ProductsDTO
     {

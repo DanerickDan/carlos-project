@@ -66,6 +66,7 @@ namespace BusinessLayer.Services
                     Code = item.Code,
                     Description = item.Description,
                     ExpirationDate = item.ExpirationDate,
+                    Quantity = item.Quantity,
                     Price = item.Price,
                     Lote = item.Lote,
                     CategoryId = item.CategoryId,

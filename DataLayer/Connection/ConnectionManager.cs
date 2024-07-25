@@ -1,11 +1,10 @@
 ﻿using System.Data.SQLite;
 
-
 namespace DataLayer.Connection
 {
     public class ConnectionManager
     {
-        private readonly string ConnectionString = "Data Source=C:\\Users\\pasantetic\\source\\repos\\ProyectoCarlos\\DataLayer\\databasePrueba2.db";
+        private readonly string ConnectionString = "Data Source=C:\\Users\\Erick\\source\\repos\\carlos-project\\DataLayer\\databasePrueba2.db";
 
         public SQLiteConnection GetConnection()
         {
