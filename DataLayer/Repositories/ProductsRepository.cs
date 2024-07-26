@@ -1,7 +1,6 @@
 ﻿using DataLayer.Connection;
 using DataLayer.IRepository;
 using DomainLayer.Entities;
-using System.Data;
 using System.Data.SQLite;
 
 namespace DataLayer.Repositories
@@ -24,7 +23,7 @@ namespace DataLayer.Repositories
                     using (var command = new SQLiteCommand(
                     "INSERT INTO Productos (nombre, codigo, descripcion, fecha_vencimiento, precio,lote,cantidad,category_id, estado_id" +
                     ") VALUES (@Nombre, @Codigo, @Descripcion, @FechaVencimiento, @Precio,@Lote, @Cantidad, @Categoria, @Estado)",
-                    connectionManager.GetConnection()))
+                    connection))
                     {
 
                         command.Parameters.AddWithValue("@Nombre", product.ProductName);
@@ -58,7 +57,7 @@ namespace DataLayer.Repositories
                     connectionManager.OpenConnection(connection);
                     string query = "UPDATE Productos SET nombre = @Nombre, codigo = @Codigo, descripcion = @Descripcion, " +
                         "fecha_vencimiento = @FechaVencimiento, precio = @Precio, lote = @Lote, cantidad = @Cantidad, category_id = Category, estado_id = @Estado WHERE product_id = @Id";
-                    using (var command = new SQLiteCommand(query, connectionManager.GetConnection()))
+                    using (var command = new SQLiteCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@Id", product.ProductsId);
                         command.Parameters.AddWithValue("@Nombre", product.ProductName);
@@ -90,7 +89,7 @@ namespace DataLayer.Repositories
                     connectionManager.OpenConnection(connection);
 
                     string query = "DELETE FROM Productos WHERE producto_id = @Id";
-                    using (var command = new SQLiteCommand(query, connectionManager.GetConnection()))
+                    using (var command = new SQLiteCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@Id", id);
                         command.ExecuteNonQuery();

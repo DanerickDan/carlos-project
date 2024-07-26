@@ -22,7 +22,7 @@ namespace DataLayer.Repositories
                     connectionManager.OpenConnection(connection);
                     string query = "INSERT INTO Clientes(nombre, direccion, ciudad, telefono, fax, RNC, codigo)" +
                         "VALUES(@Nombre, @Direcccion, @Ciudad, @Telefono, @Fax, @RNC, @Code)";
-                    using (var command = new SQLiteCommand(query, connectionManager.GetConnection()))
+                    using (var command = new SQLiteCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@Nombre", client.ClientName);
                         command.Parameters.AddWithValue("@Direccion", client.Address);
@@ -51,7 +51,7 @@ namespace DataLayer.Repositories
                     connectionManager.OpenConnection(connection);
                     string query = "UPDATE Clientes SET nombre = @Nombre, direccion = @Direccion, ciudad = @Ciudad, telefono = @Telefono" +
                         ", fax = @Fax, RNC = @rnc WHERE clientes_id = @ClienteId";
-                    using (var command = new SQLiteCommand(query, connectionManager.GetConnection()))
+                    using (var command = new SQLiteCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@Nombre", client.ClientName);
                         command.Parameters.AddWithValue("@Direccion", client.Address);
@@ -79,7 +79,7 @@ namespace DataLayer.Repositories
                 {
                     connectionManager.OpenConnection(connection);
                     string query = "DELETE FROM Clientes WHERE clientes_id = @ClientId";
-                    using (var command = new SQLiteCommand(query, connectionManager.GetConnection()))
+                    using (var command = new SQLiteCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@ClientId", id);
                         command.ExecuteNonQuery();
@@ -141,7 +141,7 @@ namespace DataLayer.Repositories
             {
                 connectionManager.OpenConnection(connection);
                 string query = "SELECT * FROM Clientes WHERE clientes_id = @ClientId";
-                using (var command = new SQLiteCommand(query, connectionManager.GetConnection()))
+                using (var command = new SQLiteCommand(query, connection))
                 {
                     using (var reader = command.ExecuteReader())
                     {

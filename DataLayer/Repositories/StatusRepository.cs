@@ -22,7 +22,7 @@ namespace DataLayer.Repositories
                 {
                     connectionManager.OpenConnection(connection);
                     string query = "SELECT * FROM EstadoPedido";
-                    using (var command = new SQLiteCommand(query, connectionManager.GetConnection()))
+                    using (var command = new SQLiteCommand(query, connection))
                     {
                         using (var reader = command.ExecuteReader())
                         {
@@ -56,7 +56,7 @@ namespace DataLayer.Repositories
                     connectionManager.OpenConnection(connection);
 
                     string query = "SELECT * FROM EstadoPedido WHERE estado_id = @Id";
-                    using (var command = new SQLiteCommand(query, connectionManager.GetConnection()))
+                    using (var command = new SQLiteCommand(query, connection))
                     {
                         using (var reader = command.ExecuteReader())
                         {

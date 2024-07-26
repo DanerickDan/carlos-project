@@ -93,7 +93,6 @@ namespace DataLayer.Repositories
                 {
                     try
                     {
-
                         using (var command = new SQLiteCommand(query, connectionT, transaction))
                         {
                             using (command)
@@ -162,7 +161,7 @@ namespace DataLayer.Repositories
                 {
                     connectionManager.OpenConnection(connection);
                     string query = "DELETE FROM Facturas WHERE facturas_id = @Id";
-                    using (var command = new SQLiteCommand(query, connectionManager.GetConnection()))
+                    using (var command = new SQLiteCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@Id", id);
                         command.ExecuteNonQuery();
@@ -269,7 +268,7 @@ namespace DataLayer.Repositories
                                     INNER JOIN Detalle_Factura AS d ON f.factura_id = d.factura_id
                                     ORDER BY f.factura_id
                                     WHERE f.facturas_id = @FacturaId";
-                    using (var command = new SQLiteCommand(query, connectionManager.GetConnection()))
+                    using (var command = new SQLiteCommand(query, connection))
                     {
                         using (var reader = command.ExecuteReader())
                         {

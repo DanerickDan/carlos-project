@@ -23,7 +23,7 @@ namespace DataLayer.Repositories
                 {
                     connectionManager.OpenConnection(connection);
                     string query = "SELECT * FROM Detalle_Factura;";
-                    using(var command = new SQLiteCommand(query, connectionManager.GetConnection()))
+                    using(var command = new SQLiteCommand(query, connection))
                     {
                         using (var reader = command.ExecuteReader())
                         {
@@ -58,11 +58,11 @@ namespace DataLayer.Repositories
         {
             try
             {
-                using (var connectionn = connectionManager.GetConnection())
+                using (var connection = connectionManager.GetConnection())
                 {
-                    connectionManager.OpenConnection(connectionn);
+                    connectionManager.OpenConnection(connection);
                     string query = "SELECT * FROM Detalle_Factura WHEREN detalle_id = @Id;";
-                    using (var command = new SQLiteCommand(query, connectionManager.GetConnection()))
+                    using (var command = new SQLiteCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@Id", id);
                         using (var reader = command.ExecuteReader())
