@@ -160,7 +160,7 @@ namespace DataLayer.Repositories
                 using (var connection = connectionManager.GetConnection())
                 {
                     connectionManager.OpenConnection(connection);
-                    string query = "DELETE FROM Facturas WHERE facturas_id = @Id";
+                    string query = "DELETE FROM Facturas WHERE factura_id = @Id";
                     using (var command = new SQLiteCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@Id", id);

@@ -76,6 +76,17 @@ namespace PresentationLayer
         // Delete Invoice
         private void btnBorrar_Click(object sender, EventArgs e)
         {
+            DialogResult result = MessageBox.Show("¿Está seguro de que desea eliminar esta factura?", "Confirmar Eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (result == DialogResult.Yes)
+            {
+                // Código para eliminar la factura
+                EliminarFactura();
+            }
+            
+        }
+
+        private void EliminarFactura()
+        {
             if (dataGridView1.SelectedRows.Count > 0)
             {
                 DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];

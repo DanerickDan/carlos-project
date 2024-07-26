@@ -45,6 +45,16 @@ namespace PresentationLayer
         // Delete Button
         private void btnBorrar_Click(object sender, EventArgs e)
         {
+            DialogResult result = MessageBox.Show("¿Está seguro de que desea eliminar este producto?", "Confirmar Eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+            {
+                EliminarProducto();
+            }
+        }
+
+        private void EliminarProducto()
+        {
             if (dataGridView1.SelectedRows.Count > 0)
             {
                 DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
@@ -52,6 +62,7 @@ namespace PresentationLayer
                 productService.DeleteProduct(productId);
             }
         }
+
 
         // Update button
         private void btnEditar_Click(object sender, EventArgs e)

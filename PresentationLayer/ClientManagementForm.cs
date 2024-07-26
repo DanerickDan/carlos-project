@@ -42,6 +42,17 @@ namespace PresentationLayer
 
         private void btnBorrar_Click(object sender, EventArgs e)
         {
+            DialogResult result = MessageBox.Show("¿Está seguro de que desea eliminar este cliente?", "Confirmar Eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (result == DialogResult.Yes)
+            {
+                // Código para eliminar el cliente
+                EliminarCliente();
+            }
+
+        }
+
+        private void EliminarCliente()
+        {
             if (dataGridView1.Rows.Count > 0)
             {
                 DataGridViewRow selectedRow = dataGridView1.Rows[0];
