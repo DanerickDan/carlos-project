@@ -77,9 +77,9 @@ namespace BusinessLayer.Services
             return clientDTO;
         }
 
-        public ClientDTO GetByIdClient()
+        public ClientDTO GetByIdClient(int id)
         {
-            var client = _clientRepository.GetByIdClient();
+            var client = _clientRepository.GetByIdClient(id);
             var clientDTO = new ClientDTO
             {
                 ClientId = client.ClientId,

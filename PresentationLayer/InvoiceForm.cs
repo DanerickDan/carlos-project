@@ -1,7 +1,9 @@
-﻿using BusinessLayer.Interfaces.IServices;
+﻿using BusinessLayer.DTOs;
+using BusinessLayer.Interfaces.IServices;
 using BusinessLayer.Model;
 using BusinessLayer.Services;
 using BusinessLayer.Utils;
+using System.ComponentModel;
 
 namespace PresentationLayer
 {
@@ -9,12 +11,14 @@ namespace PresentationLayer
     {
         private readonly IInvoiceServices invoiceServices;
         private readonly Mapping mapping;
+        private BindingList<InvoiceViewDTO> InvoiceBindingList;
         public InvoiceForm()
         {
             InitializeComponent();
             this.Load += new EventHandler(this.InvoiceForm_Load);
             invoiceServices = new InvoiceServices();
             dataGridView1.MouseWheel += DataGridView1_MouseWheel;
+
             mapping = new();
         }
 
@@ -82,16 +86,25 @@ namespace PresentationLayer
                 // Código para eliminar la factura
                 EliminarFactura();
             }
-            
+
         }
 
         private void EliminarFactura()
         {
             if (dataGridView1.SelectedRows.Count > 0)
             {
-                DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
-                int invoiceId = Convert.ToInt32(selectedRow.Cells[0].Value);
-                invoiceServices.DeleteInvoice(invoiceId);
+                int rowIndex = dataGridView1.SelectedRows[0].Index;
+                int inoviceId = (int)dataGridView1.SelectedRows[0].Cells["InvoiceID"].Value; // Ajusta "" según tu columna
+
+                // Llama al servicio para eliminar el producto de la base de datos
+                invoiceServices.DeleteInvoice(inoviceId);
+
+                // Elimina el producto de la lista de binding
+                InvoiceBindingList.RemoveAt(rowIndex);
+            }
+            else
+            {
+                MessageBox.Show("Seleccione una fila para eliminar.");
             }
         }
 
@@ -164,10 +177,10 @@ namespace PresentationLayer
         // Get all invoices
         private void GetAllInvoice()
         {
-            if (dataGridView1 != null)
-            {
-                dataGridView1.DataSource = mapping.GetInvoiceView();
-            }
+            var invoice = mapping.GetInvoiceView();
+            InvoiceBindingList = new BindingList<InvoiceViewDTO>(invoice);
+            dataGridView1.DataSource = InvoiceBindingList;
+
         }
 
 

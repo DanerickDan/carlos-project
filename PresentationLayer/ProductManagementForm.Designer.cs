@@ -28,19 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProductManagementForm));
             dataGridView1 = new DataGridView();
-            Code = new DataGridViewTextBoxColumn();
-            NameColumn = new DataGridViewTextBoxColumn();
-            DescriptionColumn = new DataGridViewTextBoxColumn();
-            Quantity = new DataGridViewTextBoxColumn();
-            CategoryColumn = new DataGridViewTextBoxColumn();
-            TimeColumn = new DataGridViewTextBoxColumn();
-            StateColumn = new DataGridViewTextBoxColumn();
-            ProductID = new DataGridViewTextBoxColumn();
             panel1 = new Panel();
             btnPanel = new Panel();
             btnAnadir = new CustomComponents.MainFormComponents.CustomButton();
@@ -51,6 +43,15 @@
             cltTxtRegistros = new Label();
             cltTxtFiltrados = new Label();
             materialScrollBar1 = new MaterialSkin.Controls.MaterialScrollBar();
+            ProductID = new DataGridViewTextBoxColumn();
+            Code = new DataGridViewTextBoxColumn();
+            NameColumn = new DataGridViewTextBoxColumn();
+            DescriptionColumn = new DataGridViewTextBoxColumn();
+            Quantity = new DataGridViewTextBoxColumn();
+            CategoryColumn = new DataGridViewTextBoxColumn();
+            TimeColumn = new DataGridViewTextBoxColumn();
+            StateColumn = new DataGridViewTextBoxColumn();
+            Lote = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             panel1.SuspendLayout();
             btnPanel.SuspendLayout();
@@ -68,101 +69,44 @@
             dataGridView1.BorderStyle = BorderStyle.None;
             dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.None;
             dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = Color.FromArgb(248, 196, 96);
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle4.ForeColor = Color.Black;
-            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(243, 156, 76);
-            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(248, 196, 96);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle1.ForeColor = Color.Black;
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(243, 156, 76);
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridView1.ColumnHeadersHeight = 30;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Code, NameColumn, DescriptionColumn, Quantity, CategoryColumn, TimeColumn, StateColumn, ProductID });
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = SystemColors.Window;
-            dataGridViewCellStyle5.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle5.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(243, 156, 76);
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.False;
-            dataGridView1.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { ProductID, Code, NameColumn, DescriptionColumn, Quantity, CategoryColumn, TimeColumn, StateColumn, Lote });
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(243, 156, 76);
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
             dataGridView1.EnableHeadersVisualStyles = false;
             dataGridView1.GridColor = Color.LightGray;
             dataGridView1.Location = new Point(0, 49);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = SystemColors.Control;
-            dataGridViewCellStyle6.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle6.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(255, 128, 128);
-            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
-            dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = SystemColors.Control;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(255, 128, 128);
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowTemplate.Height = 50;
             dataGridView1.ScrollBars = ScrollBars.None;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.Size = new Size(814, 370);
             dataGridView1.TabIndex = 0;
-            // 
-            // Code
-            // 
-            Code.DataPropertyName = "Code";
-            Code.HeaderText = "Codigo";
-            Code.Name = "Code";
-            Code.ReadOnly = true;
-            // 
-            // NameColumn
-            // 
-            NameColumn.DataPropertyName = "ProductName";
-            NameColumn.HeaderText = "Nombre";
-            NameColumn.Name = "NameColumn";
-            NameColumn.ReadOnly = true;
-            // 
-            // DescriptionColumn
-            // 
-            DescriptionColumn.DataPropertyName = "Description";
-            DescriptionColumn.HeaderText = "Descripción";
-            DescriptionColumn.Name = "DescriptionColumn";
-            DescriptionColumn.ReadOnly = true;
-            // 
-            // Quantity
-            // 
-            Quantity.DataPropertyName = "Quantity";
-            Quantity.HeaderText = "Cantidad";
-            Quantity.Name = "Quantity";
-            Quantity.ReadOnly = true;
-            // 
-            // CategoryColumn
-            // 
-            CategoryColumn.DataPropertyName = "CategoryId";
-            CategoryColumn.HeaderText = "Categoria";
-            CategoryColumn.Name = "CategoryColumn";
-            CategoryColumn.ReadOnly = true;
-            CategoryColumn.Visible = false;
-            // 
-            // TimeColumn
-            // 
-            TimeColumn.DataPropertyName = "ExpirationDate";
-            TimeColumn.HeaderText = "Expiracion";
-            TimeColumn.Name = "TimeColumn";
-            TimeColumn.ReadOnly = true;
-            // 
-            // StateColumn
-            // 
-            StateColumn.DataPropertyName = "StatusId";
-            StateColumn.HeaderText = "Estado";
-            StateColumn.Name = "StateColumn";
-            StateColumn.ReadOnly = true;
-            // 
-            // ProductID
-            // 
-            ProductID.HeaderText = "ProductID";
-            ProductID.Name = "ProductID";
-            ProductID.ReadOnly = true;
-            ProductID.Visible = false;
             // 
             // panel1
             // 
@@ -310,6 +254,71 @@
             materialScrollBar1.Text = "materialScrollBar1";
             materialScrollBar1.Scroll += materialScrollBar1_Scroll;
             // 
+            // ProductID
+            // 
+            ProductID.DataPropertyName = "ProductsId";
+            ProductID.HeaderText = "ProductID";
+            ProductID.Name = "ProductID";
+            ProductID.ReadOnly = true;
+            ProductID.Visible = false;
+            // 
+            // Code
+            // 
+            Code.DataPropertyName = "Code";
+            Code.HeaderText = "Codigo";
+            Code.Name = "Code";
+            Code.ReadOnly = true;
+            // 
+            // NameColumn
+            // 
+            NameColumn.DataPropertyName = "ProductName";
+            NameColumn.HeaderText = "Nombre";
+            NameColumn.Name = "NameColumn";
+            NameColumn.ReadOnly = true;
+            // 
+            // DescriptionColumn
+            // 
+            DescriptionColumn.DataPropertyName = "Description";
+            DescriptionColumn.HeaderText = "Descripción";
+            DescriptionColumn.Name = "DescriptionColumn";
+            DescriptionColumn.ReadOnly = true;
+            // 
+            // Quantity
+            // 
+            Quantity.DataPropertyName = "Quantity";
+            Quantity.HeaderText = "Cantidad";
+            Quantity.Name = "Quantity";
+            Quantity.ReadOnly = true;
+            // 
+            // CategoryColumn
+            // 
+            CategoryColumn.DataPropertyName = "CategoryId";
+            CategoryColumn.HeaderText = "Categoria";
+            CategoryColumn.Name = "CategoryColumn";
+            CategoryColumn.ReadOnly = true;
+            CategoryColumn.Visible = false;
+            // 
+            // TimeColumn
+            // 
+            TimeColumn.DataPropertyName = "ExpirationDate";
+            TimeColumn.HeaderText = "Expiracion";
+            TimeColumn.Name = "TimeColumn";
+            TimeColumn.ReadOnly = true;
+            // 
+            // StateColumn
+            // 
+            StateColumn.DataPropertyName = "StatusId";
+            StateColumn.HeaderText = "Estado";
+            StateColumn.Name = "StateColumn";
+            StateColumn.ReadOnly = true;
+            // 
+            // Lote
+            // 
+            Lote.DataPropertyName = "Lote";
+            Lote.HeaderText = "Lote";
+            Lote.Name = "Lote";
+            Lote.ReadOnly = true;
+            // 
             // ProductManagementForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -340,6 +349,11 @@
         private CustomComponents.MainFormComponents.CustomButton btnAnadir;
         private CustomComponents.MainFormComponents.CustomButton btnBorrar;
         private CustomComponents.MainFormComponents.CustomButton btnEditar;
+        private Panel panel2;
+        private Label cltTxtRegistros;
+        private Label cltTxtFiltrados;
+        private MaterialSkin.Controls.MaterialScrollBar materialScrollBar1;
+        private DataGridViewTextBoxColumn ProductID;
         private DataGridViewTextBoxColumn Code;
         private DataGridViewTextBoxColumn NameColumn;
         private DataGridViewTextBoxColumn DescriptionColumn;
@@ -347,10 +361,6 @@
         private DataGridViewTextBoxColumn CategoryColumn;
         private DataGridViewTextBoxColumn TimeColumn;
         private DataGridViewTextBoxColumn StateColumn;
-        private DataGridViewTextBoxColumn ProductID;
-        private Panel panel2;
-        private Label cltTxtRegistros;
-        private Label cltTxtFiltrados;
-        private MaterialSkin.Controls.MaterialScrollBar materialScrollBar1;
+        private DataGridViewTextBoxColumn Lote;
     }
 }

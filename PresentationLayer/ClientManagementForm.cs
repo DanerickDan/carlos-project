@@ -1,12 +1,15 @@
 ﻿using BusinessLayer.Interfaces.IServices;
 using BusinessLayer.Model;
 using BusinessLayer.Services;
+using DomainLayer.Entities;
+using System.ComponentModel;
 
 namespace PresentationLayer
 {
     public partial class ClientManagementForm : Form
     {
         private readonly IClientService clientService;
+        private BindingList<ClientDTO> ClientBindingList;
         public ClientManagementForm()
         {
             clientService = new ClientServices();
@@ -53,11 +56,20 @@ namespace PresentationLayer
 
         private void EliminarCliente()
         {
-            if (dataGridView1.Rows.Count > 0)
+            if (dataGridView1.SelectedRows.Count > 0)
             {
-                DataGridViewRow selectedRow = dataGridView1.Rows[0];
-                int clientId = Convert.ToInt32(selectedRow.Cells[0].Value);
+                int rowIndex = dataGridView1.SelectedRows[0].Index;
+                int clientId = (int)dataGridView1.SelectedRows[0].Cells["ClientID"].Value; // Ajusta "" según tu columna
+
+                // Llama al servicio para eliminar el producto de la base de datos
                 clientService.DeleteClient(clientId);
+
+                // Elimina el producto de la lista de binding
+                ClientBindingList.RemoveAt(rowIndex);
+            }
+            else
+            {
+                MessageBox.Show("Seleccione una fila para eliminar.");
             }
         }
 
@@ -96,7 +108,9 @@ namespace PresentationLayer
         {
             if (dataGridView1 != null)
             {
-                dataGridView1.DataSource = clientService.GetAllCLient();
+                var client = clientService.GetAllCLient();
+                ClientBindingList = new BindingList<ClientDTO>(client);
+                dataGridView1.DataSource = ClientBindingList;
             }
         }
 

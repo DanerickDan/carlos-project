@@ -13,6 +13,6 @@ namespace DataLayer.IRepository
         void UpdateClient(Client client);
         void DeleteClient(int id);
         List<Client> GetAllCLient();
-        Client GetByIdClient();
+        Client GetByIdClient(int id);
     }
 }

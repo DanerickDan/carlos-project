@@ -38,19 +38,19 @@
             btnBorrar = new CustomComponents.MainFormComponents.CustomButton();
             btnEditar = new CustomComponents.MainFormComponents.CustomButton();
             lblPrincipal = new Label();
-            City = new DataGridViewTextBoxColumn();
-            ClientID = new DataGridViewTextBoxColumn();
-            EmailColumn = new DataGridViewTextBoxColumn();
-            RNcColumn = new DataGridViewTextBoxColumn();
-            PhoneColumn = new DataGridViewTextBoxColumn();
-            AddressColumn = new DataGridViewTextBoxColumn();
-            NameColumn = new DataGridViewTextBoxColumn();
-            CodeColumn = new DataGridViewTextBoxColumn();
             dataGridView1 = new DataGridView();
             materialScrollBar1 = new MaterialSkin.Controls.MaterialScrollBar();
             cltTxtRegistros = new Label();
             cltTxtFiltrados = new Label();
             panel2 = new Panel();
+            ClientID = new DataGridViewTextBoxColumn();
+            CodeColumn = new DataGridViewTextBoxColumn();
+            NameColumn = new DataGridViewTextBoxColumn();
+            AddressColumn = new DataGridViewTextBoxColumn();
+            PhoneColumn = new DataGridViewTextBoxColumn();
+            RNcColumn = new DataGridViewTextBoxColumn();
+            EmailColumn = new DataGridViewTextBoxColumn();
+            City = new DataGridViewTextBoxColumn();
             panel1.SuspendLayout();
             btnPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -157,64 +157,6 @@
             lblPrincipal.TabIndex = 8;
             lblPrincipal.Text = "Clientes";
             // 
-            // City
-            // 
-            City.DataPropertyName = "City";
-            City.HeaderText = "Ciudad";
-            City.Name = "City";
-            City.ReadOnly = true;
-            City.Visible = false;
-            // 
-            // ClientID
-            // 
-            ClientID.DataPropertyName = "ClientID";
-            ClientID.HeaderText = "ClienteID";
-            ClientID.Name = "ClientID";
-            ClientID.ReadOnly = true;
-            ClientID.Visible = false;
-            // 
-            // EmailColumn
-            // 
-            EmailColumn.DataPropertyName = "Email";
-            EmailColumn.HeaderText = "Correo";
-            EmailColumn.Name = "EmailColumn";
-            EmailColumn.ReadOnly = true;
-            // 
-            // RNcColumn
-            // 
-            RNcColumn.DataPropertyName = "Rnc";
-            RNcColumn.HeaderText = "RNC";
-            RNcColumn.Name = "RNcColumn";
-            RNcColumn.ReadOnly = true;
-            // 
-            // PhoneColumn
-            // 
-            PhoneColumn.DataPropertyName = "PhoneNumber";
-            PhoneColumn.HeaderText = "Teléfono";
-            PhoneColumn.Name = "PhoneColumn";
-            PhoneColumn.ReadOnly = true;
-            // 
-            // AddressColumn
-            // 
-            AddressColumn.DataPropertyName = "Address";
-            AddressColumn.HeaderText = "Dirección";
-            AddressColumn.Name = "AddressColumn";
-            AddressColumn.ReadOnly = true;
-            // 
-            // NameColumn
-            // 
-            NameColumn.DataPropertyName = "ClientName";
-            NameColumn.HeaderText = "Nombre";
-            NameColumn.Name = "NameColumn";
-            NameColumn.ReadOnly = true;
-            // 
-            // CodeColumn
-            // 
-            CodeColumn.DataPropertyName = "Code";
-            CodeColumn.HeaderText = "Codígo";
-            CodeColumn.Name = "CodeColumn";
-            CodeColumn.ReadOnly = true;
-            // 
             // dataGridView1
             // 
             dataGridView1.AllowUserToAddRows = false;
@@ -236,7 +178,7 @@
             dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridView1.ColumnHeadersHeight = 30;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { CodeColumn, NameColumn, AddressColumn, PhoneColumn, RNcColumn, EmailColumn, ClientID, City });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { ClientID, CodeColumn, NameColumn, AddressColumn, PhoneColumn, RNcColumn, EmailColumn, City });
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = SystemColors.Window;
             dataGridViewCellStyle2.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -313,6 +255,64 @@
             panel2.Size = new Size(262, 23);
             panel2.TabIndex = 5;
             // 
+            // ClientID
+            // 
+            ClientID.DataPropertyName = "ClientID";
+            ClientID.HeaderText = "ClienteID";
+            ClientID.Name = "ClientID";
+            ClientID.ReadOnly = true;
+            ClientID.Visible = false;
+            // 
+            // CodeColumn
+            // 
+            CodeColumn.DataPropertyName = "Code";
+            CodeColumn.HeaderText = "Codígo";
+            CodeColumn.Name = "CodeColumn";
+            CodeColumn.ReadOnly = true;
+            // 
+            // NameColumn
+            // 
+            NameColumn.DataPropertyName = "ClientName";
+            NameColumn.HeaderText = "Nombre";
+            NameColumn.Name = "NameColumn";
+            NameColumn.ReadOnly = true;
+            // 
+            // AddressColumn
+            // 
+            AddressColumn.DataPropertyName = "Address";
+            AddressColumn.HeaderText = "Dirección";
+            AddressColumn.Name = "AddressColumn";
+            AddressColumn.ReadOnly = true;
+            // 
+            // PhoneColumn
+            // 
+            PhoneColumn.DataPropertyName = "PhoneNumber";
+            PhoneColumn.HeaderText = "Teléfono";
+            PhoneColumn.Name = "PhoneColumn";
+            PhoneColumn.ReadOnly = true;
+            // 
+            // RNcColumn
+            // 
+            RNcColumn.DataPropertyName = "Rnc";
+            RNcColumn.HeaderText = "RNC";
+            RNcColumn.Name = "RNcColumn";
+            RNcColumn.ReadOnly = true;
+            // 
+            // EmailColumn
+            // 
+            EmailColumn.DataPropertyName = "Email";
+            EmailColumn.HeaderText = "Correo";
+            EmailColumn.Name = "EmailColumn";
+            EmailColumn.ReadOnly = true;
+            // 
+            // City
+            // 
+            City.DataPropertyName = "City";
+            City.HeaderText = "Ciudad";
+            City.Name = "City";
+            City.ReadOnly = true;
+            City.Visible = false;
+            // 
             // ClientManagementForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -341,18 +341,18 @@
         private CustomComponents.MainFormComponents.CustomButton btnBorrar;
         private CustomComponents.MainFormComponents.CustomButton btnEditar;
         private Label lblPrincipal;
-        private DataGridViewTextBoxColumn City;
-        private DataGridViewTextBoxColumn ClientID;
-        private DataGridViewTextBoxColumn EmailColumn;
-        private DataGridViewTextBoxColumn RNcColumn;
-        private DataGridViewTextBoxColumn PhoneColumn;
-        private DataGridViewTextBoxColumn AddressColumn;
-        private DataGridViewTextBoxColumn NameColumn;
-        private DataGridViewTextBoxColumn CodeColumn;
         private DataGridView dataGridView1;
         private MaterialSkin.Controls.MaterialScrollBar materialScrollBar1;
         private Label cltTxtRegistros;
         private Label cltTxtFiltrados;
         private Panel panel2;
+        private DataGridViewTextBoxColumn ClientID;
+        private DataGridViewTextBoxColumn CodeColumn;
+        private DataGridViewTextBoxColumn NameColumn;
+        private DataGridViewTextBoxColumn AddressColumn;
+        private DataGridViewTextBoxColumn PhoneColumn;
+        private DataGridViewTextBoxColumn RNcColumn;
+        private DataGridViewTextBoxColumn EmailColumn;
+        private DataGridViewTextBoxColumn City;
     }
 }

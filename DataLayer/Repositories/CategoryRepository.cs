@@ -37,13 +37,13 @@ namespace DataLayer.Repositories
                             }
                         }
                     }
-                    return categories;
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception($"Error in GetAllCategory: {ex.Message}", ex);
             }
+            return categories;
         }
 
         public Categories GetCategoryById(int id)
@@ -69,13 +69,13 @@ namespace DataLayer.Repositories
                             }
                         }
                     }
-                    return null;
                 }
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
+            return null;
         }
     }
 }

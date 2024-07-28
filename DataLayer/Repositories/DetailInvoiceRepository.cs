@@ -14,6 +14,31 @@ namespace DataLayer.Repositories
             connectionManager = new();
         }
 
+        public void DeleteInvoice(int id)
+        {
+            try
+            {
+
+                using (var connection = connectionManager.GetConnection())
+                {
+                    connectionManager.OpenConnection(connection);
+                    string query = "DELETE FROM Detalle_Factura WHERE detalle_id = @Id";
+                    using (var command = new SQLiteCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@Id", id);
+                        command.ExecuteNonQuery();
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+
+
         public List<InvoiceDetails> GetAllInvoiceDetail()
         {
             var details = new List<InvoiceDetails>();

@@ -48,7 +48,7 @@ namespace DataLayer.Repositories
                                 "sub_total, codigo, neto)" +
                                 "VALUES (@FacturaID, @ProductoID, @Cantidad, @PrecioUnitario, @Lote, @Total, @SubTotal, @Codigo, @Neto)", connectionT))
                             {
-                                command.Parameters.AddWithValue("@FacturaID", detail.InvoiceId);
+                                command.Parameters.AddWithValue("@FacturaID", invoice.InvoiceID);
                                 command.Parameters.AddWithValue("@ProductoID", detail.ProductId);
                                 command.Parameters.AddWithValue("@Lote", detail.Quantity);
                                 command.Parameters.AddWithValue("@Cantidad", detail.Price);
@@ -86,7 +86,8 @@ namespace DataLayer.Repositories
                 // Transacion para si ocurre algun error darle rollback 
                 var connectionT = new SQLiteConnection(connectionManager.GetConnection());
                 connectionT.Open();
-                string query = "UPDATE Facturas SET fecha = @Fecha, terminos = @Terminos,cliente_id = @ClienteId" +
+                string query = "UPDATE Facturas " +
+                                "SET fecha = @Fecha, terminos = @Terminos,cliente_id = @ClienteId" +
                                 "num_pedido = @NumPedido, vendedor = @Vendedor, NCF = @ncf, numero = @NumFactura" +
                                 "WHERE factura_id = @FacturaID";
                 using (var transaction = connectionT.BeginTransaction())
@@ -95,18 +96,16 @@ namespace DataLayer.Repositories
                     {
                         using (var command = new SQLiteCommand(query, connectionT, transaction))
                         {
-                            using (command)
-                            {
-                                command.Parameters.AddWithValue("@Fecha", invoice.Date);
-                                command.Parameters.AddWithValue("@NumeroFactura", invoice.Number);
-                                command.Parameters.AddWithValue("@NCF", invoice.NCF);
-                                command.Parameters.AddWithValue("@Terminos", invoice.Terms);
-                                command.Parameters.AddWithValue("@NumeroPedido", invoice.OrderNumber);
-                                command.Parameters.AddWithValue("@Vendedor", invoice.SellerName);
-                                command.Parameters.AddWithValue("@ClienteID", invoice.ClientID);
+                            command.Parameters.AddWithValue("@Fecha", invoice.Date);
+                            command.Parameters.AddWithValue("@NumFactura", invoice.Number);
+                            command.Parameters.AddWithValue("@ncf", invoice.NCF);
+                            command.Parameters.AddWithValue("@Terminos", invoice.Terms);
+                            command.Parameters.AddWithValue("@NumPedido", invoice.OrderNumber);
+                            command.Parameters.AddWithValue("@Vendedor", invoice.SellerName);
+                            command.Parameters.AddWithValue("@ClienteID", invoice.ClientID);
 
-                                command.ExecuteNonQuery();
-                            }
+                            command.ExecuteNonQuery();
+
 
                             using (var command2 = new SQLiteCommand("DELETE FROM Detalle_Factura WHERE factura_id = @FacturaID", connectionManager.GetConnection()))
                             {
@@ -120,15 +119,15 @@ namespace DataLayer.Repositories
                                     "INSERT INTO Detalles_Factura (factura_id, producto_id, cantidad, precio_unitario, lote, total, sub_total,neto) " +
                                     "VALUES (@FacturaID, @ProductoID, @Cantidad, @PrecioUnitario, @Lote, @Total, @SubTotal, @Codigo, @Neto)", connectionManager.GetConnection()))
                                 {
-                                    command3.Parameters.AddWithValue("@FacturaId", details.InvoiceId);
-                                    command3.Parameters.AddWithValue("@ProductoId", details.ProductId);
+                                    command3.Parameters.AddWithValue("@FacturaID", details.InvoiceId);
+                                    command3.Parameters.AddWithValue("@ProductoID", details.ProductId);
                                     command3.Parameters.AddWithValue("@Cantidad", details.Quantity);
                                     command3.Parameters.AddWithValue("@PrecioUnitario", details.Price);
                                     command3.Parameters.AddWithValue("@Lote", details.Lote);
                                     command3.Parameters.AddWithValue("@Total", details.Total);
                                     command3.Parameters.AddWithValue("@SubTotal", details.SubTotal);
+                                    command3.Parameters.AddWithValue("@Codigo", details.ProductCode);
                                     command3.Parameters.AddWithValue("@Neto", details.Neto);
-
 
                                     command.ExecuteNonQuery();
                                 }
@@ -136,12 +135,16 @@ namespace DataLayer.Repositories
 
                             transaction.Commit();
                         }
-                        connectionManager.CloseConnection(connectionT);
                     }
                     catch (Exception ex)
                     {
                         transaction.Rollback();
                         throw new Exception(ex.Message);
+                    }
+                    finally
+                    {
+                        connectionManager.CloseConnection(connectionT);
+
                     }
                 }
 
@@ -160,6 +163,15 @@ namespace DataLayer.Repositories
                 using (var connection = connectionManager.GetConnection())
                 {
                     connectionManager.OpenConnection(connection);
+
+                    string deleteDetailsQuery = "DELETE FROM Detalle_Factura WHERE factura_id = @FacturaId";
+                    using (var command = new SQLiteCommand(deleteDetailsQuery, connection))
+                    {
+                        command.Parameters.AddWithValue("@FacturaId", id);
+                        command.ExecuteNonQuery();
+                    }
+
+
                     string query = "DELETE FROM Facturas WHERE factura_id = @Id";
                     using (var command = new SQLiteCommand(query, connection))
                     {
@@ -255,48 +267,46 @@ namespace DataLayer.Repositories
 
         public Invoice GetInvoiceById(int id)
         {
+            var invoice = new Invoice();
             try
             {
                 using (var connection = connectionManager.GetConnection())
                 {
                     connectionManager.OpenConnection(connection);
-                    string query = @"SELECT f.factura_id as InvoiceId, f.fecha as Fecha, f.terminos as Terminos, f.cliente_id,
-                                    f.num_pedido as NumPedido, f.vendedor as Vendedor, f.NCF as ncf, f.numero as Numero d.detalle_id as DetalleId, d.factura_id as FacturaId,
-                                    d.producto_id as ProductoId, d.cantidad as Cantidad, d.precio_unitario as Precio, d.lote as Lote,
-                                    d.total as Total, d.sub_total as SubTotal, d.neto as Neto, d.codigo as Codigo
-                                    FROM Facturas AS f
-                                    INNER JOIN Detalle_Factura AS d ON f.factura_id = d.factura_id
-                                    ORDER BY f.factura_id
-                                    WHERE f.facturas_id = @FacturaId";
+                    string query = @"
+                        SELECT f.factura_id as InvoiceId, f.fecha as Fecha, f.terminos as Terminos, f.cliente_id as ClienteId, f.numero as Number,
+                        f.num_pedido as NumPedido, f.vendedor as Vendedor, f.NCF as ncf, d.detalle_id as DetalleId, d.factura_id as FacturaId,
+                        d.producto_id as ProductoId, d.cantidad as Cantidad, d.precio_unitario as Precio, d.lote as Lote,
+                        d.total as Total, d.sub_total as SubTotal, d.neto as Neto, d.codigo as Codigo
+                        FROM Facturas AS f
+                        INNER JOIN Detalle_Factura AS d ON f.factura_id = d.factura_id
+                        WHERE f.factura_id = @Id
+                        ORDER BY f.factura_id;";
+
                     using (var command = new SQLiteCommand(query, connection))
                     {
+                        command.Parameters.AddWithValue("@Id", id);
+
                         using (var reader = command.ExecuteReader())
                         {
-                            Invoice currentInvoice = null; // Track the current invoice being processed
-
                             while (reader.Read())
                             {
-                                int invoiceId = reader.GetInt32(reader.GetOrdinal("InvoiceId"));
-
-                                // Check if it's a new invoice or the same one as before
-                                if (currentInvoice == null || currentInvoice.InvoiceID != invoiceId)
+                                if (invoice.InvoiceID == 0)
                                 {
-                                    return currentInvoice = new Invoice
+                                    invoice = new Invoice
                                     {
-                                        InvoiceID = invoiceId,
-                                        Date = reader.GetDateTime(reader.GetOrdinal("Fecha")),
+                                        InvoiceID = reader.GetInt32(reader.GetOrdinal("InvoiceId")),
+                                        Date = DateTime.Parse(reader.GetString(reader.GetOrdinal("Fecha"))),
                                         Terms = reader.GetString(reader.GetOrdinal("Terminos")),
                                         ClientID = reader.GetInt32(reader.GetOrdinal("ClienteId")),
                                         OrderNumber = reader.GetInt32(reader.GetOrdinal("NumPedido")),
                                         SellerName = reader.GetString(reader.GetOrdinal("Vendedor")),
+                                        Number = reader.GetInt32(reader.GetOrdinal("Number")),
                                         NCF = reader.GetString(reader.GetOrdinal("NCF")),
-                                        Number = reader.GetInt32(reader.GetOrdinal("Numero")),
-                                        Details = new List<InvoiceDetails>() // Initialize a new Details list for the invoice
+                                        Details = new List<InvoiceDetails>()
                                     };
-
                                 }
 
-                                // Create a new InvoiceDetails object for each detail record
                                 InvoiceDetails detail = new InvoiceDetails
                                 {
                                     InvoiceDetailsId = reader.GetInt32(reader.GetOrdinal("DetalleId")),
@@ -307,22 +317,22 @@ namespace DataLayer.Repositories
                                     Lote = reader.GetInt32(reader.GetOrdinal("Lote")),
                                     Total = reader.GetDouble(reader.GetOrdinal("Total")),
                                     SubTotal = reader.GetDouble(reader.GetOrdinal("SubTotal")),
-                                    Neto = reader.GetDouble(reader.GetOrdinal("Neto"))
+                                    Neto = reader.GetDouble(reader.GetOrdinal("Neto")),
+                                    ProductCode = reader.GetString(reader.GetOrdinal("Codigo"))
                                 };
 
-                                // Add the detail to the current invoice's Details list
-                                currentInvoice.Details.Add(detail);
+                                invoice.Details.Add(detail);
                             }
                         }
                     }
                 }
-                return null;
-
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
+
+            return invoice;
         }
     }
 }

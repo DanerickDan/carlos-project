@@ -8,43 +8,40 @@ namespace DataLayer.Repositories
     public class ProductsRepository : IProductsRepository
     {
         private readonly ConnectionManager connectionManager;
+
         public ProductsRepository()
         {
-            connectionManager = new();
+            connectionManager = new ConnectionManager();
         }
 
         public void AddProduct(Products product)
         {
             try
             {
-                using(var connection = connectionManager.GetConnection())
+                using (var connection = connectionManager.GetConnection())
                 {
                     connectionManager.OpenConnection(connection);
                     using (var command = new SQLiteCommand(
-                    "INSERT INTO Productos (nombre, codigo, descripcion, fecha_vencimiento, precio,lote,cantidad,category_id, estado_id" +
-                    ") VALUES (@Nombre, @Codigo, @Descripcion, @FechaVencimiento, @Precio,@Lote, @Cantidad, @Categoria, @Estado)",
-                    connection))
+                    "INSERT INTO Productos (nombre, codigo, descripcion, fecha_vencimiento, precio, lote, cantidad, category_id, estado_id) " +
+                    "VALUES (@Nombre, @Codigo, @Descripcion, @FechaVencimiento, @Precio, @Lote, @Cantidad, @Categoria, @Estado)", connection))
                     {
-
                         command.Parameters.AddWithValue("@Nombre", product.ProductName);
                         command.Parameters.AddWithValue("@Codigo", product.Code);
                         command.Parameters.AddWithValue("@Descripcion", product.Description);
-                        command.Parameters.AddWithValue("@FechaVencimiento", product.ExpirationDate);
+                        command.Parameters.AddWithValue("@FechaVencimiento", product.ExpirationDate.ToString("yyyy-MM-dd")); // Ajuste para fechas
                         command.Parameters.AddWithValue("@Precio", product.Price);
                         command.Parameters.AddWithValue("@Lote", product.Lote);
                         command.Parameters.AddWithValue("@Cantidad", product.Quantity);
                         command.Parameters.AddWithValue("@Categoria", product.CategoryId);
                         command.Parameters.AddWithValue("@Estado", product.StatusId);
 
-
                         command.ExecuteNonQuery();
                     }
                 }
-                
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception($"Error in AddProduct: {ex.Message} at {ex.StackTrace}", ex);
             }
         }
 
@@ -56,14 +53,14 @@ namespace DataLayer.Repositories
                 {
                     connectionManager.OpenConnection(connection);
                     string query = "UPDATE Productos SET nombre = @Nombre, codigo = @Codigo, descripcion = @Descripcion, " +
-                        "fecha_vencimiento = @FechaVencimiento, precio = @Precio, lote = @Lote, cantidad = @Cantidad, category_id = Category, estado_id = @Estado WHERE product_id = @Id";
+                        "fecha_vencimiento = @FechaVencimiento, precio = @Precio, lote = @Lote, cantidad = @Cantidad, category_id = @Category, estado_id = @Estado WHERE producto_id = @Id";
                     using (var command = new SQLiteCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@Id", product.ProductsId);
                         command.Parameters.AddWithValue("@Nombre", product.ProductName);
                         command.Parameters.AddWithValue("@Codigo", product.Code);
                         command.Parameters.AddWithValue("@Descripcion", product.Description);
-                        command.Parameters.AddWithValue("@FechaVencimiento", product.ExpirationDate);
+                        command.Parameters.AddWithValue("@FechaVencimiento", product.ExpirationDate.ToString("yyyy-MM-dd")); // Ajuste para fechas
                         command.Parameters.AddWithValue("@Precio", product.Price);
                         command.Parameters.AddWithValue("@Lote", product.Lote);
                         command.Parameters.AddWithValue("@Cantidad", product.Quantity);
@@ -72,11 +69,10 @@ namespace DataLayer.Repositories
                         command.ExecuteNonQuery();
                     }
                 }
-
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception($"Error in UpdateProduct: {ex.Message} at {ex.StackTrace}", ex);
             }
         }
 
@@ -87,7 +83,6 @@ namespace DataLayer.Repositories
                 using (var connection = connectionManager.GetConnection())
                 {
                     connectionManager.OpenConnection(connection);
-
                     string query = "DELETE FROM Productos WHERE producto_id = @Id";
                     using (var command = new SQLiteCommand(query, connection))
                     {
@@ -98,7 +93,7 @@ namespace DataLayer.Repositories
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception($"Error in Delete Product: {ex.Message} at {ex.StackTrace}", ex);
             }
         }
 
@@ -112,7 +107,7 @@ namespace DataLayer.Repositories
                     connectionManager.OpenConnection(connection);
                     string query = @"
                 SELECT p.producto_id as ProductoId, p.nombre as ProductoNombre, p.codigo as Codigo,
-	            p.descripcion as Descripcion, p.fecha_vencimiento as Vencimiento,p.precio as ProductoPrecio,
+	            p.descripcion as Descripcion, p.fecha_vencimiento as Vencimiento, p.precio as ProductoPrecio,
 	            p.lote as Lote, p.cantidad as Cantidad, p.category_id as ProductoCategoriaId,
 	            c.category_id as CategoriaId, c.nombre_categoria as CategoriaNombre,
                 p.estado_id as ProductoEstadoId, e.estado_id as EstadoId, e.descripcion as EstadoNombre
@@ -131,7 +126,7 @@ namespace DataLayer.Repositories
                                     ProductName = reader.GetString(reader.GetOrdinal("ProductoNombre")),
                                     Code = reader.GetInt32(reader.GetOrdinal("Codigo")),
                                     Description = reader.GetString(reader.GetOrdinal("Descripcion")),
-                                    ExpirationDate = DateTime.Parse(reader.GetString(reader.GetOrdinal("Vencimiento"))),
+                                    ExpirationDate = reader.GetDateTime(reader.GetOrdinal("Vencimiento")),
                                     Price = reader.GetDouble(reader.GetOrdinal("ProductoPrecio")),
                                     Lote = reader.GetInt32(reader.GetOrdinal("Lote")),
                                     Quantity = reader.GetInt32(reader.GetOrdinal("Cantidad")),
@@ -154,11 +149,10 @@ namespace DataLayer.Repositories
                 }
 
                 return products;
-
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error in GetAllInvoices: {ex.Message} at {ex.StackTrace}", ex);
+                throw new Exception($"Error in GetAllProduct: {ex.Message} at {ex.StackTrace}", ex);
             }
         }
 
@@ -171,7 +165,7 @@ namespace DataLayer.Repositories
                     connectionManager.OpenConnection(connection);
                     string query = @"
                 SELECT p.producto_id as ProductoId, p.nombre as ProductoNombre, p.codigo as Codigo,
-	            p.descripcion as Descripcion, p.fecha_vencimiento as Vencimiento,p.precio as ProductoPrecio,
+	            p.descripcion as Descripcion, p.fecha_vencimiento as Vencimiento, p.precio as ProductoPrecio,
 	            p.lote as Lote, p.cantidad as Cantidad, p.category_id as ProductoCategoriaId,
 	            c.category_id as CategoriaId, c.nombre_categoria as CategoriaNombre,
                 p.estado_id as ProductoEstadoId, e.estado_id as EstadoId, e.descripcion as EstadoNombre
@@ -189,11 +183,11 @@ namespace DataLayer.Repositories
                                 return new Products
                                 {
                                     ProductsId = reader.GetInt32(reader.GetOrdinal("ProductoId")),
-                                    ProductName = reader.GetString(reader.GetOrdinal("ProductoId")),
+                                    ProductName = reader.GetString(reader.GetOrdinal("ProductoNombre")),
                                     Code = reader.GetInt32(reader.GetOrdinal("Codigo")),
                                     Description = reader.GetString(reader.GetOrdinal("Descripcion")),
                                     ExpirationDate = reader.GetDateTime(reader.GetOrdinal("Vencimiento")),
-                                    Price = reader.GetInt32(reader.GetOrdinal("ProductoPrecio")),
+                                    Price = reader.GetDouble(reader.GetOrdinal("ProductoPrecio")),
                                     Lote = reader.GetInt32(reader.GetOrdinal("Lote")),
                                     Quantity = reader.GetInt32(reader.GetOrdinal("Cantidad")),
                                     CategoryId = reader.GetInt32(reader.GetOrdinal("ProductoCategoriaId")),
@@ -217,7 +211,7 @@ namespace DataLayer.Repositories
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception($"Error in GetByIdProduct: {ex.Message} at {ex.StackTrace}", ex);
             }
         }
     }

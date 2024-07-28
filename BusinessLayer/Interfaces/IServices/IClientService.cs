@@ -8,6 +8,6 @@ namespace BusinessLayer.Interfaces.IServices
         public void UpdateClient(ClientDTO clientDTO);
         public void DeleteClient(int id);
         public List<ClientDTO> GetAllCLient();
-        public ClientDTO GetByIdClient();
+        public ClientDTO GetByIdClient(int id);
     }
 }

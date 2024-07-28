@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Interfaces.IServices;
 using BusinessLayer.Model;
 using BusinessLayer.Services;
+using System.ComponentModel;
 
 
 namespace PresentationLayer
@@ -8,6 +9,8 @@ namespace PresentationLayer
     public partial class ProductManagementForm : Form
     {
         private readonly IProductService productService;
+        private BindingList<ProductsDTO> ProductBindingList;
+
         public ProductManagementForm()
         {
             InitializeComponent();
@@ -57,9 +60,15 @@ namespace PresentationLayer
         {
             if (dataGridView1.SelectedRows.Count > 0)
             {
-                DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
-                int productId = Convert.ToInt32(selectedRow.Cells[0].Value);
+                int rowIndex = dataGridView1.SelectedRows[0].Index;
+                int productId = (int)dataGridView1.SelectedRows[0].Cells["ProductID"].Value;
                 productService.DeleteProduct(productId);
+
+                ProductBindingList.RemoveAt(rowIndex);
+            }
+            else
+            {
+                MessageBox.Show("Seleccione una fila para eliminar.");
             }
         }
 
@@ -102,7 +111,9 @@ namespace PresentationLayer
         {
             if (dataGridView1 != null)
             {
-                dataGridView1.DataSource = productService.GetAllProduct();
+                var products = productService.GetAllProduct();
+                ProductBindingList = new BindingList<ProductsDTO>(products);
+                dataGridView1.DataSource = ProductBindingList;
             }
         }
 
