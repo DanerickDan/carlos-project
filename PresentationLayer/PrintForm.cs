@@ -1,14 +1,6 @@
 ﻿using BusinessLayer.InvoiceManagment;
 using BusinessLayer.Model;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+
 
 namespace PresentationLayer
 {
@@ -35,7 +27,7 @@ namespace PresentationLayer
             await webView2.EnsureCoreWebView2Async(null);
 
             // Ejemplo de datos de factura
-            var invoiceData = new InvoiceData
+            var invoiceData = new InvoiceViewDTO
             {
                 ClientName = "Juan Perez",
                 ClientCode = "12345",
@@ -51,10 +43,10 @@ namespace PresentationLayer
                 Date = DateTime.Now,
                 SubTotal = 30.0,
                 Total = 30.0,
-                Products = new List<Product>
+                Products = new List<ProductsDTO>
             {
-                new ProductDTO { ProductCode = "P001", ProductName = "Producto A", Lote = "L001", Quantity = 2, Price = 10.0, Neto = 20.0 },
-                new ProductDTO { ProductCode = "P002", ProductName = "Producto B", Lote = "L002", Quantity = 1, Price = 10.0, Neto = 10.0 }
+                new ProductsDTO { ProductCode = "P001", ProductName = "Producto A", Lote = "L001", Quantity = 2, Price = 10.0, Neto = 20.0 },
+                new ProductsDTO { ProductCode = "P002", ProductName = "Producto B", Lote = "L002", Quantity = 1, Price = 10.0, Neto = 10.0 }
             }
             };
 

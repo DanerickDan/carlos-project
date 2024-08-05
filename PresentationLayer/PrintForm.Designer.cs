@@ -51,7 +51,6 @@
             Controls.Add(webView21);
             Name = "PrintForm";
             Text = "PrintForm";
-            Load += PrintForm_Load;
             ((System.ComponentModel.ISupportInitialize)webView21).EndInit();
             ResumeLayout(false);
         }
