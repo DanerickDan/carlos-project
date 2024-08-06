@@ -171,7 +171,10 @@ namespace PresentationLayer
         // Print Invoice
         private void btnImprimir_Click(object sender, EventArgs e)
         {
-
+            PrintForm frm = new PrintForm();
+            DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
+            int invoiceId = Convert.ToInt32(selectedRow.Cells[0].Value);
+            frm.btnPrint_Click(data);
         }
 
         // Get all invoices
