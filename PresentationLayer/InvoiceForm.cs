@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.DTOs;
 using BusinessLayer.Interfaces.IServices;
+using BusinessLayer.InvoiceManagment;
 using BusinessLayer.Model;
 using BusinessLayer.Services;
 using BusinessLayer.Utils;
@@ -12,12 +13,16 @@ namespace PresentationLayer
         private readonly IInvoiceServices invoiceServices;
         private readonly Mapping mapping;
         private BindingList<InvoiceViewDTO> InvoiceBindingList;
+        private readonly PdfService pdfService;
+        private readonly PrintService printService;
         public InvoiceForm()
         {
             InitializeComponent();
             this.Load += new EventHandler(this.InvoiceForm_Load);
             invoiceServices = new InvoiceServices();
             dataGridView1.MouseWheel += DataGridView1_MouseWheel;
+            pdfService = new PdfService();
+            printService = new PrintService();
 
             mapping = new();
         }
@@ -171,10 +176,17 @@ namespace PresentationLayer
         // Print Invoice
         private void btnImprimir_Click(object sender, EventArgs e)
         {
-            PrintForm frm = new PrintForm();
-            DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
-            int invoiceId = Convert.ToInt32(selectedRow.Cells[0].Value);
-            frm.btnPrint_Click(data);
+
+            // Cargar la plantilla HTML y llenar los datos de la factura
+            string templatePath = Path.Combine(Application.StartupPath, "invoice_template.html");
+            string templateHtml = File.ReadAllText(templatePath);
+            string filledHtml = FillTemplate(templateHtml, invoiceData);
+
+            // Generar el PDF
+            byte[] pdfBytes = pdfService.GeneratePdf(filledHtml);
+
+            // Imprimir el PDF
+            printService.Print(pdfBytes);
         }
 
         // Get all invoices
