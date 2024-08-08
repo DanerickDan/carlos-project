@@ -1,7 +1,5 @@
-﻿using System.Text;
-using DinkToPdf;
+﻿using DinkToPdf;
 using DinkToPdf.Contracts;
-using System.IO;
 
 
 namespace BusinessLayer.InvoiceManagment

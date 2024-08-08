@@ -18,6 +18,7 @@ namespace DomainLayer.Entities
         public int CategoryId { get; set; }
         public int StatusId { get; set; }
         public int Quantity { get; set; }
+        public double ProductNeto { get; set; }
         public Status Statu { get; set; }
         public Categories Category { get; set; }
     }

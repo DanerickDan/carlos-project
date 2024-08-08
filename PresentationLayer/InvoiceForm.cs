@@ -5,6 +5,7 @@ using BusinessLayer.Model;
 using BusinessLayer.Services;
 using BusinessLayer.Utils;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace PresentationLayer
 {
@@ -15,6 +16,7 @@ namespace PresentationLayer
         private BindingList<InvoiceViewDTO> InvoiceBindingList;
         private readonly PdfService pdfService;
         private readonly PrintService printService;
+
         public InvoiceForm()
         {
             InitializeComponent();
@@ -45,7 +47,7 @@ namespace PresentationLayer
                 int lote = Convert.ToInt32(selectedRow.Cells[9].Value);
                 string ncf = selectedRow.Cells[10].Value.ToString();
                 int quantity = Convert.ToInt32(selectedRow.Cells[11].Value);
-                string productCode = selectedRow.Cells[12].ToString();
+                int productCode = Convert.ToInt32(selectedRow.Cells[12].Value);
                 double subTotal = Convert.ToDouble(selectedRow.Cells[13].Value);
                 int productId = Convert.ToInt32(selectedRow.Cells[14].Value);
                 int invoiceNumber = Convert.ToInt32(selectedRow.Cells[15].Value);
@@ -131,7 +133,7 @@ namespace PresentationLayer
                 int lote = Convert.ToInt32(selectedRow.Cells[9].Value);
                 string ncf = selectedRow.Cells[10].Value.ToString();
                 int quantity = Convert.ToInt32(selectedRow.Cells[11].Value);
-                string productCode = selectedRow.Cells[12].ToString();
+                int productCode = Convert.ToInt32(selectedRow.Cells[12].Value);
                 double subTotal = Convert.ToDouble(selectedRow.Cells[13].Value);
                 int productId = Convert.ToInt32(selectedRow.Cells[14].Value);
                 int invoiceNumber = Convert.ToInt32(selectedRow.Cells[15].Value);
@@ -176,17 +178,74 @@ namespace PresentationLayer
         // Print Invoice
         private void btnImprimir_Click(object sender, EventArgs e)
         {
+            try
+            {
+                DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
+                int id = Convert.ToInt32(selectedRow.Cells[0].Value);
+                
 
-            // Cargar la plantilla HTML y llenar los datos de la factura
-            string templatePath = Path.Combine(Application.StartupPath, "invoice_template.html");
-            string templateHtml = File.ReadAllText(templatePath);
-            string filledHtml = FillTemplate(templateHtml, invoiceData);
+                // Cargar la plantilla HTML y llenar los datos de la factura
+                string templatePath = Path.Combine(Application.StartupPath, "C:\\Users\\pasantetic\\source\\repos\\ProyectoCarlos\\BusinessLayer\\InvoiceManagment\\index.html");
+                string templateHtml = File.ReadAllText(templatePath);
+                var data = printService.GetInvoicePrintById(id);
+                string filledHtml = FillTemplate(templateHtml, data);
 
-            // Generar el PDF
-            byte[] pdfBytes = pdfService.GeneratePdf(filledHtml);
+                // Generar el PDF
+                byte[] pdfBytes = pdfService.GeneratePdf(filledHtml);
 
-            // Imprimir el PDF
-            printService.Print(pdfBytes);
+                // Imprimir el PDF
+                printService.Print(pdfBytes);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al imprimir la factura: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public string FillTemplate(string template, PrintViewDTO data)
+        {
+
+            // Reemplazar los marcadores de posición en la plantilla con los datos de la factura
+            template = template.Replace("{{ClientName}}", data.NombreCliente)
+                               .Replace("{{ClientCode}}", data.CodigoCliente.ToString())
+                               .Replace("{{ClientAddress}}", data.ClienteDireccion.ToString())
+                               .Replace("{{ClientCity}}", data.ClienteCiudad.ToString())
+                               .Replace("{{ClientPhone}}", data.ClienteTelefono.ToString())
+                               .Replace("{{ClientRNC}}", data.ClienteRNC.ToString())
+                               .Replace("{{SellerName}}", data.Vendedor)
+                               .Replace("{{NCF}}", data.NCF)
+                               .Replace("{{Terms}}", data.Terminos)
+                               .Replace("{{OrderNumber}}", data.NumeroPedido.ToString())
+                               .Replace("{{InvoiceNumber}}", data.NumeroFactura.ToString())
+                               .Replace("{{Date}}", data.Fecha.ToString("dd/MM/yyyy"))
+                               .Replace("{{SubTotal}}", data.SubTotal.ToString("F2"))
+                               .Replace("{{Total}}", data.Total.ToString("F2"));
+
+            // Reemplazar los productos
+            string productTemplate = @"
+            <tr>
+                <th scope=""row"">{{ProductCode}}</th>
+                <td>{{ProductName}}</td>
+                <td>{{Lote}}</td>
+                <td>{{Quantity}}</td>
+                <td>${{Price}}</td>
+                <td>{{Neto}}</td>
+            </tr>";
+            string productsHtml = "";
+            foreach (var product in data.products)
+            {
+                string productHtml = productTemplate.Replace("{{ProductCode}}", data.CodigoProducto.ToString())
+                                                    .Replace("{{ProductName}}", data.NombreProducto.ToString())
+                                                    .Replace("{{Lote}}", data.LoteProducto.ToString())
+                                                    .Replace("{{Quantity}}", data.Cantidad.ToString())
+                                                    .Replace("{{Price}}", data.PrecioUnitario.ToString("F2"))
+                                                    .Replace("{{Neto}}", data.Neto.ToString("F2"));
+                productsHtml += productHtml;
+            }
+            template = template.Replace("<!-- Products -->", productsHtml);
+
+            return template;
+
         }
 
         // Get all invoices

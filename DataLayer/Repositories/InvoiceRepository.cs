@@ -244,7 +244,7 @@ namespace DataLayer.Repositories
                                     Lote = reader.GetInt32(reader.GetOrdinal("Lote")), // Corrected type
                                     Total = reader.GetDouble(reader.GetOrdinal("Total")),
                                     SubTotal = reader.GetDouble(reader.GetOrdinal("SubTotal")),
-                                    ProductCode = reader.GetString(reader.GetOrdinal("Codigo")), // Added for Codigo
+                                    ProductCode = reader.GetInt32(reader.GetOrdinal("Codigo")), // Added for Codigo
                                     Neto = reader.GetDouble(reader.GetOrdinal("Neto"))
                                 };
 
@@ -318,7 +318,7 @@ namespace DataLayer.Repositories
                                     Total = reader.GetDouble(reader.GetOrdinal("Total")),
                                     SubTotal = reader.GetDouble(reader.GetOrdinal("SubTotal")),
                                     Neto = reader.GetDouble(reader.GetOrdinal("Neto")),
-                                    ProductCode = reader.GetString(reader.GetOrdinal("Codigo"))
+                                    ProductCode = reader.GetInt32(reader.GetOrdinal("Codigo"))
                                 };
 
                                 invoice.Details.Add(detail);

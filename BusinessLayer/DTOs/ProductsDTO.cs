@@ -10,6 +10,7 @@
         public DateTime ExpirationDate { get; set; }
         public double Price { get; set; }
         public int Lote { get; set; }
+        public double ProductNeto { get; set; }
         public int CategoryId { get; set; }
         public int StatusId { get; set; }
     }
