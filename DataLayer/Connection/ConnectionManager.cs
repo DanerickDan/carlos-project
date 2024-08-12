@@ -1,10 +1,13 @@
 ﻿using System.Data.SQLite;
+using System.Configuration;
 
 namespace DataLayer.Connection
 {
     public class ConnectionManager
     {
-        private readonly string ConnectionString = "Data Source=C:\\Users\\pasantetic\\source\\repos\\ProyectoCarlos\\DataLayer\\databasePrueba2.db";
+        private readonly string ConnectionString = ConfigurationManager.ConnectionStrings["MyDbConnectionString"].ConnectionString;
+
+
 
         public SQLiteConnection GetConnection()
         {

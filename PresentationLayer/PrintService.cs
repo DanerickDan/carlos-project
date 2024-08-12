@@ -6,7 +6,10 @@ using System.Drawing;
 using BusinessLayer.Interfaces.IServices;
 using BusinessLayer.Model;
 using System.Diagnostics;
-using PdfiumViewer;
+using PdfSharp.Pdf;
+using PdfSharp.Pdf.IO;
+using PdfSharp.Drawing;
+
 
 namespace PresentationLayer
 {
@@ -18,8 +21,6 @@ namespace PresentationLayer
         {
             printRepository = new PrintRepository();
         }
-
-
 
         public void Print(byte[] pdfBytes)
         {
@@ -46,10 +47,16 @@ namespace PresentationLayer
             DialogResult result = MessageBox.Show("¿Desea imprimir el documento?", "Confirmar Impresión", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                using (var document = PdfDocument.Load(tempPath))
+                using (PdfDocument document = PdfReader.Open(tempPath, PdfDocumentOpenMode.Import))
                 {
-                    using (var printDocument = document.CreatePrintDocument())
+                    using (PrintDocument printDocument = new PrintDocument())
                     {
+                        printDocument.PrintPage += (sender, e) =>
+                        {
+                            XGraphics gfx = XGraphics.FromPdfPage(document.Pages[0]);
+                            gfx.DrawImage(XImage.FromFile(tempPath), 0, 0);
+                        };
+
                         using (PrintDialog printDialog = new PrintDialog())
                         {
                             printDialog.Document = printDocument;

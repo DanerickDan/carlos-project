@@ -182,10 +182,11 @@ namespace PresentationLayer
             {
                 DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
                 int id = Convert.ToInt32(selectedRow.Cells[0].Value);
-                
+
 
                 // Cargar la plantilla HTML y llenar los datos de la factura
-                string templatePath = Path.Combine(Application.StartupPath, "C:\\Users\\pasantetic\\source\\repos\\ProyectoCarlos\\BusinessLayer\\InvoiceManagment\\index.html");
+                string templatePath = Path.Combine(Application.StartupPath, "index.html");
+
                 string templateHtml = File.ReadAllText(templatePath);
                 var data = printService.GetInvoicePrintById(id);
                 string filledHtml = FillTemplate(templateHtml, data);
