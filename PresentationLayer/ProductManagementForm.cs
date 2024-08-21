@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Interfaces.IServices;
 using BusinessLayer.Model;
 using BusinessLayer.Services;
+using PresentationLayer.AddForms;
 using System.ComponentModel;
 
 
@@ -23,27 +24,32 @@ namespace PresentationLayer
         // Add button
         private void btnAnadir_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.SelectedRows.Count > 0)
-            {
-                DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
+            //if (dataGridView1.SelectedRows.Count > 0)
+            //{
+            //    DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
 
-                string productName = selectedRow.Cells[1].Value.ToString();
-                int code = Convert.ToInt32(selectedRow.Cells[2].Value);
-                string description = selectedRow.Cells[3].Value.ToString();
-                DateTime expirationTime = Convert.ToDateTime(selectedRow.Cells[4].Value);
-                double price = Convert.ToDouble(selectedRow.Cells[5].Value);
-                int lote = Convert.ToInt32(selectedRow.Cells[6].Value);
-                ProductsDTO productsDTO = new ProductsDTO
-                {
-                    ProductName = productName,
-                    Code = code,
-                    Description = description,
-                    ExpirationDate = expirationTime,
-                    Price = price,
-                    Lote = lote
-                };
-                productService.AddProduct(productsDTO);
-            }
+            //    string productName = selectedRow.Cells[1].Value.ToString();
+            //    int code = Convert.ToInt32(selectedRow.Cells[2].Value);
+            //    string description = selectedRow.Cells[3].Value.ToString();
+            //    DateTime expirationTime = Convert.ToDateTime(selectedRow.Cells[4].Value);
+            //    double price = Convert.ToDouble(selectedRow.Cells[5].Value);
+            //    int lote = Convert.ToInt32(selectedRow.Cells[6].Value);
+            //    ProductsDTO productsDTO = new ProductsDTO
+            //    {
+            //        ProductName = productName,
+            //        Code = code,
+            //        Description = description,
+            //        ExpirationDate = expirationTime,
+            //        Price = price,
+            //        Lote = lote
+            //    };
+            //    productService.AddProduct(productsDTO);
+            //}
+            AddProduct addProduct = new();
+            addProduct.MaximizeBox = false;
+            addProduct.MinimizeBox = false;
+            addProduct.ShowDialog();
+
         }
         // Delete Button
         private void btnBorrar_Click(object sender, EventArgs e)

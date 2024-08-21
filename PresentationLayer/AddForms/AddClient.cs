@@ -16,5 +16,15 @@ namespace PresentationLayer.AddForms
         {
             InitializeComponent();
         }
+
+        private void customTextBox1__TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AddClient_Load(object sender, EventArgs e)
+        {
+            
+        }
     }
 }
