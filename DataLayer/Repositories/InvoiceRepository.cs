@@ -329,10 +329,37 @@ namespace DataLayer.Repositories
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception($"Error in GetInvoiceById: {ex.Message} at {ex.StackTrace}", ex);
             }
 
             return invoice;
+        }
+
+        public bool ExistCode(int code, string type)
+        {
+            try
+            {
+                using (var connection = connectionManager.GetConnection())
+                {
+                    connectionManager.OpenConnection(connection);
+                    string query = "SELECT COUNT(1) FROM Facturas WHERE @Tipo = @Codigo";
+                    using (var command = new SQLiteCommand(query,connection))
+                    {
+                        command.Parameters.AddWithValue("@Tipo", type);
+                        command.Parameters.AddWithValue("@Codigo", code);
+                        var count = command.ExecuteScalar();
+                        if(count != null)
+                        {
+                            return true;
+                        }
+                        return false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error in ExistCode: {ex.Message} at {ex.StackTrace}", ex);
+            }
         }
     }
 }

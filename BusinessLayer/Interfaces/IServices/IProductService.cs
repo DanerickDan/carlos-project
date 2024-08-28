@@ -9,5 +9,6 @@ namespace BusinessLayer.Interfaces.IServices
         public void DeleteProduct(int id);
         public List<ProductsDTO> GetAllProduct();
         public ProductsDTO GetByIdProduct(int id);
+        IEnumerable<ProductsDTO> GetAllProductName();
     }
 }

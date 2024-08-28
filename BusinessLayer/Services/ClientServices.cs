@@ -95,5 +95,17 @@ namespace BusinessLayer.Services
 
             return clientDTO;
         }
+
+        public IEnumerable<string> GetAllCLientName()
+        {
+            List<string> list = new();
+            var names = _clientRepository.GetAllNameClient();
+            foreach (var name in names)
+            {
+                list.Add(name);
+            }
+
+            return list;
+        }
     }
 }

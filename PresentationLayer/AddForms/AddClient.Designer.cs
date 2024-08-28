@@ -47,8 +47,8 @@
             nombreTxt = new CustomComponents.MainFormComponents.CustomTextBox();
             codigoTxt = new CustomComponents.MainFormComponents.CustomTextBox();
             panel3 = new Panel();
-            label4 = new Label();
             materialListBox1 = new MaterialSkin.Controls.MaterialListBox();
+            label4 = new Label();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
             SuspendLayout();
@@ -381,17 +381,6 @@
             panel3.Size = new Size(331, 450);
             panel3.TabIndex = 2;
             // 
-            // label4
-            // 
-            label4.Anchor = AnchorStyles.Top;
-            label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(91, 0);
-            label4.Name = "label4";
-            label4.Size = new Size(171, 30);
-            label4.TabIndex = 0;
-            label4.Text = "Lista de Clientes";
-            // 
             // materialListBox1
             // 
             materialListBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -406,6 +395,17 @@
             materialListBox1.SelectedItem = null;
             materialListBox1.Size = new Size(297, 406);
             materialListBox1.TabIndex = 1;
+            // 
+            // label4
+            // 
+            label4.Anchor = AnchorStyles.Top;
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label4.Location = new Point(91, 0);
+            label4.Name = "label4";
+            label4.Size = new Size(171, 30);
+            label4.TabIndex = 0;
+            label4.Text = "Lista de Clientes";
             // 
             // AddClient
             // 

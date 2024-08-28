@@ -214,5 +214,70 @@ namespace DataLayer.Repositories
                 throw new Exception($"Error in GetByIdProduct: {ex.Message} at {ex.StackTrace}", ex);
             }
         }
+
+        public IEnumerable<Products> GetAllProductName()
+        {
+            List<Products> productNames = new();
+
+            try
+            {
+                using (var connection = connectionManager.GetConnection())
+                {
+                    connectionManager.OpenConnection(connection);
+                    string query = "SELECT Nombre, Precio FROM VerProductos";
+                    using (var command = new SQLiteCommand(query, connection))
+                    {
+                        using (var reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Products products = new()
+                                {
+                                    ProductName = reader.GetString(0),
+                                    Price = reader.GetDouble(1)
+                                };
+                                productNames.Add(products);
+                            }
+                            return productNames;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error in GetAllProductName: {ex.Message} at {ex.StackTrace}", ex);
+            }
+        }
+
+        public bool ExistCode(string code, string type)
+        {
+            try
+            {
+
+                using (var connection = connectionManager.GetConnection())
+                {
+                    connectionManager.OpenConnection(connection);
+                    string query = "SELECT COUNT(1) FROM Productos WHEHRE @Type = @Code";
+                    using (var command = new SQLiteCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@Type", type);
+                        command.Parameters.AddWithValue("@Code", code);
+                        var count = command.ExecuteScalar();
+
+                        if (count != null)
+                        {
+                            return true;
+                        }
+
+                        return false;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error in ExistCode: {ex.Message} at {ex.StackTrace}", ex);
+            }
+        }
     }
 }

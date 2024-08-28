@@ -96,5 +96,23 @@ namespace BusinessLayer.Services
             return productsDTO;
 
         }
+
+        public IEnumerable<ProductsDTO> GetAllProductName()
+        {
+            List<ProductsDTO> products = new();
+            var names  = _repository.GetAllProductName();
+
+            foreach (var item in names)
+            {
+                ProductsDTO productsDTO = new()
+                {
+                    ProductName = item.ProductName,
+                    Price = item.Price
+
+                };
+                products.Add(productsDTO);
+            }
+            return products;
+        }
     }
 }

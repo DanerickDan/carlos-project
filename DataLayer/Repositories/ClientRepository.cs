@@ -1,7 +1,10 @@
 ﻿using DataLayer.Connection;
 using DataLayer.IRepository;
 using DomainLayer.Entities;
+using System.Data;
 using System.Data.SQLite;
+using System.Reflection.Metadata;
+using System.Security.Cryptography.X509Certificates;
 
 namespace DataLayer.Repositories
 {
@@ -175,6 +178,63 @@ namespace DataLayer.Repositories
                 throw new Exception($"Error in GetClientById: {ex.Message}", ex);
             }
             return null;
+        }
+
+        public IEnumerable<string> GetAllNameClient()
+        {
+            List<string> names = new();
+            string nombre = "";
+            try
+            {
+                using (var connection = connectionManager.GetConnection())
+                {
+                    connectionManager.OpenConnection(connection);
+                    string query = "SELECT Nombre FROM VerClientes";
+                    using (var command = new SQLiteCommand(query, connection))
+                    {
+                        using (var reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                nombre = reader.GetString(0);
+                                names.Add(nombre);
+                            }
+                            return names;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error in GetAllNameClient: {ex.Message}", ex);
+            }
+        }
+
+        public bool ExistCode(int code, string type)
+        {
+            try
+            {
+                using (var connection = connectionManager.GetConnection())
+                {
+                    connectionManager.OpenConnection(connection);
+                    string query = "SELECT COUNT(1) FROM Clientes Where @Type = @Code";
+                    using (var command = new SQLiteCommand(query,connection))
+                    {
+                        command.Parameters.AddWithValue("@Type",type);
+                        command.Parameters.AddWithValue("@Code",code);
+                        var count = command.ExecuteScalar();
+                        if(count != null)
+                        {
+                            return true;
+                        }
+                        return false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error in ExistCode: {ex.Message}", ex);
+            }
         }
     }
 }

@@ -353,6 +353,7 @@
             FormBorderStyle = FormBorderStyle.Fixed3D;
             Name = "AddProduct";
             Text = "AddProduct";
+            Load += AddProduct_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             panel2.ResumeLayout(false);

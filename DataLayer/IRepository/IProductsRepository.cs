@@ -14,5 +14,7 @@ namespace DataLayer.IRepository
         void DeleteProduct(int id);
         List<Products> GetAllProduct();
         Products GetByIdProduct(int id);
+        IEnumerable<Products> GetAllProductName();
+        public bool ExistCode(string code ,string type);
     }
 }
