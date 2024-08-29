@@ -3,8 +3,6 @@ using DataLayer.IRepository;
 using DomainLayer.Entities;
 using System.Data;
 using System.Data.SQLite;
-using System.Reflection.Metadata;
-using System.Security.Cryptography.X509Certificates;
 
 namespace DataLayer.Repositories
 {
@@ -23,26 +21,34 @@ namespace DataLayer.Repositories
                 using (var connection = connectionManager.GetConnection())
                 {
                     connectionManager.OpenConnection(connection);
-                    string query = "INSERT INTO Clientes(nombre, direccion, ciudad, telefono, fax, RNC, codigo, email)" +
-                        "VALUES(@Nombre, @Direcccion, @Ciudad, @Telefono, @Fax, @RNC, @Code, @Email)";
-                    using (var command = new SQLiteCommand(query, connection))
+                    using (var transaction = connection.BeginTransaction())
                     {
-                        command.Parameters.AddWithValue("@Nombre", client.ClientName);
-                        command.Parameters.AddWithValue("@Direccion", client.Address);
-                        command.Parameters.AddWithValue("@Ciudad", client.City);
-                        command.Parameters.AddWithValue("@Telefono", client.PhoneNumber);
-                        command.Parameters.AddWithValue("@Fax", client.Fax);
-                        command.Parameters.AddWithValue("@RNC", client.Rnc);
-                        command.Parameters.AddWithValue("@Code", client.Code);
-                        command.Parameters.AddWithValue("@Email", client.Email);
+                        string query = "INSERT INTO Clientes(nombre, direccion, ciudad, telefono, fax, RNC, codigo, email, activo)" +
+                            "VALUES(@Nombre, @Direccion, @Ciudad, @Telefono, @Fax, @RNC, @Code, @Email, @Activo)";
+                        using (var command = new SQLiteCommand(query, connection, transaction))
+                        {
+                            command.Parameters.AddWithValue("@Nombre", client.ClientName);
+                            command.Parameters.AddWithValue("@Direccion", client.Address);
+                            command.Parameters.AddWithValue("@Ciudad", client.City);
+                            command.Parameters.AddWithValue("@Telefono", client.PhoneNumber);
+                            command.Parameters.AddWithValue("@Fax", client.Fax);
+                            command.Parameters.AddWithValue("@RNC", client.Rnc);
+                            command.Parameters.AddWithValue("@Code", client.Code);
+                            command.Parameters.AddWithValue("@Email", client.Email);
+                            command.Parameters.AddWithValue("@Activo", 1);
 
-                        command.ExecuteNonQuery();
+                            command.ExecuteNonQuery();
+                        }
+
+                        transaction.Commit(); // Asegúrate de confirmar la transacción
+                        connection.Close();
                     }
                 }
+
             }
-            catch (Exception ex)
+            catch (SQLiteException ex)
             {
-                throw new Exception($"Error in AddClient: {ex.Message}", ex);
+                throw new SQLiteException($"Error in AddClient: {ex.Message}", ex);
             }
         }
 
@@ -55,25 +61,30 @@ namespace DataLayer.Repositories
                     connectionManager.OpenConnection(connection);
                     string query = "UPDATE Clientes SET nombre = @Nombre, direccion = @Direccion, ciudad = @Ciudad, telefono = @Telefono" +
                         ", fax = @Fax, RNC = @rnc, codigo = @Code, email = @Email WHERE clientes_id = @ClienteId";
-                    using (var command = new SQLiteCommand(query, connection))
+                    using (var transaction = connection.BeginTransaction())
                     {
-                        command.Parameters.AddWithValue("@Nombre", client.ClientName);
-                        command.Parameters.AddWithValue("@Direccion", client.Address);
-                        command.Parameters.AddWithValue("@Ciudad", client.City);
-                        command.Parameters.AddWithValue("@Telefono", client.PhoneNumber);
-                        command.Parameters.AddWithValue("@Fax", client.Fax);
-                        command.Parameters.AddWithValue("@rnc", client.Rnc);
-                        command.Parameters.AddWithValue("@ClientId", client.ClientId);
-                        command.Parameters.AddWithValue("@Email", client.Email);
-                        command.Parameters.AddWithValue("@ClienteId", client.ClientId);
+                        using (var command = new SQLiteCommand(query, connection, transaction))
+                        {
+                            command.Parameters.AddWithValue("@Nombre", client.ClientName);
+                            command.Parameters.AddWithValue("@Direccion", client.Address);
+                            command.Parameters.AddWithValue("@Ciudad", client.City);
+                            command.Parameters.AddWithValue("@Telefono", client.PhoneNumber);
+                            command.Parameters.AddWithValue("@Fax", client.Fax);
+                            command.Parameters.AddWithValue("@rnc", client.Rnc);
+                            command.Parameters.AddWithValue("@ClientId", client.ClientId);
+                            command.Parameters.AddWithValue("@Email", client.Email);
+                            command.Parameters.AddWithValue("@ClienteId", client.ClientId);
 
-                        command.ExecuteNonQuery();
+                            command.ExecuteNonQuery();
+                        }
+                        transaction.Commit();
+                        connection.Close();
                     }
                 }
             }
-            catch (Exception ex)
+            catch (SQLiteException ex)
             {
-                throw new Exception($"Error in UpdateClient: {ex.Message}", ex);
+                throw new SQLiteException($"Error in UpdateClient: {ex.Message}", ex);
             }
         }
 
@@ -84,17 +95,21 @@ namespace DataLayer.Repositories
                 using (var connection = connectionManager.GetConnection())
                 {
                     connectionManager.OpenConnection(connection);
-                    string query = "DELETE FROM Clientes WHERE clientes_id = @ClientId";
-                    using (var command = new SQLiteCommand(query, connection))
+                    string query = "UPDATE Clientes SET activo = 0  WHERE clientes_id = @ClientId";
+                    using (var transaction = new SQLiteTransaction(connection, true))
                     {
-                        command.Parameters.AddWithValue("@ClientId", id);
-                        command.ExecuteNonQuery();
+                        using (var command = new SQLiteCommand(query, connection, transaction))
+                        {
+                            command.Parameters.AddWithValue("@ClientId", id);
+                            command.ExecuteNonQuery();
+                        }
+                        transaction.Commit();
                     }
                 }
             }
-            catch (Exception e)
+            catch (SQLiteException e)
             {
-                throw new Exception($"Error in DeleteClient: {e.Message}", e);
+                throw new SQLiteException($"Error in DeleteClient: {e.Message}", e);
             }
         }
 
@@ -106,7 +121,7 @@ namespace DataLayer.Repositories
                 using (var connection = connectionManager.GetConnection())
                 {
                     connectionManager.OpenConnection(connection);
-                    string query = "SELECT * FROM Clientes";
+                    string query = "SELECT * FROM Clientes WHERE activo = 1";
                     using (var command = new SQLiteCommand(query, connection))
                     {
                         using (var reader = command.ExecuteReader())
@@ -132,9 +147,9 @@ namespace DataLayer.Repositories
                 }
                 return clients;
             }
-            catch (Exception ex)
+            catch (SQLiteException ex)
             {
-                throw new Exception($"Error in GetAllInvoices: {ex.Message} at {ex.StackTrace}", ex);
+                throw new SQLiteException($"Error in GetAllCLient: {ex.Message} at {ex.StackTrace}", ex);
             }
 
         }
@@ -147,7 +162,7 @@ namespace DataLayer.Repositories
                 using (var connection = connectionManager.GetConnection())
                 {
                     connectionManager.OpenConnection(connection);
-                    string query = "SELECT * FROM Clientes WHERE clientes_id = @ClientId";
+                    string query = "SELECT * FROM Clientes WHERE clientes_id = @ClientId and activo = 1";
                     using (var command = new SQLiteCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@ClientId", id);
@@ -173,9 +188,9 @@ namespace DataLayer.Repositories
                     }
                 }
             }
-            catch (Exception ex)
+            catch (SQLiteException ex)
             {
-                throw new Exception($"Error in GetClientById: {ex.Message}", ex);
+                throw new SQLiteException($"Error in GetClientById: {ex.Message}", ex);
             }
             return null;
         }
@@ -189,7 +204,7 @@ namespace DataLayer.Repositories
                 using (var connection = connectionManager.GetConnection())
                 {
                     connectionManager.OpenConnection(connection);
-                    string query = "SELECT Nombre FROM VerClientes";
+                    string query = "SELECT Nombre FROM VerClientes WHERE activo = 1";
                     using (var command = new SQLiteCommand(query, connection))
                     {
                         using (var reader = command.ExecuteReader())
@@ -204,9 +219,9 @@ namespace DataLayer.Repositories
                     }
                 }
             }
-            catch (Exception ex)
+            catch (SQLiteException ex)
             {
-                throw new Exception($"Error in GetAllNameClient: {ex.Message}", ex);
+                throw new SQLiteException($"Error in GetAllNameClient: {ex.Message}", ex);
             }
         }
 
@@ -231,9 +246,9 @@ namespace DataLayer.Repositories
                     }
                 }
             }
-            catch (Exception ex)
+            catch (SQLiteException ex)
             {
-                throw new Exception($"Error in ExistCode: {ex.Message}", ex);
+                throw new SQLiteException($"Error in ExistCode: {ex.Message}", ex);
             }
         }
     }

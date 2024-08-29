@@ -18,7 +18,6 @@ namespace BusinessLayer.Services
         {
             var product = new Products
             {
-                ProductsId = productDTO.ProductsId,
                 ProductName = productDTO.ProductName,
                 Code = productDTO.Code,
                 Description = productDTO.Description,

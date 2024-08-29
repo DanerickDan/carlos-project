@@ -21,8 +21,8 @@ namespace BusinessLayer.Utils
 
             do
             {
-                newCode = _suffixGenerator.GenerarSufijoAleatorio(2) + new Random().Next(1000-9999);
-                isUnique = _productsRepository.ExistCode(newCode, "code");
+                newCode = _suffixGenerator.GenerarSufijoAleatorio(2) + new Random().Next(1000, 9999);
+                isUnique = _productsRepository.ExistCode(newCode, "codigo");
             } while (!isUnique);
             return newCode;
         }
@@ -34,7 +34,7 @@ namespace BusinessLayer.Utils
 
             do
             {
-                newCode = new Random().Next(1000 - 9999).ToString();
+                newCode = new Random().Next(1000, 9999).ToString();
                 isUnique = _productsRepository.ExistCode(newCode,"lote");
             } while (!isUnique);
 

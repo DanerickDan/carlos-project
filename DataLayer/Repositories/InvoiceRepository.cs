@@ -64,16 +64,16 @@ namespace DataLayer.Repositories
                         transaction.Commit();
                         connectionManager.CloseConnection(connectionT);
                     }
-                    catch (Exception ex)
+                    catch (SQLiteException ex)
                     {
                         transaction.Rollback();
-                        throw new Exception(ex.Message);
+                        throw new SQLiteException(ex.Message);
                     }
                 }
             }
-            catch (Exception ex)
+            catch (SQLiteException ex)
             {
-                throw new Exception(ex.Message);
+                throw new SQLiteException(ex.Message);
             }
 
         }
@@ -134,12 +134,13 @@ namespace DataLayer.Repositories
                             }
 
                             transaction.Commit();
+                            connectionT.Close();
                         }
                     }
-                    catch (Exception ex)
+                    catch (SQLiteException ex)
                     {
                         transaction.Rollback();
-                        throw new Exception(ex.Message);
+                        throw new SQLiteException(ex.Message);
                     }
                     finally
                     {
@@ -149,9 +150,9 @@ namespace DataLayer.Repositories
                 }
 
             }
-            catch (Exception e)
+            catch (SQLiteException e)
             {
-                throw new Exception(e.Message);
+                throw new SQLiteException(e.Message);
             }
         }
 
@@ -164,26 +165,31 @@ namespace DataLayer.Repositories
                 {
                     connectionManager.OpenConnection(connection);
 
-                    string deleteDetailsQuery = "DELETE FROM Detalle_Factura WHERE factura_id = @FacturaId";
-                    using (var command = new SQLiteCommand(deleteDetailsQuery, connection))
+                    using (var transaction = connection.BeginTransaction())
                     {
-                        command.Parameters.AddWithValue("@FacturaId", id);
-                        command.ExecuteNonQuery();
-                    }
+                        string deleteDetailsQuery = "DELETE FROM Detalle_Factura WHERE factura_id = @FacturaId";
+                        using (var command = new SQLiteCommand(deleteDetailsQuery, connection, transaction))
+                        {
+                            command.Parameters.AddWithValue("@FacturaId", id);
+                            command.ExecuteNonQuery();
+                        }
 
 
-                    string query = "DELETE FROM Facturas WHERE factura_id = @Id";
-                    using (var command = new SQLiteCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@Id", id);
-                        command.ExecuteNonQuery();
+                        string query = "DELETE FROM Facturas WHERE factura_id = @Id";
+                        using (var command = new SQLiteCommand(query, connection, transaction))
+                        {
+                            command.Parameters.AddWithValue("@Id", id);
+                            command.ExecuteNonQuery();
+                        }
+                        transaction.Commit();
+                        connection.Close();
                     }
 
                 }
             }
-            catch (Exception ex)
+            catch (SQLiteException ex)
             {
-                throw new Exception(ex.Message);
+                throw new SQLiteException(ex.Message);
             }
         }
 
@@ -244,7 +250,7 @@ namespace DataLayer.Repositories
                                     Lote = reader.GetInt32(reader.GetOrdinal("Lote")), // Corrected type
                                     Total = reader.GetDouble(reader.GetOrdinal("Total")),
                                     SubTotal = reader.GetDouble(reader.GetOrdinal("SubTotal")),
-                                    ProductCode = reader.GetInt32(reader.GetOrdinal("Codigo")), // Added for Codigo
+                                    ProductCode = reader.GetString(reader.GetOrdinal("Codigo")), // Added for Codigo
                                     Neto = reader.GetDouble(reader.GetOrdinal("Neto"))
                                 };
 
@@ -257,12 +263,11 @@ namespace DataLayer.Repositories
 
                 return invoices;
             }
-            catch (Exception ex)
+            catch (SQLiteException ex)
             {
-                throw new Exception($"Error in GetAllInvoices: {ex.Message} at {ex.StackTrace}", ex);
+                throw new SQLiteException($"Error in GetAllInvoices: {ex.Message} at {ex.StackTrace}", ex);
             }
         }
-
 
 
         public Invoice GetInvoiceById(int id)
@@ -318,7 +323,7 @@ namespace DataLayer.Repositories
                                     Total = reader.GetDouble(reader.GetOrdinal("Total")),
                                     SubTotal = reader.GetDouble(reader.GetOrdinal("SubTotal")),
                                     Neto = reader.GetDouble(reader.GetOrdinal("Neto")),
-                                    ProductCode = reader.GetInt32(reader.GetOrdinal("Codigo"))
+                                    ProductCode = reader.GetString(reader.GetOrdinal("Codigo"))
                                 };
 
                                 invoice.Details.Add(detail);
@@ -327,9 +332,9 @@ namespace DataLayer.Repositories
                     }
                 }
             }
-            catch (Exception ex)
+            catch (SQLiteException ex)
             {
-                throw new Exception($"Error in GetInvoiceById: {ex.Message} at {ex.StackTrace}", ex);
+                throw new SQLiteException($"Error in GetInvoiceById: {ex.Message} at {ex.StackTrace}", ex);
             }
 
             return invoice;
@@ -356,9 +361,9 @@ namespace DataLayer.Repositories
                     }
                 }
             }
-            catch (Exception ex)
+            catch (SQLiteException ex)
             {
-                throw new Exception($"Error in ExistCode: {ex.Message} at {ex.StackTrace}", ex);
+                throw new SQLiteException($"Error in ExistCode: {ex.Message} at {ex.StackTrace}", ex);
             }
         }
     }

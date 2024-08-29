@@ -18,7 +18,6 @@ namespace BusinessLayer.Services
         {
             var client = new Client
             {
-                ClientId = clientDTO.ClientId,
                 ClientName = clientDTO.ClientName,
                 Address = clientDTO.Address,
                 City = clientDTO.City,

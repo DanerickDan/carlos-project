@@ -19,7 +19,7 @@ namespace BusinessLayer.Utils
 
             do
             {
-                newCode = new Random().Next(1000-9999) ;
+                newCode = new Random().Next(1000, 9999) ;
                 isUnique = _clientRepository.ExistCode(newCode,"codigo") ;
             } while (!isUnique);
             return newCode.ToString();

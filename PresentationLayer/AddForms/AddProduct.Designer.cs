@@ -31,7 +31,7 @@
             panel1 = new Panel();
             loteTxt = new CustomComponents.MainFormComponents.CustomTextBox();
             cantidadTxt = new CustomComponents.MainFormComponents.CustomTextBox();
-            vencimientTxt = new CustomComponents.MainFormComponents.CustomTextBox();
+            vencimientoTxt = new CustomComponents.MainFormComponents.CustomTextBox();
             nombreTxt = new CustomComponents.MainFormComponents.CustomTextBox();
             label8 = new Label();
             precioTxt = new CustomComponents.MainFormComponents.CustomTextBox();
@@ -55,7 +55,7 @@
             // 
             panel1.Controls.Add(loteTxt);
             panel1.Controls.Add(cantidadTxt);
-            panel1.Controls.Add(vencimientTxt);
+            panel1.Controls.Add(vencimientoTxt);
             panel1.Controls.Add(nombreTxt);
             panel1.Controls.Add(label8);
             panel1.Controls.Add(precioTxt);
@@ -115,26 +115,26 @@
             cantidadTxt.Texts = "";
             cantidadTxt.UnderlinedStyle = true;
             // 
-            // vencimientTxt
+            // vencimientoTxt
             // 
-            vencimientTxt.BackColor = Color.White;
-            vencimientTxt.BorderColor = Color.FromArgb(248, 169, 96);
-            vencimientTxt.BorderFocusColor = Color.HotPink;
-            vencimientTxt.BorderRadius = 0;
-            vencimientTxt.BorderSize = 2;
-            vencimientTxt.Font = new Font("Segoe UI", 9.5F);
-            vencimientTxt.ForeColor = Color.DimGray;
-            vencimientTxt.Location = new Point(286, 134);
-            vencimientTxt.Multiline = false;
-            vencimientTxt.Name = "vencimientTxt";
-            vencimientTxt.Padding = new Padding(10, 7, 10, 7);
-            vencimientTxt.PasswordChar = false;
-            vencimientTxt.PlaceholderColor = Color.DarkGray;
-            vencimientTxt.PlaceholderText = "DD/MM/YY";
-            vencimientTxt.Size = new Size(127, 32);
-            vencimientTxt.TabIndex = 2;
-            vencimientTxt.Texts = "";
-            vencimientTxt.UnderlinedStyle = true;
+            vencimientoTxt.BackColor = Color.White;
+            vencimientoTxt.BorderColor = Color.FromArgb(248, 169, 96);
+            vencimientoTxt.BorderFocusColor = Color.HotPink;
+            vencimientoTxt.BorderRadius = 0;
+            vencimientoTxt.BorderSize = 2;
+            vencimientoTxt.Font = new Font("Segoe UI", 9.5F);
+            vencimientoTxt.ForeColor = Color.DimGray;
+            vencimientoTxt.Location = new Point(286, 134);
+            vencimientoTxt.Multiline = false;
+            vencimientoTxt.Name = "vencimientoTxt";
+            vencimientoTxt.Padding = new Padding(10, 7, 10, 7);
+            vencimientoTxt.PasswordChar = false;
+            vencimientoTxt.PlaceholderColor = Color.DarkGray;
+            vencimientoTxt.PlaceholderText = "DD/MM/YY";
+            vencimientoTxt.Size = new Size(127, 32);
+            vencimientoTxt.TabIndex = 2;
+            vencimientoTxt.Texts = "";
+            vencimientoTxt.UnderlinedStyle = true;
             // 
             // nombreTxt
             // 
@@ -298,6 +298,7 @@
             btnAgregar.Text = "Agregar";
             btnAgregar.TextColor = Color.White;
             btnAgregar.UseVisualStyleBackColor = false;
+            btnAgregar.Click += btnAgregar_Click;
             // 
             // label2
             // 
@@ -371,7 +372,7 @@
         private Label label2;
         private CustomComponents.MainFormComponents.CustomTextBox codigoTxt;
         private CustomComponents.MainFormComponents.CustomTextBox cantidadTxt;
-        private CustomComponents.MainFormComponents.CustomTextBox vencimientTxt;
+        private CustomComponents.MainFormComponents.CustomTextBox vencimientoTxt;
         private CustomComponents.MainFormComponents.CustomTextBox nombreTxt;
         private CustomComponents.MainFormComponents.CustomTextBox precioTxt;
         private Label label7;

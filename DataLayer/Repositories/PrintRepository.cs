@@ -100,7 +100,7 @@ namespace DataLayer.Repositories
                                 };
                                 var products = new Products()
                                 {
-                                    Code = reader.GetInt32(18),
+                                    Code = reader.GetString(18),
                                     ProductName = reader.GetString(19),
                                     Lote = reader.GetInt32(20),
                                     Quantity = reader.GetInt32(21),

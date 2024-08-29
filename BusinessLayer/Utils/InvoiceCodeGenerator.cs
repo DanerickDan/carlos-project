@@ -18,7 +18,7 @@ namespace BusinessLayer.Utils
 
             do
             {
-                newCode = new Random().Next(1000-9999);
+                newCode = new Random().Next(1000,9999);
                 _invoiceRepository.ExistCode(newCode,"numero");
             } while (!isUnique);
             return newCode.ToString();
@@ -31,7 +31,7 @@ namespace BusinessLayer.Utils
 
             do
             {
-                newCode = new Random().Next(1000 - 9999);
+                newCode = new Random().Next(1000, 9999);
                 _invoiceRepository.ExistCode(newCode, "num_pedido");
             } while (!isUnique);
             return newCode.ToString();

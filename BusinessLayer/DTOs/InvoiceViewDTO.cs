@@ -17,7 +17,7 @@
         public int Lote { get; set; }
         public double Total { get; set; }
         public double SubTotal { get; set; }
-        public int ProductCode { get; set; }
+        public string ProductCode { get; set; }
         public double Neto { get; set; }
 
     }

@@ -139,7 +139,7 @@ namespace PresentationLayer
                 int lote = Convert.ToInt32(selectedRow.Cells[9].Value);
                 string ncf = selectedRow.Cells[10].Value.ToString();
                 int quantity = Convert.ToInt32(selectedRow.Cells[11].Value);
-                int productCode = Convert.ToInt32(selectedRow.Cells[12].Value);
+                string productCode = selectedRow.Cells[12].Value.ToString();
                 double subTotal = Convert.ToDouble(selectedRow.Cells[13].Value);
                 int productId = Convert.ToInt32(selectedRow.Cells[14].Value);
                 int invoiceNumber = Convert.ToInt32(selectedRow.Cells[15].Value);

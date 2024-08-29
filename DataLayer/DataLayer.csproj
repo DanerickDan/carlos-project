@@ -12,16 +12,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="bd_sqlite.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="databasePrueba2.db">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <ProjectReference Include="..\EntitiesLayer\DomainLayer.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EntitiesLayer\DomainLayer.csproj" />
+    <None Update="databasePrueba2.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

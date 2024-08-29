@@ -88,7 +88,7 @@ namespace PresentationLayer
 
                 int productId = Convert.ToInt32(selectedRow.Cells[0].Value);
                 string productName = selectedRow.Cells[1].Value.ToString();
-                int code = Convert.ToInt32(selectedRow.Cells[2].Value);
+                string code = selectedRow.Cells[2].Value.ToString();
                 string description = selectedRow.Cells[3].Value.ToString();
                 DateTime expirationTime = Convert.ToDateTime(selectedRow.Cells[4].Value);
                 Double price = Convert.ToDouble(selectedRow.Cells[5].Value);
