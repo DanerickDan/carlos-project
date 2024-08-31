@@ -15,13 +15,13 @@ namespace BusinessLayer.Utils
         public string ClientCode()
         {
             int newCode;
-            bool isUnique = false;
+            bool isUnique = true;
 
             do
             {
-                newCode = new Random().Next(1000, 9999) ;
-                isUnique = _clientRepository.ExistCode(newCode,"codigo") ;
-            } while (!isUnique);
+                newCode = new Random().Next(1000, 9999);
+                isUnique = _clientRepository.ExistCode(newCode, "codigo");
+            } while (isUnique == true);
             return newCode.ToString();
         }
     }

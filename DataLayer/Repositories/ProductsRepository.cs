@@ -2,6 +2,7 @@
 using DataLayer.IRepository;
 using DomainLayer.Entities;
 using System.Data.SQLite;
+using System.Globalization;
 
 namespace DataLayer.Repositories
 {
@@ -120,16 +121,16 @@ namespace DataLayer.Repositories
                 {
                     connectionManager.OpenConnection(connection);
                     string query = @"
-                SELECT p.producto_id as ProductoId, p.nombre as ProductoNombre, p.codigo as Codigo,
-	            p.descripcion as Descripcion, p.fecha_vencimiento as Vencimiento, p.precio as ProductoPrecio,
-	            p.lote as Lote, p.cantidad as Cantidad, p.category_id as ProductoCategoriaId,
-	            c.category_id as CategoriaId, c.nombre_categoria as CategoriaNombre,
-                p.estado_id as ProductoEstadoId, e.estado_id as EstadoId, e.descripcion as EstadoNombre
-                FROM Productos p
-                INNER JOIN Categorias c ON p.category_id = c.category_id
-                INNER JOIN EstadoPedido e ON p.estado_id = e.estado_id
-                WHERE activo = 1"
-                ;
+                        SELECT p.producto_id as ProductoId, p.nombre as ProductoNombre, p.codigo as Codigo,
+	                    p.descripcion as Descripcion, p.fecha_vencimiento as Vencimiento, p.precio as ProductoPrecio,
+	                    p.lote as Lote, p.cantidad as Cantidad, p.category_id as ProductoCategoriaId,
+	                    c.category_id as CategoriaId, c.nombre_categoria as CategoriaNombre,
+                        p.estado_id as ProductoEstadoId, e.estado_id as EstadoId, e.descripcion as EstadoNombre
+                        FROM Productos p
+                        INNER JOIN Categorias c ON p.category_id = c.category_id
+                        INNER JOIN EstadoPedido e ON p.estado_id = e.estado_id
+                        WHERE activo = 1"
+                    ;
                     using (var command = new SQLiteCommand(query, connection))
                     {
                         using (var reader = command.ExecuteReader())
@@ -142,7 +143,7 @@ namespace DataLayer.Repositories
                                     ProductName = reader.GetString(reader.GetOrdinal("ProductoNombre")),
                                     Code = reader.GetString(reader.GetOrdinal("Codigo")),
                                     Description = reader.GetString(reader.GetOrdinal("Descripcion")),
-                                    ExpirationDate = reader.GetDateTime(reader.GetOrdinal("Vencimiento")),
+                                    ExpirationDate = DateTime.ParseExact(reader.GetString(reader.GetOrdinal("Vencimiento")), "dd-MM-yyyy", CultureInfo.InvariantCulture),
                                     Price = reader.GetDouble(reader.GetOrdinal("ProductoPrecio")),
                                     Lote = reader.GetInt32(reader.GetOrdinal("Lote")),
                                     Quantity = reader.GetInt32(reader.GetOrdinal("Cantidad")),

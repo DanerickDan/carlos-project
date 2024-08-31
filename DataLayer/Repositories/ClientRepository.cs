@@ -39,9 +39,10 @@ namespace DataLayer.Repositories
 
                             command.ExecuteNonQuery();
                         }
+                        transaction.Commit();
 
-                        transaction.Commit(); // Asegúrate de confirmar la transacción
-                        connection.Close();
+                        // Asegúrate de confirmar la transacción
+                        connectionManager.CloseConnection(connection);
                     }
                 }
 
@@ -96,14 +97,16 @@ namespace DataLayer.Repositories
                 {
                     connectionManager.OpenConnection(connection);
                     string query = "UPDATE Clientes SET activo = 0  WHERE clientes_id = @ClientId";
-                    using (var transaction = new SQLiteTransaction(connection, true))
+                    using (var transaction = connection.BeginTransaction())
                     {
                         using (var command = new SQLiteCommand(query, connection, transaction))
                         {
                             command.Parameters.AddWithValue("@ClientId", id);
+                            
                             command.ExecuteNonQuery();
                         }
                         transaction.Commit();
+                        connectionManager.CloseConnection(connection);
                     }
                 }
             }
@@ -204,7 +207,7 @@ namespace DataLayer.Repositories
                 using (var connection = connectionManager.GetConnection())
                 {
                     connectionManager.OpenConnection(connection);
-                    string query = "SELECT Nombre FROM VerClientes WHERE activo = 1";
+                    string query = "SELECT Nombre FROM VerClientes";
                     using (var command = new SQLiteCommand(query, connection))
                     {
                         using (var reader = command.ExecuteReader())
@@ -237,8 +240,8 @@ namespace DataLayer.Repositories
                     {
                         command.Parameters.AddWithValue("@Type",type);
                         command.Parameters.AddWithValue("@Code",code);
-                        var count = command.ExecuteScalar();
-                        if(count != null)
+                        var count = Convert.ToInt32(command.ExecuteScalar());
+                        if(count != 0)
                         {
                             return true;
                         }

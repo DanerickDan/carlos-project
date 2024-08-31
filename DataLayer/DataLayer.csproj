@@ -7,18 +7,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="databasePrueba2.db" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="databasePrueba2.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.118" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\EntitiesLayer\DomainLayer.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="databasePrueba2.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

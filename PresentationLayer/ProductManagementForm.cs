@@ -14,8 +14,8 @@ namespace PresentationLayer
 
         public ProductManagementForm()
         {
-            InitializeComponent();
             productService = new ProductServices();
+            InitializeComponent();
             this.Load += new EventHandler(this.ProductManagementForm_Load);
             dataGridView1.MouseWheel += DataGridView1_MouseWheel;
         }
@@ -24,31 +24,21 @@ namespace PresentationLayer
         // Add button
         private void btnAnadir_Click(object sender, EventArgs e)
         {
-            //if (dataGridView1.SelectedRows.Count > 0)
-            //{
-            //    DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
 
-            //    string productName = selectedRow.Cells[1].Value.ToString();
-            //    int code = Convert.ToInt32(selectedRow.Cells[2].Value);
-            //    string description = selectedRow.Cells[3].Value.ToString();
-            //    DateTime expirationTime = Convert.ToDateTime(selectedRow.Cells[4].Value);
-            //    double price = Convert.ToDouble(selectedRow.Cells[5].Value);
-            //    int lote = Convert.ToInt32(selectedRow.Cells[6].Value);
-            //    ProductsDTO productsDTO = new ProductsDTO
-            //    {
-            //        ProductName = productName,
-            //        Code = code,
-            //        Description = description,
-            //        ExpirationDate = expirationTime,
-            //        Price = price,
-            //        Lote = lote
-            //    };
-            //    productService.AddProduct(productsDTO);
-            //}
             AddProduct addProduct = new();
             addProduct.MaximizeBox = false;
             addProduct.MinimizeBox = false;
-            addProduct.ShowDialog();
+            var result = addProduct.ShowDialog();
+            if(result == DialogResult.OK)
+            {
+                DataGridSettings();
+                LoadData();
+                MessageBox.Show("DataGrid Actualizado");
+            }
+            else
+            {
+                MessageBox.Show(result.ToString());
+            }
 
         }
         // Delete Button
@@ -131,33 +121,47 @@ namespace PresentationLayer
 
         private void materialScrollBar1_Scroll(object sender, ScrollEventArgs e)
         {
-            dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows[e.NewValue].Index;
+            // Verificar que el índice no sea mayor que la cantidad de filas disponibles
+            int newRowIndex = Math.Min(e.NewValue, dataGridView1.Rows.Count - 1);
+            if (newRowIndex >= 0)
+            {
+                dataGridView1.FirstDisplayedScrollingRowIndex = newRowIndex;
+            }
         }
 
         private void dataGridView1_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
-            materialScrollBar1.Maximum = dataGridView1.RowCount;
+            // Ajustar el máximo del scrollbar al número de filas - 1 para evitar IndexOutOfRange
+            materialScrollBar1.Maximum = Math.Max(0, dataGridView1.RowCount - 1);
+        }
+
+        private void dataGridView1_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        {
+            // Ajustar el máximo del scrollbar al número de filas - 1 para evitar IndexOutOfRange
+            materialScrollBar1.Maximum = Math.Max(0, dataGridView1.RowCount - 1);
         }
 
 
         private void DataGridView1_MouseWheel(object sender, MouseEventArgs e)
         {
-            if (e.Delta > 0 && materialScrollBar1.Value > materialScrollBar1.Minimum)
+            int newValue = materialScrollBar1.Value;
+
+            if (e.Delta > 0 && newValue > materialScrollBar1.Minimum)
             {
-                materialScrollBar1.Value--;
+                newValue--;
             }
-            else if (e.Delta < 0 && materialScrollBar1.Value < materialScrollBar1.Maximum)
+            else if (e.Delta < 0 && newValue < materialScrollBar1.Maximum)
             {
-                materialScrollBar1.Value++;
+                newValue++;
             }
 
-            dataGridView1.FirstDisplayedScrollingRowIndex = materialScrollBar1.Value;
+            // Verificar que el índice no sea mayor que la cantidad de filas disponibles
+            if (newValue >= 0 && newValue < dataGridView1.RowCount)
+            {
+                materialScrollBar1.Value = newValue;
+                dataGridView1.FirstDisplayedScrollingRowIndex = newValue;
+            }
         }
 
-
-        private void dataGridView1_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
-        {
-            materialScrollBar1.Maximum = dataGridView1.RowCount;
-        }
     }
 }

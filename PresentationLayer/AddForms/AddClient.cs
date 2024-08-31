@@ -56,6 +56,7 @@ namespace PresentationLayer.AddForms
             };
             _clientService.AddClient(clientDTO);
             // Adding to the list Box
+            materialListBox1.Items.Clear();
             LoadListBoxView();
             CleanTextBox();
             MessageBox.Show("Cliente agregado correctamente");
@@ -70,7 +71,7 @@ namespace PresentationLayer.AddForms
             telefonoTxt.Texts = "";
             faxTxt.Texts = "";
             rncTxt.Texts = "";
-            codigoTxt.Texts = "";
+            codigoTxt.Texts = _clientCodeGenerator.ClientCode();
         }
     }
 }

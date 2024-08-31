@@ -22,6 +22,7 @@ namespace BusinessLayer.Services
                 Code = productDTO.Code,
                 Description = productDTO.Description,
                 ExpirationDate = productDTO.ExpirationDate,
+                Quantity = productDTO.Quantity,
                 Price = productDTO.Price,
                 Lote = productDTO.Lote,
                 CategoryId = productDTO.CategoryId,

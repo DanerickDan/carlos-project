@@ -4,15 +4,8 @@ using BusinessLayer.Services;
 using BusinessLayer.Utils;
 using MaterialSkin;
 using MaterialSkin.Controls;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace PresentationLayer.AddForms
 {
@@ -29,17 +22,7 @@ namespace PresentationLayer.AddForms
 
         private void AddProduct_Load(object sender, EventArgs e)
         {
-            var data = _productService.GetAllProductName();
-            codigoTxt.Texts = _productCodeGenarator.GenerateProductCode();
-            materialListBox1.Style = MaterialListBox.ListBoxStyle.TwoLine;
-            foreach (var item in data)
-            {
-                MaterialListBoxItem listBoxItem = new MaterialListBoxItem();
-                listBoxItem.Text = item.ProductName;
-                listBoxItem.SecondaryText = item.Price.ToString();
-                materialListBox1.Items.Add(listBoxItem);
-            }
-
+            LoadListBoxView();
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
@@ -50,11 +33,41 @@ namespace PresentationLayer.AddForms
                 Code = codigoTxt.Texts,
                 Description = descriptxt.Texts,
                 Quantity = Convert.ToInt32(cantidadTxt.Texts),
-                ExpirationDate = Convert.ToDateTime(vencimientoTxt.Texts),
+                ExpirationDate = DateTime.ParseExact(vencimientoTxt.Texts, "dd/MM/yyyy", CultureInfo.InvariantCulture),
+                Lote = Convert.ToInt32(loteTxt.Texts),
                 Price = Convert.ToDouble(precioTxt.Texts),
                 ProductNeto = Convert.ToInt32(cantidadTxt.Texts) * Convert.ToDouble(precioTxt.Texts)
             };
             _productService.AddProduct(productsDTO);
+            CleanTextBox();
+            materialListBox1.Items.Clear();
+            LoadListBoxView();
+            MessageBox.Show("Producto agregado correctamente");
+        }
+
+        private void CleanTextBox()
+        {
+            loteTxt.Texts = "";
+            nombreTxt.Texts = "";
+            descriptxt.Texts = "";
+            cantidadTxt.Texts = "";
+            vencimientoTxt.Texts = "";
+            precioTxt.Texts = "";
+            codigoTxt.Texts = _productCodeGenarator.GenerateProductCode();
+        }
+
+        private void LoadListBoxView()
+        {
+            var data = _productService.GetAllProductName();
+            codigoTxt.Texts = _productCodeGenarator.GenerateProductCode();
+            materialListBox1.Style = MaterialListBox.ListBoxStyle.TwoLine;
+            foreach (var item in data)
+            {
+                MaterialListBoxItem listBoxItem = new MaterialListBoxItem();
+                listBoxItem.Text = item.ProductName;
+                listBoxItem.SecondaryText = item.Price.ToString();
+                materialListBox1.Items.Add(listBoxItem);
+            }
         }
     }
 }

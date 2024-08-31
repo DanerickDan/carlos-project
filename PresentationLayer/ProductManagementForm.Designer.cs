@@ -33,6 +33,15 @@
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProductManagementForm));
             dataGridView1 = new DataGridView();
+            ProductID = new DataGridViewTextBoxColumn();
+            Code = new DataGridViewTextBoxColumn();
+            NameColumn = new DataGridViewTextBoxColumn();
+            DescriptionColumn = new DataGridViewTextBoxColumn();
+            Quantity = new DataGridViewTextBoxColumn();
+            CategoryColumn = new DataGridViewTextBoxColumn();
+            TimeColumn = new DataGridViewTextBoxColumn();
+            StateColumn = new DataGridViewTextBoxColumn();
+            Lote = new DataGridViewTextBoxColumn();
             panel1 = new Panel();
             btnPanel = new Panel();
             btnAnadir = new CustomComponents.MainFormComponents.CustomButton();
@@ -43,15 +52,6 @@
             cltTxtRegistros = new Label();
             cltTxtFiltrados = new Label();
             materialScrollBar1 = new MaterialSkin.Controls.MaterialScrollBar();
-            ProductID = new DataGridViewTextBoxColumn();
-            Code = new DataGridViewTextBoxColumn();
-            NameColumn = new DataGridViewTextBoxColumn();
-            DescriptionColumn = new DataGridViewTextBoxColumn();
-            Quantity = new DataGridViewTextBoxColumn();
-            CategoryColumn = new DataGridViewTextBoxColumn();
-            TimeColumn = new DataGridViewTextBoxColumn();
-            StateColumn = new DataGridViewTextBoxColumn();
-            Lote = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             panel1.SuspendLayout();
             btnPanel.SuspendLayout();
@@ -107,6 +107,73 @@
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.Size = new Size(814, 370);
             dataGridView1.TabIndex = 0;
+            dataGridView1.RowsAdded += dataGridView1_RowsAdded;
+            dataGridView1.RowsRemoved += dataGridView1_RowsRemoved;
+            // 
+            // ProductID
+            // 
+            ProductID.DataPropertyName = "ProductsId";
+            ProductID.HeaderText = "ProductID";
+            ProductID.Name = "ProductID";
+            ProductID.ReadOnly = true;
+            ProductID.Visible = false;
+            // 
+            // Code
+            // 
+            Code.DataPropertyName = "Code";
+            Code.HeaderText = "Codigo";
+            Code.Name = "Code";
+            Code.ReadOnly = true;
+            // 
+            // NameColumn
+            // 
+            NameColumn.DataPropertyName = "ProductName";
+            NameColumn.HeaderText = "Nombre";
+            NameColumn.Name = "NameColumn";
+            NameColumn.ReadOnly = true;
+            // 
+            // DescriptionColumn
+            // 
+            DescriptionColumn.DataPropertyName = "Description";
+            DescriptionColumn.HeaderText = "Descripción";
+            DescriptionColumn.Name = "DescriptionColumn";
+            DescriptionColumn.ReadOnly = true;
+            // 
+            // Quantity
+            // 
+            Quantity.DataPropertyName = "Quantity";
+            Quantity.HeaderText = "Cantidad";
+            Quantity.Name = "Quantity";
+            Quantity.ReadOnly = true;
+            // 
+            // CategoryColumn
+            // 
+            CategoryColumn.DataPropertyName = "CategoryId";
+            CategoryColumn.HeaderText = "Categoria";
+            CategoryColumn.Name = "CategoryColumn";
+            CategoryColumn.ReadOnly = true;
+            CategoryColumn.Visible = false;
+            // 
+            // TimeColumn
+            // 
+            TimeColumn.DataPropertyName = "ExpirationDate";
+            TimeColumn.HeaderText = "Expiracion";
+            TimeColumn.Name = "TimeColumn";
+            TimeColumn.ReadOnly = true;
+            // 
+            // StateColumn
+            // 
+            StateColumn.DataPropertyName = "StatusId";
+            StateColumn.HeaderText = "Estado";
+            StateColumn.Name = "StateColumn";
+            StateColumn.ReadOnly = true;
+            // 
+            // Lote
+            // 
+            Lote.DataPropertyName = "Lote";
+            Lote.HeaderText = "Lote";
+            Lote.Name = "Lote";
+            Lote.ReadOnly = true;
             // 
             // panel1
             // 
@@ -253,71 +320,6 @@
             materialScrollBar1.TabIndex = 7;
             materialScrollBar1.Text = "materialScrollBar1";
             materialScrollBar1.Scroll += materialScrollBar1_Scroll;
-            // 
-            // ProductID
-            // 
-            ProductID.DataPropertyName = "ProductsId";
-            ProductID.HeaderText = "ProductID";
-            ProductID.Name = "ProductID";
-            ProductID.ReadOnly = true;
-            ProductID.Visible = false;
-            // 
-            // Code
-            // 
-            Code.DataPropertyName = "Code";
-            Code.HeaderText = "Codigo";
-            Code.Name = "Code";
-            Code.ReadOnly = true;
-            // 
-            // NameColumn
-            // 
-            NameColumn.DataPropertyName = "ProductName";
-            NameColumn.HeaderText = "Nombre";
-            NameColumn.Name = "NameColumn";
-            NameColumn.ReadOnly = true;
-            // 
-            // DescriptionColumn
-            // 
-            DescriptionColumn.DataPropertyName = "Description";
-            DescriptionColumn.HeaderText = "Descripción";
-            DescriptionColumn.Name = "DescriptionColumn";
-            DescriptionColumn.ReadOnly = true;
-            // 
-            // Quantity
-            // 
-            Quantity.DataPropertyName = "Quantity";
-            Quantity.HeaderText = "Cantidad";
-            Quantity.Name = "Quantity";
-            Quantity.ReadOnly = true;
-            // 
-            // CategoryColumn
-            // 
-            CategoryColumn.DataPropertyName = "CategoryId";
-            CategoryColumn.HeaderText = "Categoria";
-            CategoryColumn.Name = "CategoryColumn";
-            CategoryColumn.ReadOnly = true;
-            CategoryColumn.Visible = false;
-            // 
-            // TimeColumn
-            // 
-            TimeColumn.DataPropertyName = "ExpirationDate";
-            TimeColumn.HeaderText = "Expiracion";
-            TimeColumn.Name = "TimeColumn";
-            TimeColumn.ReadOnly = true;
-            // 
-            // StateColumn
-            // 
-            StateColumn.DataPropertyName = "StatusId";
-            StateColumn.HeaderText = "Estado";
-            StateColumn.Name = "StateColumn";
-            StateColumn.ReadOnly = true;
-            // 
-            // Lote
-            // 
-            Lote.DataPropertyName = "Lote";
-            Lote.HeaderText = "Lote";
-            Lote.Name = "Lote";
-            Lote.ReadOnly = true;
             // 
             // ProductManagementForm
             // 

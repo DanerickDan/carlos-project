@@ -2,6 +2,7 @@
 using DataLayer.IRepository;
 using DomainLayer.Entities;
 using System.Data.SQLite;
+using System.Globalization;
 
 namespace DataLayer.Repositories
 {
@@ -31,7 +32,7 @@ namespace DataLayer.Repositories
                     {
                         using (var command = new SQLiteCommand(query, connectionT, transaction))
                         {
-                            command.Parameters.AddWithValue("@Fecha", invoice.Date);
+                            command.Parameters.AddWithValue("@Fecha", invoice.Date.ToString("dd-MM-yyyy"));
                             command.Parameters.AddWithValue("@Terminos", invoice.Terms);
                             command.Parameters.AddWithValue("@ClienteId", invoice.ClientID);
                             command.Parameters.AddWithValue("@NumPedido", invoice.OrderNumber);
@@ -227,7 +228,7 @@ namespace DataLayer.Repositories
                                     currentInvoice = new Invoice
                                     {
                                         InvoiceID = invoiceId,
-                                        Date = DateTime.Parse(reader.GetString(reader.GetOrdinal("Fecha"))), // Corrected
+                                        Date = DateTime.ParseExact(reader.GetString(reader.GetOrdinal("Fecha")), "dd-MM-yyyy", CultureInfo.InvariantCulture),
                                         Terms = reader.GetString(reader.GetOrdinal("Terminos")),
                                         ClientID = reader.GetInt32(reader.GetOrdinal("ClienteId")),
                                         OrderNumber = reader.GetInt32(reader.GetOrdinal("NumPedido")),
@@ -301,7 +302,7 @@ namespace DataLayer.Repositories
                                     invoice = new Invoice
                                     {
                                         InvoiceID = reader.GetInt32(reader.GetOrdinal("InvoiceId")),
-                                        Date = DateTime.Parse(reader.GetString(reader.GetOrdinal("Fecha"))),
+                                        Date = DateTime.ParseExact(reader.GetString(reader.GetOrdinal("Fecha")), "dd-MM-yyyy", CultureInfo.InvariantCulture),
                                         Terms = reader.GetString(reader.GetOrdinal("Terminos")),
                                         ClientID = reader.GetInt32(reader.GetOrdinal("ClienteId")),
                                         OrderNumber = reader.GetInt32(reader.GetOrdinal("NumPedido")),
