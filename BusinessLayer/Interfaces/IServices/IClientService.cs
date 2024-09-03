@@ -9,6 +9,6 @@ namespace BusinessLayer.Interfaces.IServices
         public void DeleteClient(int id);
         public List<ClientDTO> GetAllCLient();
         public ClientDTO GetByIdClient(int id);
-        public IEnumerable<string> GetAllCLientName();
+        public IEnumerable<ClientDTO> GetAllCLientName();
     }
 }

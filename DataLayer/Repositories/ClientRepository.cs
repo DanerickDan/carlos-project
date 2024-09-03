@@ -61,7 +61,7 @@ namespace DataLayer.Repositories
                 {
                     connectionManager.OpenConnection(connection);
                     string query = "UPDATE Clientes SET nombre = @Nombre, direccion = @Direccion, ciudad = @Ciudad, telefono = @Telefono" +
-                        ", fax = @Fax, RNC = @rnc, codigo = @Code, email = @Email WHERE clientes_id = @ClienteId";
+                        ", fax = @Fax, RNC = @rnc, email = @Email WHERE clientes_id = @ClienteId";
                     using (var transaction = connection.BeginTransaction())
                     {
                         using (var command = new SQLiteCommand(query, connection, transaction))
@@ -102,7 +102,7 @@ namespace DataLayer.Repositories
                         using (var command = new SQLiteCommand(query, connection, transaction))
                         {
                             command.Parameters.AddWithValue("@ClientId", id);
-                            
+
                             command.ExecuteNonQuery();
                         }
                         transaction.Commit();
@@ -198,24 +198,28 @@ namespace DataLayer.Repositories
             return null;
         }
 
-        public IEnumerable<string> GetAllNameClient()
+        public IEnumerable<Client> GetAllNameClient()
         {
-            List<string> names = new();
-            string nombre = "";
+            List<Client> names = new();
             try
             {
                 using (var connection = connectionManager.GetConnection())
                 {
                     connectionManager.OpenConnection(connection);
-                    string query = "SELECT Nombre FROM VerClientes";
+                    string query = "SELECT Nombre, Id FROM VerClientes";
                     using (var command = new SQLiteCommand(query, connection))
                     {
                         using (var reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                nombre = reader.GetString(0);
-                                names.Add(nombre);
+                                Client client = new()
+                                {
+                                    ClientName = reader.GetString(0),
+                                    ClientId = reader.GetInt32(1)
+                                };
+                                names.Add(client);
+
                             }
                             return names;
                         }
@@ -236,12 +240,12 @@ namespace DataLayer.Repositories
                 {
                     connectionManager.OpenConnection(connection);
                     string query = "SELECT COUNT(1) FROM Clientes Where @Type = @Code";
-                    using (var command = new SQLiteCommand(query,connection))
+                    using (var command = new SQLiteCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@Type",type);
-                        command.Parameters.AddWithValue("@Code",code);
+                        command.Parameters.AddWithValue("@Type", type);
+                        command.Parameters.AddWithValue("@Code", code);
                         var count = Convert.ToInt32(command.ExecuteScalar());
-                        if(count != 0)
+                        if (count != 0)
                         {
                             return true;
                         }

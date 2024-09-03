@@ -51,6 +51,7 @@
             RNcColumn = new DataGridViewTextBoxColumn();
             EmailColumn = new DataGridViewTextBoxColumn();
             City = new DataGridViewTextBoxColumn();
+            Fax = new DataGridViewTextBoxColumn();
             panel1.SuspendLayout();
             btnPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -178,7 +179,7 @@
             dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridView1.ColumnHeadersHeight = 30;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { ClientID, CodeColumn, NameColumn, AddressColumn, PhoneColumn, RNcColumn, EmailColumn, City });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { ClientID, CodeColumn, NameColumn, AddressColumn, PhoneColumn, RNcColumn, EmailColumn, City, Fax });
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = SystemColors.Window;
             dataGridViewCellStyle2.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -313,6 +314,14 @@
             City.ReadOnly = true;
             City.Visible = false;
             // 
+            // Fax
+            // 
+            Fax.DataPropertyName = "Fax";
+            Fax.HeaderText = "Fax";
+            Fax.Name = "Fax";
+            Fax.ReadOnly = true;
+            Fax.Visible = false;
+            // 
             // ClientManagementForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -354,5 +363,6 @@
         private DataGridViewTextBoxColumn RNcColumn;
         private DataGridViewTextBoxColumn EmailColumn;
         private DataGridViewTextBoxColumn City;
+        private DataGridViewTextBoxColumn Fax;
     }
 }

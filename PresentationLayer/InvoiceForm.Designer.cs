@@ -37,14 +37,9 @@
             btnPanel = new Panel();
             btnAnadir = new CustomComponents.MainFormComponents.CustomButton();
             btnBorrar = new CustomComponents.MainFormComponents.CustomButton();
-            btnEditar = new CustomComponents.MainFormComponents.CustomButton();
             btnImprimir = new CustomComponents.MainFormComponents.CustomButton();
             lblPrincipal = new Label();
             dataGridView1 = new DataGridView();
-            panel2 = new Panel();
-            cltTxtRegistros = new Label();
-            cltTxtFiltrados = new Label();
-            materialScrollBar1 = new MaterialSkin.Controls.MaterialScrollBar();
             InvoiceID = new DataGridViewTextBoxColumn();
             OrderNumber = new DataGridViewTextBoxColumn();
             Terms = new DataGridViewTextBoxColumn();
@@ -61,6 +56,10 @@
             SubTotal = new DataGridViewTextBoxColumn();
             ProductId = new DataGridViewTextBoxColumn();
             Number = new DataGridViewTextBoxColumn();
+            panel2 = new Panel();
+            cltTxtRegistros = new Label();
+            cltTxtFiltrados = new Label();
+            materialScrollBar1 = new MaterialSkin.Controls.MaterialScrollBar();
             panel1.SuspendLayout();
             btnPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -82,7 +81,6 @@
             btnPanel.BackColor = SystemColors.Control;
             btnPanel.Controls.Add(btnAnadir);
             btnPanel.Controls.Add(btnBorrar);
-            btnPanel.Controls.Add(btnEditar);
             btnPanel.Controls.Add(btnImprimir);
             btnPanel.Dock = DockStyle.Right;
             btnPanel.Location = new Point(188, 0);
@@ -135,29 +133,6 @@
             btnBorrar.UseVisualStyleBackColor = false;
             btnBorrar.Click += btnBorrar_Click;
             // 
-            // btnEditar
-            // 
-            btnEditar.Anchor = AnchorStyles.Left;
-            btnEditar.BackColor = Color.FromArgb(243, 156, 76);
-            btnEditar.BackgroundColor = Color.FromArgb(243, 156, 76);
-            btnEditar.BorderColor = Color.PaleVioletRed;
-            btnEditar.BorderRadius = 5;
-            btnEditar.BorderSize = 0;
-            btnEditar.FlatAppearance.BorderSize = 0;
-            btnEditar.FlatStyle = FlatStyle.Flat;
-            btnEditar.ForeColor = Color.White;
-            btnEditar.Image = (Image)resources.GetObject("btnEditar.Image");
-            btnEditar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnEditar.Location = new Point(182, 7);
-            btnEditar.Margin = new Padding(8, 3, 3, 3);
-            btnEditar.Name = "btnEditar";
-            btnEditar.Size = new Size(127, 37);
-            btnEditar.TabIndex = 0;
-            btnEditar.Text = "Editar";
-            btnEditar.TextColor = Color.White;
-            btnEditar.UseVisualStyleBackColor = false;
-            btnEditar.Click += btnEditar_Click;
-            // 
             // btnImprimir
             // 
             btnImprimir.Anchor = AnchorStyles.Left;
@@ -171,7 +146,7 @@
             btnImprimir.ForeColor = Color.White;
             btnImprimir.Image = (Image)resources.GetObject("btnImprimir.Image");
             btnImprimir.ImageAlign = ContentAlignment.MiddleLeft;
-            btnImprimir.Location = new Point(44, 7);
+            btnImprimir.Location = new Point(182, 7);
             btnImprimir.Margin = new Padding(8, 3, 3, 3);
             btnImprimir.Name = "btnImprimir";
             btnImprimir.Size = new Size(127, 37);
@@ -242,52 +217,6 @@
             dataGridView1.TabIndex = 0;
             dataGridView1.RowsAdded += dataGridView1_RowsAdded;
             dataGridView1.RowsRemoved += dataGridView1_RowsRemoved;
-            // 
-            // panel2
-            // 
-            panel2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            panel2.Controls.Add(cltTxtRegistros);
-            panel2.Controls.Add(cltTxtFiltrados);
-            panel2.Location = new Point(32, 422);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(262, 23);
-            panel2.TabIndex = 6;
-            // 
-            // cltTxtRegistros
-            // 
-            cltTxtRegistros.AutoSize = true;
-            cltTxtRegistros.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            cltTxtRegistros.ForeColor = Color.Gray;
-            cltTxtRegistros.Location = new Point(19, 3);
-            cltTxtRegistros.Name = "cltTxtRegistros";
-            cltTxtRegistros.Size = new Size(63, 17);
-            cltTxtRegistros.TabIndex = 4;
-            cltTxtRegistros.Text = "Registros";
-            // 
-            // cltTxtFiltrados
-            // 
-            cltTxtFiltrados.AutoSize = true;
-            cltTxtFiltrados.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            cltTxtFiltrados.ForeColor = Color.Gray;
-            cltTxtFiltrados.Location = new Point(167, 3);
-            cltTxtFiltrados.Name = "cltTxtFiltrados";
-            cltTxtFiltrados.Size = new Size(58, 17);
-            cltTxtFiltrados.TabIndex = 4;
-            cltTxtFiltrados.Text = "Filtrados";
-            // 
-            // materialScrollBar1
-            // 
-            materialScrollBar1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-            materialScrollBar1.Depth = 0;
-            materialScrollBar1.Location = new Point(787, 88);
-            materialScrollBar1.MouseState = MaterialSkin.MouseState.HOVER;
-            materialScrollBar1.Name = "materialScrollBar1";
-            materialScrollBar1.Orientation = MaterialSkin.Controls.MaterialScrollOrientation.Vertical;
-            materialScrollBar1.ScrollbarSize = 13;
-            materialScrollBar1.Size = new Size(13, 328);
-            materialScrollBar1.TabIndex = 7;
-            materialScrollBar1.Text = "materialScrollBar1";
-            materialScrollBar1.Scroll += materialScrollBar1_Scroll;
             // 
             // InvoiceID
             // 
@@ -412,6 +341,52 @@
             Number.ReadOnly = true;
             Number.Visible = false;
             // 
+            // panel2
+            // 
+            panel2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            panel2.Controls.Add(cltTxtRegistros);
+            panel2.Controls.Add(cltTxtFiltrados);
+            panel2.Location = new Point(32, 422);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(262, 23);
+            panel2.TabIndex = 6;
+            // 
+            // cltTxtRegistros
+            // 
+            cltTxtRegistros.AutoSize = true;
+            cltTxtRegistros.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            cltTxtRegistros.ForeColor = Color.Gray;
+            cltTxtRegistros.Location = new Point(19, 3);
+            cltTxtRegistros.Name = "cltTxtRegistros";
+            cltTxtRegistros.Size = new Size(63, 17);
+            cltTxtRegistros.TabIndex = 4;
+            cltTxtRegistros.Text = "Registros";
+            // 
+            // cltTxtFiltrados
+            // 
+            cltTxtFiltrados.AutoSize = true;
+            cltTxtFiltrados.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            cltTxtFiltrados.ForeColor = Color.Gray;
+            cltTxtFiltrados.Location = new Point(167, 3);
+            cltTxtFiltrados.Name = "cltTxtFiltrados";
+            cltTxtFiltrados.Size = new Size(58, 17);
+            cltTxtFiltrados.TabIndex = 4;
+            cltTxtFiltrados.Text = "Filtrados";
+            // 
+            // materialScrollBar1
+            // 
+            materialScrollBar1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+            materialScrollBar1.Depth = 0;
+            materialScrollBar1.Location = new Point(787, 88);
+            materialScrollBar1.MouseState = MaterialSkin.MouseState.HOVER;
+            materialScrollBar1.Name = "materialScrollBar1";
+            materialScrollBar1.Orientation = MaterialSkin.Controls.MaterialScrollOrientation.Vertical;
+            materialScrollBar1.ScrollbarSize = 13;
+            materialScrollBar1.Size = new Size(13, 328);
+            materialScrollBar1.TabIndex = 7;
+            materialScrollBar1.Text = "materialScrollBar1";
+            materialScrollBar1.Scroll += materialScrollBar1_Scroll;
+            // 
             // InvoiceForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -438,7 +413,6 @@
         private Panel btnPanel;
         private CustomComponents.MainFormComponents.CustomButton btnAnadir;
         private CustomComponents.MainFormComponents.CustomButton btnBorrar;
-        private CustomComponents.MainFormComponents.CustomButton btnEditar;
         private CustomComponents.MainFormComponents.CustomButton btnImprimir;
         private Label lblPrincipal;
         private DataGridView dataGridView1;

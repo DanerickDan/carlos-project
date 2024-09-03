@@ -2,6 +2,7 @@
 using BusinessLayer.Model;
 using BusinessLayer.Services;
 using PresentationLayer.AddForms;
+using PresentationLayer.UpdateForms;
 using System.ComponentModel;
 
 
@@ -14,13 +15,13 @@ namespace PresentationLayer
 
         public ProductManagementForm()
         {
-            productService = new ProductServices();
             InitializeComponent();
+            productService = new ProductServices();
             this.Load += new EventHandler(this.ProductManagementForm_Load);
             dataGridView1.MouseWheel += DataGridView1_MouseWheel;
         }
 
-
+        #region CRUD
         // Add button
         private void btnAnadir_Click(object sender, EventArgs e)
         {
@@ -68,7 +69,6 @@ namespace PresentationLayer
             }
         }
 
-
         // Update button
         private void btnEditar_Click(object sender, EventArgs e)
         {
@@ -77,27 +77,39 @@ namespace PresentationLayer
                 DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
 
                 int productId = Convert.ToInt32(selectedRow.Cells[0].Value);
-                string productName = selectedRow.Cells[1].Value.ToString();
-                string code = selectedRow.Cells[2].Value.ToString();
+                string code = selectedRow.Cells[1].Value.ToString();
+                string productName = selectedRow.Cells[2].Value.ToString();
                 string description = selectedRow.Cells[3].Value.ToString();
-                DateTime expirationTime = Convert.ToDateTime(selectedRow.Cells[4].Value);
-                Double price = Convert.ToDouble(selectedRow.Cells[5].Value);
+                int quantity = Convert.ToInt32(selectedRow.Cells[4].Value);
+                DateTime expirationTime = Convert.ToDateTime(selectedRow.Cells[5].Value);
                 int lote = Convert.ToInt32(selectedRow.Cells[6].Value);
+                double price = Convert.ToDouble(selectedRow.Cells[7].Value);
                 ProductsDTO productsDTO = new ProductsDTO
                 {
                     ProductsId = productId,
                     ProductName = productName,
                     Code = code,
                     Description = description,
+                    Quantity = quantity,
                     ExpirationDate = expirationTime,
                     Price = price,
                     Lote = lote
                 };
-                productService.UpdateProduct(productsDTO);
+                UpdateProduct updateProduct = new(productsDTO);
+                updateProduct.MaximizeBox = false;
+                updateProduct.MinimizeBox = false;
+                var result = updateProduct.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    DataGridSettings();
+                    LoadData();
+                }
             }
 
         }
+        #endregion
 
+        #region DataGrid
         private void DataGridSettings()
         {
             dataGridView1.AutoGenerateColumns = false;
@@ -118,7 +130,9 @@ namespace PresentationLayer
             DataGridSettings();
             LoadData();
         }
+        #endregion
 
+        #region ScrollBar
         private void materialScrollBar1_Scroll(object sender, ScrollEventArgs e)
         {
             // Verificar que el índice no sea mayor que la cantidad de filas disponibles
@@ -162,6 +176,7 @@ namespace PresentationLayer
                 dataGridView1.FirstDisplayedScrollingRowIndex = newValue;
             }
         }
+        #endregion
 
     }
 }

@@ -14,7 +14,7 @@ namespace DataLayer.IRepository
         void DeleteClient(int id);
         List<Client> GetAllCLient();
         Client GetByIdClient(int id);
-        IEnumerable<string> GetAllNameClient();
+        IEnumerable<Client> GetAllNameClient();
         public bool ExistCode(int code, string type);
     }
 }

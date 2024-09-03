@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Model;
+using DomainLayer.Entities;
 
 namespace BusinessLayer.Interfaces.IServices
 {
@@ -10,5 +11,6 @@ namespace BusinessLayer.Interfaces.IServices
         public List<ProductsDTO> GetAllProduct();
         public ProductsDTO GetByIdProduct(int id);
         IEnumerable<ProductsDTO> GetAllProductName();
+        public IEnumerable<ProductsDTO> GetInvoiceProducts();
     }
 }

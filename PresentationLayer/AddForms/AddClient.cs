@@ -35,7 +35,7 @@ namespace PresentationLayer.AddForms
             foreach (var name in data)
             {
                 MaterialListBoxItem item = new();
-                item.Text = name;
+                item.Text = name.ClientName;
                 materialListBox1.Items.Add(item);
                 // If i want to add a secondary text the code must be: item.SecondaryText = data and the add still equal
             }

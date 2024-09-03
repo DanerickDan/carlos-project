@@ -26,7 +26,7 @@ namespace DataLayer.Repositories
                     {
                         using (var command = new SQLiteCommand(
                         "INSERT INTO Productos (nombre, codigo, descripcion, fecha_vencimiento, precio, lote, cantidad, activo,category_id, estado_id) " +
-                        "VALUES (@Nombre, @Codigo, @Descripcion, @FechaVencimiento, @Precio, @Lote, @Cantidad, @Activo,@Categoria, @Estado)", connection , transaction))
+                        "VALUES (@Nombre, @Codigo, @Descripcion, @FechaVencimiento, @Precio, @Lote, @Cantidad, @Activo,@Categoria, @Estado)", connection, transaction))
                         {
                             command.Parameters.AddWithValue("@Nombre", product.ProductName);
                             command.Parameters.AddWithValue("@Codigo", product.Code);
@@ -73,8 +73,8 @@ namespace DataLayer.Repositories
                             command.Parameters.AddWithValue("@Precio", product.Price);
                             command.Parameters.AddWithValue("@Lote", product.Lote);
                             command.Parameters.AddWithValue("@Cantidad", product.Quantity);
-                            command.Parameters.AddWithValue("@Category", product.CategoryId);
-                            command.Parameters.AddWithValue("@Estado", product.StatusId);
+                            command.Parameters.AddWithValue("@Category", 1);
+                            command.Parameters.AddWithValue("@Estado", 1);
                             command.ExecuteNonQuery();
                         }
                         transaction.Commit();
@@ -181,15 +181,15 @@ namespace DataLayer.Repositories
                 {
                     connectionManager.OpenConnection(connection);
                     string query = @"
-                SELECT p.producto_id as ProductoId, p.nombre as ProductoNombre, p.codigo as Codigo,
-	            p.descripcion as Descripcion, p.fecha_vencimiento as Vencimiento, p.precio as ProductoPrecio,
-	            p.lote as Lote, p.cantidad as Cantidad, p.category_id as ProductoCategoriaId,
-	            c.category_id as CategoriaId, c.nombre_categoria as CategoriaNombre,
-                p.estado_id as ProductoEstadoId, e.estado_id as EstadoId, e.descripcion as EstadoNombre
-                FROM Productos p 
-                INNER JOIN Categorias c ON p.category_id = c.category_id
-                INNER JOIN EstadoPedido e ON p.estado_id = e.estado_id
-                WHERE p.producto_id = @Id and activo = 1;";
+                        SELECT p.producto_id as ProductoId, p.nombre as ProductoNombre, p.codigo as Codigo,
+	                    p.descripcion as Descripcion, p.fecha_vencimiento as Vencimiento, p.precio as ProductoPrecio,
+	                    p.lote as Lote, p.cantidad as Cantidad, p.category_id as ProductoCategoriaId,
+	                    c.category_id as CategoriaId, c.nombre_categoria as CategoriaNombre,
+                        p.estado_id as ProductoEstadoId, e.estado_id as EstadoId, e.descripcion as EstadoNombre
+                        FROM Productos p 
+                        INNER JOIN Categorias c ON p.category_id = c.category_id
+                        INNER JOIN EstadoPedido e ON p.estado_id = e.estado_id
+                        WHERE p.producto_id = @Id and activo = 1;";
                     using (var command = new SQLiteCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@Id", id);
@@ -255,15 +255,53 @@ namespace DataLayer.Repositories
                                 };
                                 productNames.Add(products);
                             }
-                            return productNames;
                         }
                     }
                 }
+                return productNames;
             }
             catch (SQLiteException ex)
             {
                 throw new SQLiteException($"Error in GetAllProductName: {ex.Message} at {ex.StackTrace}", ex);
             }
+        }
+
+        public IEnumerable<Products> GetInvoiceProducts()
+        {
+            List<Products> products = new();
+            try
+            {
+                using (var connection = connectionManager.GetConnection())
+                {
+                    connectionManager.OpenConnection(connection);
+
+                    string query = "SELECT * FROM ProductosFacturas";
+                    using (var command = new SQLiteCommand(query, connection))
+                    {
+                        using(var reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Products product = new()
+                                {
+                                    ProductName = reader.GetString(0),
+                                    Price = reader.GetDouble(1),
+                                    Quantity = reader.GetInt32(2),
+                                    ProductsId = reader.GetInt32(3)
+                                };
+                                products.Add(product);
+                            }
+                        }
+                    }
+
+                }
+                return products;
+            }
+            catch (SQLiteException ex)
+            {
+                throw new SQLiteException($"Error in GetAllProductName: {ex.Message} at {ex.StackTrace}", ex);
+            }
+
         }
 
         public bool ExistCode(string code, string type)

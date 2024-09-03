@@ -79,7 +79,7 @@ namespace BusinessLayer.Services
         public ClientDTO GetByIdClient(int id)
         {
             var client = _clientRepository.GetByIdClient(id);
-            var clientDTO = new ClientDTO
+            ClientDTO clientDTO = new()
             {
                 ClientId = client.ClientId,
                 ClientName = client.ClientName,
@@ -95,13 +95,19 @@ namespace BusinessLayer.Services
             return clientDTO;
         }
 
-        public IEnumerable<string> GetAllCLientName()
+        public IEnumerable<ClientDTO> GetAllCLientName()
         {
-            List<string> list = new();
+            List<ClientDTO> list = new();
             var names = _clientRepository.GetAllNameClient();
+
             foreach (var name in names)
             {
-                list.Add(name);
+                ClientDTO clientDTO = new()
+                {
+                    ClientName = name.ClientName,
+                    ClientId = name.ClientId,
+                };
+                list.Add(clientDTO);
             }
 
             return list;

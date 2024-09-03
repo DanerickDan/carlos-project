@@ -4,6 +4,7 @@ using BusinessLayer.InvoiceManagment;
 using BusinessLayer.Model;
 using BusinessLayer.Services;
 using BusinessLayer.Utils;
+using DomainLayer.Entities;
 using PresentationLayer.AddForms;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -36,9 +37,14 @@ namespace PresentationLayer
             AddInvoice addInvoice = new();
             addInvoice.MaximizeBox = false;
             addInvoice.MinimizeBox = false;
-            addInvoice.ShowDialog();
+            var result = addInvoice.ShowDialog();
+            if (result == DialogResult.OK)
+            {
 
+            }
         }
+
+        
 
         // Delete Invoice
         private void btnBorrar_Click(object sender, EventArgs e)

@@ -1,9 +1,4 @@
 ﻿using DomainLayer.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataLayer.IRepository
 {
@@ -16,5 +11,6 @@ namespace DataLayer.IRepository
         Products GetByIdProduct(int id);
         IEnumerable<Products> GetAllProductName();
         public bool ExistCode(string code ,string type);
+        public IEnumerable<Products> GetInvoiceProducts();
     }
 }

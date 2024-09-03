@@ -33,15 +33,6 @@
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProductManagementForm));
             dataGridView1 = new DataGridView();
-            ProductID = new DataGridViewTextBoxColumn();
-            Code = new DataGridViewTextBoxColumn();
-            NameColumn = new DataGridViewTextBoxColumn();
-            DescriptionColumn = new DataGridViewTextBoxColumn();
-            Quantity = new DataGridViewTextBoxColumn();
-            CategoryColumn = new DataGridViewTextBoxColumn();
-            TimeColumn = new DataGridViewTextBoxColumn();
-            StateColumn = new DataGridViewTextBoxColumn();
-            Lote = new DataGridViewTextBoxColumn();
             panel1 = new Panel();
             btnPanel = new Panel();
             btnAnadir = new CustomComponents.MainFormComponents.CustomButton();
@@ -52,6 +43,16 @@
             cltTxtRegistros = new Label();
             cltTxtFiltrados = new Label();
             materialScrollBar1 = new MaterialSkin.Controls.MaterialScrollBar();
+            ProductID = new DataGridViewTextBoxColumn();
+            Code = new DataGridViewTextBoxColumn();
+            NameColumn = new DataGridViewTextBoxColumn();
+            DescriptionColumn = new DataGridViewTextBoxColumn();
+            Quantity = new DataGridViewTextBoxColumn();
+            TimeColumn = new DataGridViewTextBoxColumn();
+            Lote = new DataGridViewTextBoxColumn();
+            Price = new DataGridViewTextBoxColumn();
+            StateColumn = new DataGridViewTextBoxColumn();
+            CategoryColumn = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             panel1.SuspendLayout();
             btnPanel.SuspendLayout();
@@ -79,7 +80,7 @@
             dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridView1.ColumnHeadersHeight = 30;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { ProductID, Code, NameColumn, DescriptionColumn, Quantity, CategoryColumn, TimeColumn, StateColumn, Lote });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { ProductID, Code, NameColumn, DescriptionColumn, Quantity, TimeColumn, Lote, Price, StateColumn, CategoryColumn });
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = SystemColors.Window;
             dataGridViewCellStyle2.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -109,71 +110,6 @@
             dataGridView1.TabIndex = 0;
             dataGridView1.RowsAdded += dataGridView1_RowsAdded;
             dataGridView1.RowsRemoved += dataGridView1_RowsRemoved;
-            // 
-            // ProductID
-            // 
-            ProductID.DataPropertyName = "ProductsId";
-            ProductID.HeaderText = "ProductID";
-            ProductID.Name = "ProductID";
-            ProductID.ReadOnly = true;
-            ProductID.Visible = false;
-            // 
-            // Code
-            // 
-            Code.DataPropertyName = "Code";
-            Code.HeaderText = "Codigo";
-            Code.Name = "Code";
-            Code.ReadOnly = true;
-            // 
-            // NameColumn
-            // 
-            NameColumn.DataPropertyName = "ProductName";
-            NameColumn.HeaderText = "Nombre";
-            NameColumn.Name = "NameColumn";
-            NameColumn.ReadOnly = true;
-            // 
-            // DescriptionColumn
-            // 
-            DescriptionColumn.DataPropertyName = "Description";
-            DescriptionColumn.HeaderText = "Descripción";
-            DescriptionColumn.Name = "DescriptionColumn";
-            DescriptionColumn.ReadOnly = true;
-            // 
-            // Quantity
-            // 
-            Quantity.DataPropertyName = "Quantity";
-            Quantity.HeaderText = "Cantidad";
-            Quantity.Name = "Quantity";
-            Quantity.ReadOnly = true;
-            // 
-            // CategoryColumn
-            // 
-            CategoryColumn.DataPropertyName = "CategoryId";
-            CategoryColumn.HeaderText = "Categoria";
-            CategoryColumn.Name = "CategoryColumn";
-            CategoryColumn.ReadOnly = true;
-            CategoryColumn.Visible = false;
-            // 
-            // TimeColumn
-            // 
-            TimeColumn.DataPropertyName = "ExpirationDate";
-            TimeColumn.HeaderText = "Expiracion";
-            TimeColumn.Name = "TimeColumn";
-            TimeColumn.ReadOnly = true;
-            // 
-            // StateColumn
-            // 
-            StateColumn.DataPropertyName = "StatusId";
-            StateColumn.HeaderText = "Estado";
-            StateColumn.Name = "StateColumn";
-            StateColumn.ReadOnly = true;
-            // 
-            // Lote
-            // 
-            Lote.DataPropertyName = "Lote";
-            Lote.HeaderText = "Lote";
-            Lote.Name = "Lote";
-            Lote.ReadOnly = true;
             // 
             // panel1
             // 
@@ -321,6 +257,79 @@
             materialScrollBar1.Text = "materialScrollBar1";
             materialScrollBar1.Scroll += materialScrollBar1_Scroll;
             // 
+            // ProductID
+            // 
+            ProductID.DataPropertyName = "ProductsId";
+            ProductID.HeaderText = "ProductID";
+            ProductID.Name = "ProductID";
+            ProductID.ReadOnly = true;
+            ProductID.Visible = false;
+            // 
+            // Code
+            // 
+            Code.DataPropertyName = "Code";
+            Code.HeaderText = "Codigo";
+            Code.Name = "Code";
+            Code.ReadOnly = true;
+            // 
+            // NameColumn
+            // 
+            NameColumn.DataPropertyName = "ProductName";
+            NameColumn.HeaderText = "Nombre";
+            NameColumn.Name = "NameColumn";
+            NameColumn.ReadOnly = true;
+            // 
+            // DescriptionColumn
+            // 
+            DescriptionColumn.DataPropertyName = "Description";
+            DescriptionColumn.HeaderText = "Descripción";
+            DescriptionColumn.Name = "DescriptionColumn";
+            DescriptionColumn.ReadOnly = true;
+            // 
+            // Quantity
+            // 
+            Quantity.DataPropertyName = "Quantity";
+            Quantity.HeaderText = "Cantidad";
+            Quantity.Name = "Quantity";
+            Quantity.ReadOnly = true;
+            // 
+            // TimeColumn
+            // 
+            TimeColumn.DataPropertyName = "ExpirationDate";
+            TimeColumn.HeaderText = "Expiracion";
+            TimeColumn.Name = "TimeColumn";
+            TimeColumn.ReadOnly = true;
+            // 
+            // Lote
+            // 
+            Lote.DataPropertyName = "Lote";
+            Lote.HeaderText = "Lote";
+            Lote.Name = "Lote";
+            Lote.ReadOnly = true;
+            // 
+            // Price
+            // 
+            Price.DataPropertyName = "Price";
+            Price.HeaderText = "Precio";
+            Price.Name = "Price";
+            Price.ReadOnly = true;
+            // 
+            // StateColumn
+            // 
+            StateColumn.DataPropertyName = "StatusId";
+            StateColumn.HeaderText = "Estado";
+            StateColumn.Name = "StateColumn";
+            StateColumn.ReadOnly = true;
+            StateColumn.Visible = false;
+            // 
+            // CategoryColumn
+            // 
+            CategoryColumn.DataPropertyName = "CategoryId";
+            CategoryColumn.HeaderText = "Categoria";
+            CategoryColumn.Name = "CategoryColumn";
+            CategoryColumn.ReadOnly = true;
+            CategoryColumn.Visible = false;
+            // 
             // ProductManagementForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -360,9 +369,10 @@
         private DataGridViewTextBoxColumn NameColumn;
         private DataGridViewTextBoxColumn DescriptionColumn;
         private DataGridViewTextBoxColumn Quantity;
-        private DataGridViewTextBoxColumn CategoryColumn;
         private DataGridViewTextBoxColumn TimeColumn;
-        private DataGridViewTextBoxColumn StateColumn;
         private DataGridViewTextBoxColumn Lote;
+        private DataGridViewTextBoxColumn Price;
+        private DataGridViewTextBoxColumn StateColumn;
+        private DataGridViewTextBoxColumn CategoryColumn;
     }
 }

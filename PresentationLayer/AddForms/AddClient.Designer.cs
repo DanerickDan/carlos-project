@@ -114,7 +114,7 @@
             agregarBtn.FlatAppearance.BorderSize = 0;
             agregarBtn.FlatStyle = FlatStyle.Flat;
             agregarBtn.ForeColor = Color.White;
-            agregarBtn.Location = new Point(142, 369);
+            agregarBtn.Location = new Point(153, 383);
             agregarBtn.Name = "agregarBtn";
             agregarBtn.Size = new Size(150, 40);
             agregarBtn.TabIndex = 3;
@@ -128,7 +128,7 @@
             label9.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             label9.AutoSize = true;
             label9.Font = new Font("Nirmala UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label9.Location = new Point(271, 275);
+            label9.Location = new Point(271, 291);
             label9.Name = "label9";
             label9.Size = new Size(42, 21);
             label9.TabIndex = 2;
@@ -139,7 +139,7 @@
             label7.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             label7.AutoSize = true;
             label7.Font = new Font("Nirmala UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label7.Location = new Point(271, 202);
+            label7.Location = new Point(271, 218);
             label7.Name = "label7";
             label7.Size = new Size(68, 21);
             label7.TabIndex = 2;
@@ -209,7 +209,7 @@
             label2.Name = "label2";
             label2.Size = new Size(60, 21);
             label2.TabIndex = 2;
-            label2.Text = "Codigo";
+            label2.Text = "Código";
             // 
             // rncTxt
             // 
@@ -221,7 +221,7 @@
             rncTxt.BorderSize = 1;
             rncTxt.Font = new Font("Segoe UI", 9.5F);
             rncTxt.ForeColor = Color.DimGray;
-            rncTxt.Location = new Point(271, 302);
+            rncTxt.Location = new Point(271, 318);
             rncTxt.Multiline = false;
             rncTxt.Name = "rncTxt";
             rncTxt.Padding = new Padding(10, 7, 10, 7);
@@ -267,7 +267,7 @@
             telefonoTxt.BorderSize = 1;
             telefonoTxt.Font = new Font("Segoe UI", 9.5F);
             telefonoTxt.ForeColor = Color.DimGray;
-            telefonoTxt.Location = new Point(271, 226);
+            telefonoTxt.Location = new Point(271, 242);
             telefonoTxt.Multiline = false;
             telefonoTxt.Name = "telefonoTxt";
             telefonoTxt.Padding = new Padding(10, 7, 10, 7);
@@ -314,13 +314,13 @@
             direccionTxt.Font = new Font("Segoe UI", 9.5F);
             direccionTxt.ForeColor = Color.DimGray;
             direccionTxt.Location = new Point(271, 146);
-            direccionTxt.Multiline = false;
+            direccionTxt.Multiline = true;
             direccionTxt.Name = "direccionTxt";
             direccionTxt.Padding = new Padding(10, 7, 10, 7);
             direccionTxt.PasswordChar = false;
             direccionTxt.PlaceholderColor = Color.DarkGray;
             direccionTxt.PlaceholderText = "";
-            direccionTxt.Size = new Size(127, 32);
+            direccionTxt.Size = new Size(127, 58);
             direccionTxt.TabIndex = 1;
             direccionTxt.Texts = "";
             direccionTxt.UnderlinedStyle = true;

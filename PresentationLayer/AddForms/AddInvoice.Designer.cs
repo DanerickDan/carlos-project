@@ -31,27 +31,27 @@
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
-            panel1 = new Panel();
+            panelEjemplo = new Panel();
             label4 = new Label();
-            customComboBox1 = new CustomComponents.MainFormComponents.CustomComboBox();
-            customComboBox2 = new CustomComponents.MainFormComponents.CustomComboBox();
-            customComboBox3 = new CustomComponents.MainFormComponents.CustomComboBox();
+            cbFacturaDe = new CustomComponents.MainFormComponents.CustomComboBox();
+            cbTerminos = new CustomComponents.MainFormComponents.CustomComboBox();
+            cbFacturaPara = new CustomComponents.MainFormComponents.CustomComboBox();
             label5 = new Label();
-            customTextBox1 = new CustomComponents.MainFormComponents.CustomTextBox();
-            customTextBox2 = new CustomComponents.MainFormComponents.CustomTextBox();
-            customTextBox3 = new CustomComponents.MainFormComponents.CustomTextBox();
-            customTextBox4 = new CustomComponents.MainFormComponents.CustomTextBox();
-            button1 = new Button();
+            txtPrecio = new CustomComponents.MainFormComponents.CustomTextBox();
+            txtCantidad = new CustomComponents.MainFormComponents.CustomTextBox();
+            txtNeto = new CustomComponents.MainFormComponents.CustomTextBox();
+            btnAgregarProd = new Button();
             label6 = new Label();
-            customTextBox5 = new CustomComponents.MainFormComponents.CustomTextBox();
-            customButton1 = new CustomComponents.MainFormComponents.CustomButton();
+            txtDescrip = new CustomComponents.MainFormComponents.CustomTextBox();
+            btnCrear = new CustomComponents.MainFormComponents.CustomButton();
+            cbProductNombre = new CustomComponents.MainFormComponents.CustomComboBox();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(31, 45);
+            label1.Location = new Point(30, 49);
             label1.Name = "label1";
             label1.Size = new Size(101, 25);
             label1.TabIndex = 0;
@@ -61,105 +61,103 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(231, 45);
+            label2.Location = new Point(241, 49);
             label2.Name = "label2";
             label2.Size = new Size(118, 25);
             label2.TabIndex = 0;
             label2.Text = "Factura para";
-            label2.Click += label2_Click;
             // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(417, 45);
+            label3.Location = new Point(451, 49);
             label3.Name = "label3";
             label3.Size = new Size(89, 25);
             label3.TabIndex = 0;
             label3.Text = "Terminos";
-            label3.Click += label2_Click;
             // 
-            // panel1
+            // panelEjemplo
             // 
-            panel1.BackColor = SystemColors.ActiveBorder;
-            panel1.Location = new Point(587, 73);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(353, 366);
-            panel1.TabIndex = 1;
+            panelEjemplo.BackColor = SystemColors.ActiveBorder;
+            panelEjemplo.Location = new Point(620, 73);
+            panelEjemplo.Name = "panelEjemplo";
+            panelEjemplo.Size = new Size(320, 366);
+            panelEjemplo.TabIndex = 1;
             // 
             // label4
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(693, 45);
+            label4.Location = new Point(725, 45);
             label4.Name = "label4";
             label4.Size = new Size(124, 25);
             label4.TabIndex = 0;
             label4.Text = "Ejemplo final";
-            label4.Click += label2_Click;
             // 
-            // customComboBox1
+            // cbFacturaDe
             // 
-            customComboBox1.AutoCompleteMode = AutoCompleteMode.Suggest;
-            customComboBox1.BackColor = Color.WhiteSmoke;
-            customComboBox1.BorderColor = SystemColors.Control;
-            customComboBox1.BorderSize = 1;
-            customComboBox1.DropDownStyle = ComboBoxStyle.DropDown;
-            customComboBox1.Font = new Font("Segoe UI", 10F);
-            customComboBox1.ForeColor = Color.DimGray;
-            customComboBox1.IconColor = Color.FromArgb(248, 169, 96);
-            customComboBox1.Items.AddRange(new object[] { "Hola", "como estas", "Cada cadena", "Mensaje muy largo para ver si el ancho e bobo tu lo shabeeeee eooooo", ",as mensaje mas", "otro por si acaso ", "uuuu besbesita uaa", "Eoo dimelo ", "Ay hay ahi jooooo", "knjna", "ajidjaisjdijasda", "dkna", "me case fue" });
-            customComboBox1.ListBackColor = Color.FromArgb(230, 228, 245);
-            customComboBox1.ListTextColor = Color.DimGray;
-            customComboBox1.Location = new Point(31, 77);
-            customComboBox1.MinimumSize = new Size(150, 30);
-            customComboBox1.Name = "customComboBox1";
-            customComboBox1.Padding = new Padding(1);
-            customComboBox1.Size = new Size(150, 30);
-            customComboBox1.TabIndex = 2;
-            customComboBox1.Texts = "";
+            cbFacturaDe.AutoCompleteMode = AutoCompleteMode.Suggest;
+            cbFacturaDe.BackColor = Color.WhiteSmoke;
+            cbFacturaDe.BorderColor = SystemColors.Control;
+            cbFacturaDe.BorderSize = 1;
+            cbFacturaDe.DropDownStyle = ComboBoxStyle.DropDown;
+            cbFacturaDe.Font = new Font("Segoe UI", 10F);
+            cbFacturaDe.ForeColor = Color.DimGray;
+            cbFacturaDe.IconColor = Color.FromArgb(248, 169, 96);
+            cbFacturaDe.Items.AddRange(new object[] { "Carlos Radhames", "Johanna Rodriguez" });
+            cbFacturaDe.ListBackColor = Color.FromArgb(230, 228, 245);
+            cbFacturaDe.ListTextColor = Color.DimGray;
+            cbFacturaDe.Location = new Point(31, 77);
+            cbFacturaDe.MinimumSize = new Size(150, 30);
+            cbFacturaDe.Name = "cbFacturaDe";
+            cbFacturaDe.Padding = new Padding(1);
+            cbFacturaDe.Size = new Size(170, 30);
+            cbFacturaDe.TabIndex = 2;
+            cbFacturaDe.Texts = "";
             // 
-            // customComboBox2
+            // cbTerminos
             // 
-            customComboBox2.AutoCompleteMode = AutoCompleteMode.Suggest;
-            customComboBox2.BackColor = Color.WhiteSmoke;
-            customComboBox2.BorderColor = SystemColors.Control;
-            customComboBox2.BorderSize = 1;
-            customComboBox2.DropDownStyle = ComboBoxStyle.DropDown;
-            customComboBox2.Font = new Font("Segoe UI", 10F);
-            customComboBox2.ForeColor = Color.DimGray;
-            customComboBox2.IconColor = Color.FromArgb(248, 169, 96);
-            customComboBox2.Items.AddRange(new object[] { "Hola", "como estas", "Cada cadena", "Mensaje muy largo para ver si el ancho e bobo tu lo shabeeeee eooooo", ",as mensaje mas", "otro por si acaso ", "uuuu besbesita uaa", "Eoo dimelo ", "Ay hay ahi jooooo", "knjna", "ajidjaisjdijasda", "dkna", "me case fue" });
-            customComboBox2.ListBackColor = Color.FromArgb(230, 228, 245);
-            customComboBox2.ListTextColor = Color.DimGray;
-            customComboBox2.Location = new Point(417, 77);
-            customComboBox2.MinimumSize = new Size(150, 30);
-            customComboBox2.Name = "customComboBox2";
-            customComboBox2.Padding = new Padding(1);
-            customComboBox2.Size = new Size(150, 30);
-            customComboBox2.TabIndex = 2;
-            customComboBox2.Texts = "";
+            cbTerminos.AutoCompleteMode = AutoCompleteMode.Suggest;
+            cbTerminos.BackColor = Color.WhiteSmoke;
+            cbTerminos.BorderColor = SystemColors.Control;
+            cbTerminos.BorderSize = 1;
+            cbTerminos.DropDownStyle = ComboBoxStyle.DropDown;
+            cbTerminos.Font = new Font("Segoe UI", 10F);
+            cbTerminos.ForeColor = Color.DimGray;
+            cbTerminos.IconColor = Color.FromArgb(248, 169, 96);
+            cbTerminos.Items.AddRange(new object[] { "Credito", "Contado" });
+            cbTerminos.ListBackColor = Color.FromArgb(230, 228, 245);
+            cbTerminos.ListTextColor = Color.DimGray;
+            cbTerminos.Location = new Point(451, 77);
+            cbTerminos.MinimumSize = new Size(150, 30);
+            cbTerminos.Name = "cbTerminos";
+            cbTerminos.Padding = new Padding(1);
+            cbTerminos.Size = new Size(150, 30);
+            cbTerminos.TabIndex = 2;
+            cbTerminos.Texts = "";
             // 
-            // customComboBox3
+            // cbFacturaPara
             // 
-            customComboBox3.AutoCompleteMode = AutoCompleteMode.Suggest;
-            customComboBox3.BackColor = Color.WhiteSmoke;
-            customComboBox3.BorderColor = SystemColors.Control;
-            customComboBox3.BorderSize = 1;
-            customComboBox3.DropDownStyle = ComboBoxStyle.DropDown;
-            customComboBox3.Font = new Font("Segoe UI", 10F);
-            customComboBox3.ForeColor = Color.DimGray;
-            customComboBox3.IconColor = Color.FromArgb(248, 169, 96);
-            customComboBox3.Items.AddRange(new object[] { "Hola", "como estas", "Cada cadena", "Mensaje muy largo para ver si el ancho e bobo tu lo shabeeeee eooooo", ",as mensaje mas", "otro por si acaso ", "uuuu besbesita uaa", "Eoo dimelo ", "Ay hay ahi jooooo", "knjna", "ajidjaisjdijasda", "dkna", "me case fue" });
-            customComboBox3.ListBackColor = Color.FromArgb(230, 228, 245);
-            customComboBox3.ListTextColor = Color.DimGray;
-            customComboBox3.Location = new Point(231, 77);
-            customComboBox3.MinimumSize = new Size(150, 30);
-            customComboBox3.Name = "customComboBox3";
-            customComboBox3.Padding = new Padding(1);
-            customComboBox3.Size = new Size(150, 30);
-            customComboBox3.TabIndex = 2;
-            customComboBox3.Texts = "";
+            cbFacturaPara.AutoCompleteMode = AutoCompleteMode.Suggest;
+            cbFacturaPara.AutoCompleteSource = AutoCompleteSource.ListItems;
+            cbFacturaPara.BackColor = Color.WhiteSmoke;
+            cbFacturaPara.BorderColor = SystemColors.Control;
+            cbFacturaPara.BorderSize = 1;
+            cbFacturaPara.DropDownStyle = ComboBoxStyle.DropDown;
+            cbFacturaPara.Font = new Font("Segoe UI", 10F);
+            cbFacturaPara.ForeColor = Color.DimGray;
+            cbFacturaPara.IconColor = Color.FromArgb(248, 169, 96);
+            cbFacturaPara.ListBackColor = Color.FromArgb(230, 228, 245);
+            cbFacturaPara.ListTextColor = Color.DimGray;
+            cbFacturaPara.Location = new Point(241, 77);
+            cbFacturaPara.MinimumSize = new Size(150, 30);
+            cbFacturaPara.Name = "cbFacturaPara";
+            cbFacturaPara.Padding = new Padding(1);
+            cbFacturaPara.Size = new Size(167, 30);
+            cbFacturaPara.TabIndex = 2;
+            cbFacturaPara.Texts = "";
+            cbFacturaPara.OnSelectedIndexChanged += cbFacturaPara_OnSelectedIndexChanged;
             // 
             // label5
             // 
@@ -171,101 +169,82 @@
             label5.TabIndex = 3;
             label5.Text = "Productos";
             // 
-            // customTextBox1
+            // txtPrecio
             // 
-            customTextBox1.BackColor = Color.White;
-            customTextBox1.BorderColor = Color.DarkGray;
-            customTextBox1.BorderFocusColor = Color.HotPink;
-            customTextBox1.BorderRadius = 6;
-            customTextBox1.BorderSize = 1;
-            customTextBox1.Font = new Font("Segoe UI", 9.5F);
-            customTextBox1.ForeColor = Color.DimGray;
-            customTextBox1.Location = new Point(31, 205);
-            customTextBox1.Multiline = false;
-            customTextBox1.Name = "customTextBox1";
-            customTextBox1.Padding = new Padding(10, 7, 10, 7);
-            customTextBox1.PasswordChar = false;
-            customTextBox1.PlaceholderColor = Color.DarkGray;
-            customTextBox1.PlaceholderText = "Nombre";
-            customTextBox1.Size = new Size(150, 32);
-            customTextBox1.TabIndex = 4;
-            customTextBox1.Texts = "";
-            customTextBox1.UnderlinedStyle = false;
+            txtPrecio.BackColor = Color.White;
+            txtPrecio.BorderColor = Color.DarkGray;
+            txtPrecio.BorderFocusColor = Color.HotPink;
+            txtPrecio.BorderRadius = 6;
+            txtPrecio.BorderSize = 1;
+            txtPrecio.Font = new Font("Segoe UI", 9.5F);
+            txtPrecio.ForeColor = Color.DimGray;
+            txtPrecio.Location = new Point(233, 207);
+            txtPrecio.Multiline = false;
+            txtPrecio.Name = "txtPrecio";
+            txtPrecio.Padding = new Padding(10, 7, 10, 7);
+            txtPrecio.PasswordChar = false;
+            txtPrecio.PlaceholderColor = Color.DarkGray;
+            txtPrecio.PlaceholderText = "Precio";
+            txtPrecio.Size = new Size(76, 32);
+            txtPrecio.TabIndex = 4;
+            txtPrecio.Texts = "";
+            txtPrecio.UnderlinedStyle = false;
             // 
-            // customTextBox2
+            // txtCantidad
             // 
-            customTextBox2.BackColor = Color.White;
-            customTextBox2.BorderColor = Color.DarkGray;
-            customTextBox2.BorderFocusColor = Color.HotPink;
-            customTextBox2.BorderRadius = 6;
-            customTextBox2.BorderSize = 1;
-            customTextBox2.Font = new Font("Segoe UI", 9.5F);
-            customTextBox2.ForeColor = Color.DimGray;
-            customTextBox2.Location = new Point(187, 205);
-            customTextBox2.Multiline = false;
-            customTextBox2.Name = "customTextBox2";
-            customTextBox2.Padding = new Padding(10, 7, 10, 7);
-            customTextBox2.PasswordChar = false;
-            customTextBox2.PlaceholderColor = Color.DarkGray;
-            customTextBox2.PlaceholderText = "Precio";
-            customTextBox2.Size = new Size(76, 32);
-            customTextBox2.TabIndex = 4;
-            customTextBox2.Texts = "";
-            customTextBox2.UnderlinedStyle = false;
+            txtCantidad.BackColor = Color.White;
+            txtCantidad.BorderColor = Color.DarkGray;
+            txtCantidad.BorderFocusColor = Color.HotPink;
+            txtCantidad.BorderRadius = 6;
+            txtCantidad.BorderSize = 1;
+            txtCantidad.Font = new Font("Segoe UI", 9.5F);
+            txtCantidad.ForeColor = Color.DimGray;
+            txtCantidad.Location = new Point(315, 207);
+            txtCantidad.Multiline = false;
+            txtCantidad.Name = "txtCantidad";
+            txtCantidad.Padding = new Padding(10, 7, 10, 7);
+            txtCantidad.PasswordChar = false;
+            txtCantidad.PlaceholderColor = Color.DarkGray;
+            txtCantidad.PlaceholderText = "Cantidad";
+            txtCantidad.Size = new Size(76, 32);
+            txtCantidad.TabIndex = 4;
+            txtCantidad.Texts = "";
+            txtCantidad.UnderlinedStyle = false;
+            txtCantidad._TextChanged += txtCantidad__TextChanged;
             // 
-            // customTextBox3
+            // txtNeto
             // 
-            customTextBox3.BackColor = Color.White;
-            customTextBox3.BorderColor = Color.DarkGray;
-            customTextBox3.BorderFocusColor = Color.HotPink;
-            customTextBox3.BorderRadius = 6;
-            customTextBox3.BorderSize = 1;
-            customTextBox3.Font = new Font("Segoe UI", 9.5F);
-            customTextBox3.ForeColor = Color.DimGray;
-            customTextBox3.Location = new Point(269, 205);
-            customTextBox3.Multiline = false;
-            customTextBox3.Name = "customTextBox3";
-            customTextBox3.Padding = new Padding(10, 7, 10, 7);
-            customTextBox3.PasswordChar = false;
-            customTextBox3.PlaceholderColor = Color.DarkGray;
-            customTextBox3.PlaceholderText = "Cantidad";
-            customTextBox3.Size = new Size(76, 32);
-            customTextBox3.TabIndex = 4;
-            customTextBox3.Texts = "";
-            customTextBox3.UnderlinedStyle = false;
+            txtNeto.BackColor = Color.White;
+            txtNeto.BorderColor = Color.DarkGray;
+            txtNeto.BorderFocusColor = Color.HotPink;
+            txtNeto.BorderRadius = 6;
+            txtNeto.BorderSize = 1;
+            txtNeto.Enabled = false;
+            txtNeto.Font = new Font("Segoe UI", 9.5F);
+            txtNeto.ForeColor = Color.DimGray;
+            txtNeto.Location = new Point(397, 207);
+            txtNeto.Multiline = false;
+            txtNeto.Name = "txtNeto";
+            txtNeto.Padding = new Padding(10, 7, 10, 7);
+            txtNeto.PasswordChar = false;
+            txtNeto.PlaceholderColor = Color.DarkGray;
+            txtNeto.PlaceholderText = "Neto";
+            txtNeto.Size = new Size(76, 32);
+            txtNeto.TabIndex = 4;
+            txtNeto.Texts = "";
+            txtNeto.UnderlinedStyle = false;
             // 
-            // customTextBox4
+            // btnAgregarProd
             // 
-            customTextBox4.BackColor = Color.White;
-            customTextBox4.BorderColor = Color.DarkGray;
-            customTextBox4.BorderFocusColor = Color.HotPink;
-            customTextBox4.BorderRadius = 6;
-            customTextBox4.BorderSize = 1;
-            customTextBox4.Enabled = false;
-            customTextBox4.Font = new Font("Segoe UI", 9.5F);
-            customTextBox4.ForeColor = Color.DimGray;
-            customTextBox4.Location = new Point(351, 205);
-            customTextBox4.Multiline = false;
-            customTextBox4.Name = "customTextBox4";
-            customTextBox4.Padding = new Padding(10, 7, 10, 7);
-            customTextBox4.PasswordChar = false;
-            customTextBox4.PlaceholderColor = Color.DarkGray;
-            customTextBox4.PlaceholderText = "Neto";
-            customTextBox4.Size = new Size(76, 32);
-            customTextBox4.TabIndex = 4;
-            customTextBox4.Texts = "";
-            customTextBox4.UnderlinedStyle = false;
-            // 
-            // button1
-            // 
-            button1.FlatAppearance.BorderSize = 0;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Image = Properties.Resources.icons8_añadir_40;
-            button1.Location = new Point(436, 203);
-            button1.Name = "button1";
-            button1.Size = new Size(41, 40);
-            button1.TabIndex = 6;
-            button1.UseVisualStyleBackColor = true;
+            btnAgregarProd.FlatAppearance.BorderSize = 0;
+            btnAgregarProd.FlatStyle = FlatStyle.Flat;
+            btnAgregarProd.Image = Properties.Resources.icons8_añadir_40;
+            btnAgregarProd.Location = new Point(482, 205);
+            btnAgregarProd.Name = "btnAgregarProd";
+            btnAgregarProd.Size = new Size(41, 40);
+            btnAgregarProd.TabIndex = 6;
+            btnAgregarProd.UseVisualStyleBackColor = true;
+            btnAgregarProd.Click += btnAgregarProd_Click;
             // 
             // label6
             // 
@@ -277,63 +256,85 @@
             label6.TabIndex = 7;
             label6.Text = "Descripción";
             // 
-            // customTextBox5
+            // txtDescrip
             // 
-            customTextBox5.BackColor = Color.White;
-            customTextBox5.BorderColor = Color.DarkGray;
-            customTextBox5.BorderFocusColor = Color.HotPink;
-            customTextBox5.BorderRadius = 6;
-            customTextBox5.BorderSize = 1;
-            customTextBox5.Font = new Font("Segoe UI", 9.5F);
-            customTextBox5.ForeColor = Color.DimGray;
-            customTextBox5.Location = new Point(31, 293);
-            customTextBox5.Multiline = true;
-            customTextBox5.Name = "customTextBox5";
-            customTextBox5.Padding = new Padding(10, 7, 10, 7);
-            customTextBox5.PasswordChar = false;
-            customTextBox5.PlaceholderColor = Color.DarkGray;
-            customTextBox5.PlaceholderText = "Descripción";
-            customTextBox5.Size = new Size(232, 90);
-            customTextBox5.TabIndex = 4;
-            customTextBox5.Texts = "";
-            customTextBox5.UnderlinedStyle = false;
+            txtDescrip.BackColor = Color.White;
+            txtDescrip.BorderColor = Color.DarkGray;
+            txtDescrip.BorderFocusColor = Color.HotPink;
+            txtDescrip.BorderRadius = 6;
+            txtDescrip.BorderSize = 1;
+            txtDescrip.Font = new Font("Segoe UI", 9.5F);
+            txtDescrip.ForeColor = Color.DimGray;
+            txtDescrip.Location = new Point(31, 293);
+            txtDescrip.Multiline = true;
+            txtDescrip.Name = "txtDescrip";
+            txtDescrip.Padding = new Padding(10, 7, 10, 7);
+            txtDescrip.PasswordChar = false;
+            txtDescrip.PlaceholderColor = Color.DarkGray;
+            txtDescrip.PlaceholderText = "Descripción";
+            txtDescrip.Size = new Size(232, 90);
+            txtDescrip.TabIndex = 4;
+            txtDescrip.Texts = "";
+            txtDescrip.UnderlinedStyle = false;
             // 
-            // customButton1
+            // btnCrear
             // 
-            customButton1.BackColor = Color.FromArgb(248, 169, 96);
-            customButton1.BackgroundColor = Color.FromArgb(248, 169, 96);
-            customButton1.BorderColor = Color.PaleVioletRed;
-            customButton1.BorderRadius = 5;
-            customButton1.BorderSize = 0;
-            customButton1.FlatAppearance.BorderSize = 0;
-            customButton1.FlatStyle = FlatStyle.Flat;
-            customButton1.ForeColor = Color.White;
-            customButton1.Location = new Point(241, 399);
-            customButton1.Name = "customButton1";
-            customButton1.Size = new Size(150, 40);
-            customButton1.TabIndex = 8;
-            customButton1.Text = "Crear Factura";
-            customButton1.TextColor = Color.White;
-            customButton1.UseVisualStyleBackColor = false;
+            btnCrear.BackColor = Color.FromArgb(248, 169, 96);
+            btnCrear.BackgroundColor = Color.FromArgb(248, 169, 96);
+            btnCrear.BorderColor = Color.PaleVioletRed;
+            btnCrear.BorderRadius = 5;
+            btnCrear.BorderSize = 0;
+            btnCrear.FlatAppearance.BorderSize = 0;
+            btnCrear.FlatStyle = FlatStyle.Flat;
+            btnCrear.ForeColor = Color.White;
+            btnCrear.Location = new Point(241, 399);
+            btnCrear.Name = "btnCrear";
+            btnCrear.Size = new Size(150, 40);
+            btnCrear.TabIndex = 8;
+            btnCrear.Text = "Crear Factura";
+            btnCrear.TextColor = Color.White;
+            btnCrear.UseVisualStyleBackColor = false;
+            btnCrear.Click += btnCrear_Click;
+            // 
+            // cbProductNombre
+            // 
+            cbProductNombre.AutoCompleteMode = AutoCompleteMode.Suggest;
+            cbProductNombre.BackColor = Color.WhiteSmoke;
+            cbProductNombre.BorderColor = SystemColors.Control;
+            cbProductNombre.BorderSize = 1;
+            cbProductNombre.DropDownStyle = ComboBoxStyle.DropDown;
+            cbProductNombre.Font = new Font("Segoe UI", 10F);
+            cbProductNombre.ForeColor = Color.DimGray;
+            cbProductNombre.IconColor = Color.FromArgb(248, 169, 96);
+            cbProductNombre.ListBackColor = Color.FromArgb(230, 228, 245);
+            cbProductNombre.ListTextColor = Color.DimGray;
+            cbProductNombre.Location = new Point(31, 207);
+            cbProductNombre.MinimumSize = new Size(150, 30);
+            cbProductNombre.Name = "cbProductNombre";
+            cbProductNombre.Padding = new Padding(1);
+            cbProductNombre.Size = new Size(196, 30);
+            cbProductNombre.TabIndex = 2;
+            cbProductNombre.Texts = "Nombre";
+            cbProductNombre.OnSelectedIndexChanged += cbProductNombre_OnSelectedIndexChanged;
             // 
             // AddInvoice
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(952, 450);
-            Controls.Add(customButton1);
+            Controls.Add(btnCrear);
             Controls.Add(label6);
-            Controls.Add(button1);
-            Controls.Add(customTextBox4);
-            Controls.Add(customTextBox3);
-            Controls.Add(customTextBox2);
-            Controls.Add(customTextBox5);
-            Controls.Add(customTextBox1);
+            Controls.Add(btnAgregarProd);
+            Controls.Add(txtNeto);
+            Controls.Add(txtCantidad);
+            Controls.Add(txtPrecio);
+            Controls.Add(txtDescrip);
             Controls.Add(label5);
-            Controls.Add(customComboBox3);
-            Controls.Add(customComboBox2);
-            Controls.Add(customComboBox1);
-            Controls.Add(panel1);
+            Controls.Add(cbFacturaPara);
+            Controls.Add(cbTerminos);
+            Controls.Add(cbProductNombre);
+            Controls.Add(cbFacturaDe);
+            Controls.Add(panelEjemplo);
             Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(label2);
@@ -350,19 +351,19 @@
         private Label label1;
         private Label label2;
         private Label label3;
-        private Panel panel1;
+        private Panel panelEjemplo;
         private Label label4;
-        private CustomComponents.MainFormComponents.CustomComboBox customComboBox1;
-        private CustomComponents.MainFormComponents.CustomComboBox customComboBox2;
-        private CustomComponents.MainFormComponents.CustomComboBox customComboBox3;
+        private CustomComponents.MainFormComponents.CustomComboBox cbFacturaDe;
+        private CustomComponents.MainFormComponents.CustomComboBox cbTerminos;
+        private CustomComponents.MainFormComponents.CustomComboBox cbFacturaPara;
         private Label label5;
-        private CustomComponents.MainFormComponents.CustomTextBox customTextBox1;
-        private CustomComponents.MainFormComponents.CustomTextBox customTextBox2;
-        private CustomComponents.MainFormComponents.CustomTextBox customTextBox3;
-        private CustomComponents.MainFormComponents.CustomTextBox customTextBox4;
-        private Button button1;
+        private CustomComponents.MainFormComponents.CustomTextBox txtPrecio;
+        private CustomComponents.MainFormComponents.CustomTextBox txtCantidad;
+        private CustomComponents.MainFormComponents.CustomTextBox txtNeto;
+        private Button btnAgregarProd;
         private Label label6;
-        private CustomComponents.MainFormComponents.CustomTextBox customTextBox5;
-        private CustomComponents.MainFormComponents.CustomButton customButton1;
+        private CustomComponents.MainFormComponents.CustomTextBox txtDescrip;
+        private CustomComponents.MainFormComponents.CustomButton btnCrear;
+        private CustomComponents.MainFormComponents.CustomComboBox cbProductNombre;
     }
 }

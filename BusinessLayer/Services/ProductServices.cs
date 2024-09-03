@@ -39,13 +39,14 @@ namespace BusinessLayer.Services
                 ProductName = productDTO.ProductName,
                 Code = productDTO.Code,
                 Description = productDTO.Description,
+                Quantity = productDTO.Quantity,
                 ExpirationDate = productDTO.ExpirationDate,
                 Price = productDTO.Price,
                 Lote = productDTO.Lote,
                 CategoryId = productDTO.CategoryId,
                 StatusId = productDTO.StatusId
             };
-            _repository.AddProduct(product);
+            _repository.UpdateProduct(product);
         }
 
         public void DeleteProduct(int id)
@@ -113,6 +114,24 @@ namespace BusinessLayer.Services
                 products.Add(productsDTO);
             }
             return products;
+        }
+
+        public IEnumerable<ProductsDTO> GetInvoiceProducts()
+        {
+            var products = _repository.GetInvoiceProducts();
+            List<ProductsDTO> productsList = new();
+            foreach (var item in products)
+            {
+                ProductsDTO product = new()
+                {
+                    ProductsId = item.ProductsId,
+                    ProductName= item.ProductName,
+                    Price = item.Price,
+                    Quantity = item.Quantity,
+                };
+                productsList.Add(product);
+            }
+            return productsList;
         }
     }
 }

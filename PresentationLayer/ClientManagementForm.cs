@@ -3,6 +3,7 @@ using BusinessLayer.Model;
 using BusinessLayer.Services;
 using DomainLayer.Entities;
 using PresentationLayer.AddForms;
+using PresentationLayer.UpdateForms;
 using System.ComponentModel;
 
 namespace PresentationLayer
@@ -20,6 +21,7 @@ namespace PresentationLayer
             dataGridView1.MouseWheel += DataGridView1_MouseWheel;
         }
 
+        #region CRUD
         private void btnAnadir_Click(object sender, EventArgs e)
         {
 
@@ -66,30 +68,44 @@ namespace PresentationLayer
 
         private void btnEditar_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.Rows.Count > 0)
+            if (dataGridView1.SelectedRows.Count > 0)
             {
-                DataGridViewRow selectedRow = dataGridView1.Rows[0];
-                int clientId = Convert.ToInt32(selectedRow.Cells[0].Value);
-                string clientName = selectedRow.Cells[1].Value.ToString();
-                string address = selectedRow.Cells[2].Value.ToString();
-                string city = selectedRow.Cells[3].Value.ToString();
+                DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
+                int clientId = (int)dataGridView1.SelectedRows[0].Cells["ClientID"].Value;
+                int code = Convert.ToInt32(selectedRow.Cells[1].Value);
+                string clientName = selectedRow.Cells[2].Value.ToString();
+                string address = selectedRow.Cells[3].Value.ToString();
                 string phone = selectedRow.Cells[4].Value.ToString();
-                string fax = selectedRow.Cells[5].Value.ToString();
-                string rnc = selectedRow.Cells[6].Value.ToString();
+                string rnc = selectedRow.Cells[5].Value.ToString();
+                string email = selectedRow.Cells[6].Value.ToString();
+                string city = selectedRow.Cells[7].Value.ToString();
+                string fax = selectedRow.Cells[8].Value.ToString();
                 ClientDTO clientDTO = new ClientDTO
                 {
                     ClientId = clientId,
+                    Code = code,
                     ClientName = clientName,
                     Address = address,
                     City = city,
                     PhoneNumber = phone,
                     Fax = fax,
-                    Rnc = rnc
+                    Rnc = rnc,
+                    Email = email
                 };
-                clientService.AddClient(clientDTO);
+                UpdateClient updateClient = new UpdateClient(clientDTO);
+                updateClient.MaximizeBox = false;
+                updateClient.MinimizeBox = false;
+                var result = updateClient.ShowDialog();
+                if(result == DialogResult.OK)
+                {
+                    DataGridSettings();
+                    LoadData();
+                }
             }
         }
+        #endregion
 
+        #region DataGrid Settings
         private void DataGridSettings()
         {
             dataGridView1.AutoGenerateColumns = false;
@@ -110,7 +126,9 @@ namespace PresentationLayer
             DataGridSettings();
             LoadData();
         }
+        #endregion
 
+        #region ScrollBar
         private void materialScrollBar1_Scroll(object sender, ScrollEventArgs e)
         {
             // Verificar que el índice no sea mayor que la cantidad de filas disponibles
@@ -154,6 +172,7 @@ namespace PresentationLayer
                 dataGridView1.FirstDisplayedScrollingRowIndex = newValue;
             }
         }
+        #endregion
 
     }
 }
