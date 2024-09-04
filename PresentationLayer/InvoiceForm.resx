@@ -195,4 +195,21 @@
   <metadata name="Number.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <data name="customButton1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        DwAACw8BkvkDpQAAApxJREFUSEvtle1LE3EAx/0D0ptut1u9yVNZL3VTTy3z2enMh9SI1lahteEzYYhu
+        Tt2DI19kQSBBb7IJQkm+qCBk2NQNwhdBRPimFoGVdYbYi/Yuvt3GnTPbpXm99AufN8f9vp/fE3cJB/kv
+        ob2WztQpyzvaaw7FQz3TPasNOkOiBBzjfJV4uCI/PWWBGBkPuxazg06IEnB+5avEI1kSdLB8lXjoycsL
+        9H0z/sArQaIaO91OeernKE+tj3TpfUpXzTrp0IfJ4eqwYqgqrBjUheW2yh9Hxpo/0JPmlWMzPU+1SyMr
+        YmgWHS/46lg4wRongNJdA9KpB+mogmJYB7m9AnJbOVKspUjuL0a6vQ4n73Yj/17P4s4t3E6q17LOV8ei
+        HK1lBUHWTRNSPQ1RgXq0CRnuhqggua8IaYO1+5eQrhpWWMHtwAPMvvbj8FAV3n/7CN1ER1Qgu1aINJsE
+        icKhZ4UtOuqux+fv65h++QyTy4+3BETvCaRZT0mQjOjY7Wdwa2EakWSPGbYExNUCqDpLVrPchudq15kl
+        hbUiJE7lG746FvlwJSsI1J5GfNpkcScwA+/yky1BUk8+ZBc0oAy5INsLIbOXiZJsLf3JV8eSYi9nhVv0
+        6NU8xuenQPWXYXXjC+omuqKCxG4GMlOWBImtjI0IUgZKoLl+LiqIrCDdrgdtrY4KEjtzQBglSLiHa8I1
+        3X4GwgoigkPt2SAMmRIkA8Vtsr6iOVlvoY/oPe4j2phNwpwL4go3+1Ytklo0SLqYCXljRMKAupQPZWuB
+        OC15G3y1eBTN2qCySYPfaOY4mwOVMQ8q09+hjMzuH0jqPLOgMjJc4Q7iFMZjTxKVifHHG7xnjMzu/xNu
+        Szq4F99yA0L7gTIxN/iqg/xLEhJ+AXpnxVZu4JysAAAAAElFTkSuQmCC
+</value>
+  </data>
 </root>

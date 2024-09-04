@@ -95,7 +95,7 @@ namespace PresentationLayer.AddForms
         // Evento agregar Producto
         private void btnAgregarProd_Click(object sender, EventArgs e)
         {
-            if (cbProductNombre.SelectedItem != null)
+            if (cbProductNombre.SelectedIndex >= 0)
             {
                 int id = (int)cbProductNombre.SelectedValue;
                 var products = _productService.GetByIdProduct(id);
@@ -204,11 +204,27 @@ namespace PresentationLayer.AddForms
 
         private void CleanTxt()
         {
+            // Desactivar temporalmente el evento OnSelectedIndexChanged para evitar cambios automáticos
+            cbProductNombre.OnSelectedIndexChanged -= cbProductNombre_OnSelectedIndexChanged;
+
+            // Limpiar y asegurarse de que SelectedIndex sea -1
+            cbProductNombre.SelectedIndex = -1;
             cbProductNombre.Texts = "";
+
+            // Verificar si el índice es realmente -1; si no, forzarlo de nuevo
+            if (cbProductNombre.SelectedIndex != -1)
+            {
+                cbProductNombre.SelectedItem = null;
+                cbProductNombre.SelectedIndex = -1;
+            }
+
+            // Reactivar el evento después de los cambios
+            cbProductNombre.OnSelectedIndexChanged += cbProductNombre_OnSelectedIndexChanged;
+
+            // Limpiar los otros campos de texto
             txtCantidad.Texts = "";
             txtPrecio.Texts = "";
             txtNeto.Texts = "";
-            cbProductNombre.SelectedItem = null;
         }
         #endregion
 
@@ -257,7 +273,7 @@ namespace PresentationLayer.AddForms
 
         private void cbProductNombre_OnSelectedIndexChanged(object sender, EventArgs e)
         {
-            cbProductNombre.SelectedValue = cbFacturaPara.SelectedValue;
+            //cbProductNombre.SelectedValue = cbFacturaPara.SelectedValue;
             int selectedProduct = (int)cbProductNombre.SelectedValue;
             var productDTO = _productService.GetByIdProduct(selectedProduct);
             txtPrecio.Texts = productDTO.Price.ToString();

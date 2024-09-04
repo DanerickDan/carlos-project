@@ -3,6 +3,7 @@ using BusinessLayer.Model;
 using BusinessLayer.Services;
 using DomainLayer.Entities;
 using PresentationLayer.AddForms;
+using PresentationLayer.Features;
 using PresentationLayer.UpdateForms;
 using System.ComponentModel;
 
@@ -12,13 +13,15 @@ namespace PresentationLayer
     {
         private readonly IClientService clientService;
         private BindingList<ClientDTO> ClientBindingList;
+        private readonly CreateCSV _createCSV;
         public ClientManagementForm()
         {
-            clientService = new ClientServices();
             InitializeComponent();
+            clientService = new ClientServices();
             this.Load += new EventHandler(this.ClientManagementForm_Load);
             // Maneja el evento MouseWheel del DataGridView
             dataGridView1.MouseWheel += DataGridView1_MouseWheel;
+            _createCSV = new CreateCSV();
         }
 
         #region CRUD
@@ -175,9 +178,9 @@ namespace PresentationLayer
 
 #endregion
 
-        private void panel3_Paint(object sender, PaintEventArgs e)
+        private void customButton1_Click(object sender, EventArgs e)
         {
-
+            _createCSV.ExportarDataGridViewAExcel(dataGridView1);
         }
     }
 }

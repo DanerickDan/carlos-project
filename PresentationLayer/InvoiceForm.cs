@@ -6,6 +6,7 @@ using BusinessLayer.Services;
 using BusinessLayer.Utils;
 using DomainLayer.Entities;
 using PresentationLayer.AddForms;
+using PresentationLayer.Features;
 using System.ComponentModel;
 using System.Diagnostics;
 
@@ -18,6 +19,7 @@ namespace PresentationLayer
         private BindingList<InvoiceViewDTO> InvoiceBindingList;
         private readonly PdfService pdfService;
         private readonly PrintService printService;
+        private readonly CreateCSV _createCSV;
 
         public InvoiceForm()
         {
@@ -27,7 +29,7 @@ namespace PresentationLayer
             dataGridView1.MouseWheel += DataGridView1_MouseWheel;
             pdfService = new PdfService();
             printService = new PrintService();
-
+            _createCSV = new();
             mapping = new();
         }
 
@@ -44,7 +46,7 @@ namespace PresentationLayer
             }
         }
 
-        
+
 
         // Delete Invoice
         private void btnBorrar_Click(object sender, EventArgs e)
@@ -280,7 +282,9 @@ namespace PresentationLayer
             }
         }
 
-
-
+        private void customButton1_Click(object sender, EventArgs e)
+        {
+            _createCSV.ExportarDataGridViewAExcel(dataGridView1);
+        }
     }
 }

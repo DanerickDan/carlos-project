@@ -83,6 +83,7 @@
             cbProductNombre = new CustomComponents.MainFormComponents.CustomComboBox();
             txtPrecio = new CustomComponents.MainFormComponents.CustomTextBox();
             txtCantidad = new CustomComponents.MainFormComponents.CustomTextBox();
+            test = new ComboBox();
             panelEjemplo.SuspendLayout();
             SuspendLayout();
             // 
@@ -748,11 +749,20 @@
             txtCantidad.Texts = "";
             txtCantidad.UnderlinedStyle = false;
             // 
+            // test
+            // 
+            test.FormattingEnabled = true;
+            test.Location = new Point(288, 154);
+            test.Name = "test";
+            test.Size = new Size(121, 23);
+            test.TabIndex = 11;
+            // 
             // AddInvoice
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(973, 450);
+            Controls.Add(test);
             Controls.Add(txtCantidad);
             Controls.Add(txtPrecio);
             Controls.Add(btnCrear);
@@ -836,5 +846,6 @@
         private Label label17;
         private Label label16;
         private Label label15;
+        private ComboBox test;
     }
 }

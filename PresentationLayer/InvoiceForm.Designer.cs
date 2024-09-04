@@ -64,6 +64,7 @@
             materialScrollBar1 = new MaterialSkin.Controls.MaterialScrollBar();
             panel3 = new Panel();
             customTextBox1 = new CustomComponents.MainFormComponents.CustomTextBox();
+            customButton1 = new CustomComponents.MainFormComponents.CustomButton();
             panel1.SuspendLayout();
             btnPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -219,7 +220,7 @@
             dataGridView1.RowTemplate.Height = 50;
             dataGridView1.ScrollBars = ScrollBars.None;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(787, 385);
+            dataGridView1.Size = new Size(787, 371);
             dataGridView1.TabIndex = 0;
             dataGridView1.RowsAdded += dataGridView1_RowsAdded;
             dataGridView1.RowsRemoved += dataGridView1_RowsRemoved;
@@ -405,12 +406,12 @@
             // 
             materialScrollBar1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             materialScrollBar1.Depth = 0;
-            materialScrollBar1.Location = new Point(787, 130);
+            materialScrollBar1.Location = new Point(787, 126);
             materialScrollBar1.MouseState = MaterialSkin.MouseState.HOVER;
             materialScrollBar1.Name = "materialScrollBar1";
             materialScrollBar1.Orientation = MaterialSkin.Controls.MaterialScrollOrientation.Vertical;
             materialScrollBar1.ScrollbarSize = 13;
-            materialScrollBar1.Size = new Size(13, 358);
+            materialScrollBar1.Size = new Size(13, 348);
             materialScrollBar1.TabIndex = 7;
             materialScrollBar1.Text = "materialScrollBar1";
             materialScrollBar1.Scroll += materialScrollBar1_Scroll;
@@ -446,11 +447,36 @@
             customTextBox1.Texts = "";
             customTextBox1.UnderlinedStyle = false;
             // 
+            // customButton1
+            // 
+            customButton1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            customButton1.BackColor = Color.MediumSeaGreen;
+            customButton1.BackgroundColor = Color.MediumSeaGreen;
+            customButton1.BorderColor = Color.PaleVioletRed;
+            customButton1.BorderRadius = 5;
+            customButton1.BorderSize = 0;
+            customButton1.FlatAppearance.BorderSize = 0;
+            customButton1.FlatStyle = FlatStyle.Flat;
+            customButton1.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            customButton1.ForeColor = Color.FromArgb(64, 64, 64);
+            customButton1.Image = (Image)resources.GetObject("customButton1.Image");
+            customButton1.ImageAlign = ContentAlignment.MiddleLeft;
+            customButton1.Location = new Point(641, 480);
+            customButton1.Margin = new Padding(8, 3, 3, 3);
+            customButton1.Name = "customButton1";
+            customButton1.Size = new Size(135, 37);
+            customButton1.TabIndex = 9;
+            customButton1.Text = "Generar CSV";
+            customButton1.TextColor = Color.FromArgb(64, 64, 64);
+            customButton1.UseVisualStyleBackColor = false;
+            customButton1.Click += customButton1_Click;
+            // 
             // InvoiceForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 522);
+            Controls.Add(customButton1);
             Controls.Add(panel3);
             Controls.Add(materialScrollBar1);
             Controls.Add(panel2);
@@ -501,5 +527,6 @@
         private CustomComponents.MainFormComponents.CustomTextBox customTextBox1;
         private Label lblFiltrados;
         private Label lblTotalRegistros;
+        private CustomComponents.MainFormComponents.CustomButton customButton1;
     }
 }

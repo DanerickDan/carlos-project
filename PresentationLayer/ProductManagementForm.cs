@@ -2,6 +2,7 @@
 using BusinessLayer.Model;
 using BusinessLayer.Services;
 using PresentationLayer.AddForms;
+using PresentationLayer.Features;
 using PresentationLayer.UpdateForms;
 using System.ComponentModel;
 
@@ -12,6 +13,7 @@ namespace PresentationLayer
     {
         private readonly IProductService productService;
         private BindingList<ProductsDTO> ProductBindingList;
+        private readonly CreateCSV _createCSV;
 
         public ProductManagementForm()
         {
@@ -19,6 +21,7 @@ namespace PresentationLayer
             productService = new ProductServices();
             this.Load += new EventHandler(this.ProductManagementForm_Load);
             dataGridView1.MouseWheel += DataGridView1_MouseWheel;
+            _createCSV = new();
         }
 
         #region CRUD
@@ -173,6 +176,11 @@ namespace PresentationLayer
             }
         }
 
-#endregion
+        #endregion
+
+        private void customButton1_Click(object sender, EventArgs e)
+        {
+            _createCSV.ExportarDataGridViewAExcel(dataGridView1);
+        }
     }
 }
