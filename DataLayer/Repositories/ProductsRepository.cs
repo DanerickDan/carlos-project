@@ -177,6 +177,7 @@ namespace DataLayer.Repositories
         {
             try
             {
+                Products products = new Products();
                 using (var connection = connectionManager.GetConnection())
                 {
                     connectionManager.OpenConnection(connection);
@@ -197,13 +198,13 @@ namespace DataLayer.Repositories
                         {
                             if (reader.Read())
                             {
-                                return new Products
+                                products =  new Products
                                 {
                                     ProductsId = reader.GetInt32(reader.GetOrdinal("ProductoId")),
                                     ProductName = reader.GetString(reader.GetOrdinal("ProductoNombre")),
                                     Code = reader.GetString(reader.GetOrdinal("Codigo")),
                                     Description = reader.GetString(reader.GetOrdinal("Descripcion")),
-                                    ExpirationDate = reader.GetDateTime(reader.GetOrdinal("Vencimiento")),
+                                    ExpirationDate = DateTime.ParseExact(reader.GetString(reader.GetOrdinal("Vencimiento")), "dd-MM-yyyy", CultureInfo.InvariantCulture),
                                     Price = reader.GetDouble(reader.GetOrdinal("ProductoPrecio")),
                                     Lote = reader.GetInt32(reader.GetOrdinal("Lote")),
                                     Quantity = reader.GetInt32(reader.GetOrdinal("Cantidad")),
@@ -222,9 +223,9 @@ namespace DataLayer.Repositories
                                 };
                             }
                         }
+                        return products;
                     }
                 }
-                return null;
             }
             catch (SQLiteException ex)
             {
@@ -278,7 +279,7 @@ namespace DataLayer.Repositories
                     string query = "SELECT * FROM ProductosFacturas";
                     using (var command = new SQLiteCommand(query, connection))
                     {
-                        using(var reader = command.ExecuteReader())
+                        using (var reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {

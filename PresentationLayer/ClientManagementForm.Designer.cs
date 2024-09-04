@@ -39,10 +39,6 @@
             btnEditar = new CustomComponents.MainFormComponents.CustomButton();
             lblPrincipal = new Label();
             dataGridView1 = new DataGridView();
-            materialScrollBar1 = new MaterialSkin.Controls.MaterialScrollBar();
-            cltTxtRegistros = new Label();
-            cltTxtFiltrados = new Label();
-            panel2 = new Panel();
             ClientID = new DataGridViewTextBoxColumn();
             CodeColumn = new DataGridViewTextBoxColumn();
             NameColumn = new DataGridViewTextBoxColumn();
@@ -52,29 +48,38 @@
             EmailColumn = new DataGridViewTextBoxColumn();
             City = new DataGridViewTextBoxColumn();
             Fax = new DataGridViewTextBoxColumn();
+            materialScrollBar1 = new MaterialSkin.Controls.MaterialScrollBar();
+            cltTxtRegistros = new Label();
+            cltTxtFiltrados = new Label();
+            panel2 = new Panel();
+            lblFiltrados = new Label();
+            lblTotalRegistros = new Label();
+            panel3 = new Panel();
+            customTextBox1 = new CustomComponents.MainFormComponents.CustomTextBox();
             panel1.SuspendLayout();
             btnPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             panel2.SuspendLayout();
+            panel3.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
             // 
+            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel1.Controls.Add(btnPanel);
             panel1.Controls.Add(lblPrincipal);
-            panel1.Dock = DockStyle.Top;
-            panel1.Location = new Point(0, 0);
+            panel1.Location = new Point(0, 53);
             panel1.Name = "panel1";
             panel1.Size = new Size(800, 47);
             panel1.TabIndex = 2;
             // 
             // btnPanel
             // 
+            btnPanel.Anchor = AnchorStyles.Right;
             btnPanel.BackColor = SystemColors.Control;
             btnPanel.Controls.Add(btnAnadir);
             btnPanel.Controls.Add(btnBorrar);
             btnPanel.Controls.Add(btnEditar);
-            btnPanel.Dock = DockStyle.Right;
             btnPanel.Location = new Point(188, 0);
             btnPanel.Name = "btnPanel";
             btnPanel.Size = new Size(612, 47);
@@ -190,7 +195,7 @@
             dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
             dataGridView1.EnableHeadersVisualStyles = false;
             dataGridView1.GridColor = Color.LightGray;
-            dataGridView1.Location = new Point(0, 53);
+            dataGridView1.Location = new Point(0, 103);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
@@ -205,56 +210,10 @@
             dataGridView1.RowTemplate.Height = 50;
             dataGridView1.ScrollBars = ScrollBars.None;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(785, 365);
+            dataGridView1.Size = new Size(787, 385);
             dataGridView1.TabIndex = 0;
             dataGridView1.RowsAdded += dataGridView1_RowsAdded;
             dataGridView1.RowsRemoved += dataGridView1_RowsRemoved;
-            // 
-            // materialScrollBar1
-            // 
-            materialScrollBar1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-            materialScrollBar1.Depth = 0;
-            materialScrollBar1.Location = new Point(783, 84);
-            materialScrollBar1.MouseState = MaterialSkin.MouseState.HOVER;
-            materialScrollBar1.Name = "materialScrollBar1";
-            materialScrollBar1.Orientation = MaterialSkin.Controls.MaterialScrollOrientation.Vertical;
-            materialScrollBar1.ScrollbarSize = 17;
-            materialScrollBar1.Size = new Size(17, 334);
-            materialScrollBar1.TabIndex = 3;
-            materialScrollBar1.Text = "materialScrollBar1";
-            materialScrollBar1.Scroll += materialScrollBar1_Scroll;
-            // 
-            // cltTxtRegistros
-            // 
-            cltTxtRegistros.AutoSize = true;
-            cltTxtRegistros.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            cltTxtRegistros.ForeColor = Color.Gray;
-            cltTxtRegistros.Location = new Point(19, 3);
-            cltTxtRegistros.Name = "cltTxtRegistros";
-            cltTxtRegistros.Size = new Size(63, 17);
-            cltTxtRegistros.TabIndex = 4;
-            cltTxtRegistros.Text = "Registros";
-            // 
-            // cltTxtFiltrados
-            // 
-            cltTxtFiltrados.AutoSize = true;
-            cltTxtFiltrados.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            cltTxtFiltrados.ForeColor = Color.Gray;
-            cltTxtFiltrados.Location = new Point(167, 3);
-            cltTxtFiltrados.Name = "cltTxtFiltrados";
-            cltTxtFiltrados.Size = new Size(58, 17);
-            cltTxtFiltrados.TabIndex = 4;
-            cltTxtFiltrados.Text = "Filtrados";
-            // 
-            // panel2
-            // 
-            panel2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            panel2.Controls.Add(cltTxtRegistros);
-            panel2.Controls.Add(cltTxtFiltrados);
-            panel2.Location = new Point(52, 424);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(262, 23);
-            panel2.TabIndex = 5;
             // 
             // ClientID
             // 
@@ -322,11 +281,111 @@
             Fax.ReadOnly = true;
             Fax.Visible = false;
             // 
+            // materialScrollBar1
+            // 
+            materialScrollBar1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+            materialScrollBar1.Depth = 0;
+            materialScrollBar1.Location = new Point(783, 133);
+            materialScrollBar1.MouseState = MaterialSkin.MouseState.HOVER;
+            materialScrollBar1.Name = "materialScrollBar1";
+            materialScrollBar1.Orientation = MaterialSkin.Controls.MaterialScrollOrientation.Vertical;
+            materialScrollBar1.ScrollbarSize = 17;
+            materialScrollBar1.Size = new Size(17, 355);
+            materialScrollBar1.TabIndex = 3;
+            materialScrollBar1.Text = "materialScrollBar1";
+            materialScrollBar1.Scroll += materialScrollBar1_Scroll;
+            // 
+            // cltTxtRegistros
+            // 
+            cltTxtRegistros.AutoSize = true;
+            cltTxtRegistros.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            cltTxtRegistros.ForeColor = Color.Gray;
+            cltTxtRegistros.Location = new Point(19, 3);
+            cltTxtRegistros.Name = "cltTxtRegistros";
+            cltTxtRegistros.Size = new Size(63, 17);
+            cltTxtRegistros.TabIndex = 4;
+            cltTxtRegistros.Text = "Registros";
+            // 
+            // cltTxtFiltrados
+            // 
+            cltTxtFiltrados.AutoSize = true;
+            cltTxtFiltrados.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            cltTxtFiltrados.ForeColor = Color.Gray;
+            cltTxtFiltrados.Location = new Point(167, 3);
+            cltTxtFiltrados.Name = "cltTxtFiltrados";
+            cltTxtFiltrados.Size = new Size(58, 17);
+            cltTxtFiltrados.TabIndex = 4;
+            cltTxtFiltrados.Text = "Filtrados";
+            // 
+            // panel2
+            // 
+            panel2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            panel2.Controls.Add(lblFiltrados);
+            panel2.Controls.Add(lblTotalRegistros);
+            panel2.Controls.Add(cltTxtRegistros);
+            panel2.Controls.Add(cltTxtFiltrados);
+            panel2.Location = new Point(32, 494);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(272, 23);
+            panel2.TabIndex = 5;
+            // 
+            // lblFiltrados
+            // 
+            lblFiltrados.AutoSize = true;
+            lblFiltrados.Location = new Point(231, 5);
+            lblFiltrados.Name = "lblFiltrados";
+            lblFiltrados.Size = new Size(13, 15);
+            lblFiltrados.TabIndex = 6;
+            lblFiltrados.Text = "0";
+            // 
+            // lblTotalRegistros
+            // 
+            lblTotalRegistros.AutoSize = true;
+            lblTotalRegistros.Font = new Font("Segoe UI Light", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblTotalRegistros.Location = new Point(88, 5);
+            lblTotalRegistros.Name = "lblTotalRegistros";
+            lblTotalRegistros.Size = new Size(13, 15);
+            lblTotalRegistros.TabIndex = 5;
+            lblTotalRegistros.Text = "0";
+            // 
+            // panel3
+            // 
+            panel3.BackColor = Color.White;
+            panel3.Controls.Add(customTextBox1);
+            panel3.Dock = DockStyle.Top;
+            panel3.Location = new Point(0, 0);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(800, 38);
+            panel3.TabIndex = 6;
+            panel3.Paint += panel3_Paint;
+            // 
+            // customTextBox1
+            // 
+            customTextBox1.BackColor = Color.Gainsboro;
+            customTextBox1.BorderColor = Color.Gainsboro;
+            customTextBox1.BorderFocusColor = Color.Gainsboro;
+            customTextBox1.BorderRadius = 9;
+            customTextBox1.BorderSize = 1;
+            customTextBox1.Font = new Font("Segoe UI", 9.5F);
+            customTextBox1.ForeColor = Color.DimGray;
+            customTextBox1.Location = new Point(7, 3);
+            customTextBox1.Multiline = false;
+            customTextBox1.Name = "customTextBox1";
+            customTextBox1.Padding = new Padding(10, 7, 10, 7);
+            customTextBox1.PasswordChar = false;
+            customTextBox1.PlaceholderColor = Color.DarkGray;
+            customTextBox1.PlaceholderText = "Buscar";
+            customTextBox1.Size = new Size(250, 32);
+            customTextBox1.TabIndex = 0;
+            customTextBox1.Texts = "";
+            customTextBox1.UnderlinedStyle = false;
+            // 
             // ClientManagementForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(800, 522);
+            Controls.Add(panel3);
             Controls.Add(materialScrollBar1);
             Controls.Add(panel1);
             Controls.Add(dataGridView1);
@@ -340,6 +399,7 @@
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
+            panel3.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -364,5 +424,9 @@
         private DataGridViewTextBoxColumn EmailColumn;
         private DataGridViewTextBoxColumn City;
         private DataGridViewTextBoxColumn Fax;
+        private Panel panel3;
+        private CustomComponents.MainFormComponents.CustomTextBox customTextBox1;
+        private Label lblTotalRegistros;
+        private Label lblFiltrados;
     }
 }

@@ -96,7 +96,7 @@ namespace PresentationLayer
                 updateClient.MaximizeBox = false;
                 updateClient.MinimizeBox = false;
                 var result = updateClient.ShowDialog();
-                if(result == DialogResult.OK)
+                if (result == DialogResult.OK)
                 {
                     DataGridSettings();
                     LoadData();
@@ -172,7 +172,12 @@ namespace PresentationLayer
                 dataGridView1.FirstDisplayedScrollingRowIndex = newValue;
             }
         }
-        #endregion
 
+#endregion
+
+        private void panel3_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

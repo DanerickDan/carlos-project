@@ -353,8 +353,8 @@ namespace DataLayer.Repositories
                     {
                         command.Parameters.AddWithValue("@Tipo", type);
                         command.Parameters.AddWithValue("@Codigo", code);
-                        var count = command.ExecuteScalar();
-                        if(count != null)
+                        var count = Convert.ToInt32(command.ExecuteScalar());
+                        if(count != 0)
                         {
                             return true;
                         }

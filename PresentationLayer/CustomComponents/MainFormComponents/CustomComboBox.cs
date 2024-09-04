@@ -21,6 +21,7 @@ namespace PresentationLayer.CustomComponents.MainFormComponents
         private ComboBox cmbList;
         private Label lblText;
         private Button btnIcon;
+        private object selectedValue; // Adding by me
 
         //Events
         public event EventHandler OnSelectedIndexChanged;//Default event
@@ -188,6 +189,43 @@ namespace PresentationLayer.CustomComponents.MainFormComponents
         }
         //Properties
         //-> Data
+
+        // Slected Value adding by me ------------------------------------------------------
+        [Category("RJ Code - Data")]
+        [Bindable(true)]
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public object SelectedValue
+        {
+            get
+            {
+                if (cmbList.SelectedIndex != -1 && cmbList.DataSource != null)
+                {
+                    var item = cmbList.SelectedItem;
+                    if (!string.IsNullOrEmpty(ValueMember))
+                    {
+                        var prop = TypeDescriptor.GetProperties(item)[ValueMember];
+                        if (prop != null)
+                        {
+                            return prop.GetValue(item);
+                        }
+                    }
+                    return item;
+                }
+                return null;
+            }
+            set
+            {
+                selectedValue = value;
+                if (cmbList.DataSource != null)
+                {
+                    cmbList.SelectedValue = value;
+                }
+            }
+        }
+
+        /// -------------------------------------------------------------------
+
         [Category("RJ Code - Data")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         [Editor("System.Windows.Forms.Design.ListControlStringCollectionEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
@@ -206,6 +244,7 @@ namespace PresentationLayer.CustomComponents.MainFormComponents
             get { return cmbList.DataSource; }
             set { cmbList.DataSource = value; }
         }
+
 
         [Category("RJ Code - Data")]
         [Browsable(true)]
@@ -297,6 +336,7 @@ namespace PresentationLayer.CustomComponents.MainFormComponents
                 OnSelectedIndexChanged.Invoke(sender, e);
             //Refresh text
             lblText.Text = cmbList.Text;
+            selectedValue = cmbList.SelectedValue; // Update SelectedValue adding by ,e
         }
 
         //-> Draw icon

@@ -81,6 +81,10 @@ namespace BusinessLayer.Services
         public ProductsDTO GetByIdProduct(int id)
         {
             var products = _repository.GetByIdProduct(id);
+            if(products == null)
+            {
+                throw new Exception("Es null bro checka bi");
+            }
             var productsDTO = new ProductsDTO
             {
                 ProductsId = products.ProductsId,
@@ -89,9 +93,11 @@ namespace BusinessLayer.Services
                 Description = products.Description,
                 ExpirationDate = products.ExpirationDate,
                 Price = products.Price,
+                Quantity=products.Quantity,
                 Lote = products.Lote,
                 CategoryId = products.CategoryId,
-                StatusId = products.StatusId
+                StatusId = products.StatusId,
+                
             };
 
             return productsDTO;

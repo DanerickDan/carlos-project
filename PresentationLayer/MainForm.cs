@@ -32,7 +32,10 @@
 
         private void btnInicio_Click(object sender, EventArgs e)
         {
-            ActiveForm.Close();
+            if(ActiveForm != null)
+            {
+                ActiveForm.Close();
+            }
         }
 
         private void btnFacturas_Click(object sender, EventArgs e)
@@ -68,5 +71,9 @@
             //txtBuscar2.Visible = false;
         }
 
+        private void panel3_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

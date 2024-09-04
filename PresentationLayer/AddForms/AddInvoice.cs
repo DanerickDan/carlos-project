@@ -10,6 +10,9 @@ namespace PresentationLayer.AddForms
         private readonly InvoiceCodeGenerator _invoiceCodeGenerator;
         private readonly IProductService _productService;
         private readonly IClientService _clientService;
+        private readonly InvoiceDTO _invoiceDTO;
+        private readonly List<InvoiceDTO> _invoiceList;
+
 
         public AddInvoice()
         {
@@ -17,6 +20,12 @@ namespace PresentationLayer.AddForms
             _clientService = new ClientServices();
             _productService = new ProductServices();
             _invoiceCodeGenerator = new InvoiceCodeGenerator();
+            _invoiceDTO = new();
+            _invoiceList = new();
+            lblNumFactura.Text = _invoiceCodeGenerator.InvoiceNumber();
+            lblNumFactura.Visible = true;
+            lblFecha.Text = DateTime.Now.ToString("dd/MM/yyyy");
+            lblPedido.Text = _invoiceCodeGenerator.OrderNumber();
             ComboBoxSettings();
         }
 
@@ -75,47 +84,192 @@ namespace PresentationLayer.AddForms
         //    return null;
         //}
 
+        #region Events settings
 
+        // Evento crear factura
         private void btnCrear_Click(object sender, EventArgs e)
         {
 
         }
 
+        // Evento agregar Producto
         private void btnAgregarProd_Click(object sender, EventArgs e)
         {
+            if (cbProductNombre.SelectedItem != null)
+            {
+                int id = (int)cbProductNombre.SelectedValue;
+                var products = _productService.GetByIdProduct(id);
+                ProductsDTO productsDTO = new()
+                {
+                    ProductName = products.ProductName,
+                    Lote = products.Lote,
+                    Code = products.Code
+                };
 
+                InvoiceDetailsDTO details = new()
+                {
+                    ProductId = id,
+                    Price = Convert.ToDouble(txtPrecio.Texts),
+                    Quantity = Convert.ToInt32(txtCantidad.Texts),
+                    Neto = Convert.ToDouble(txtNeto.Texts),
+                    ProductName = productsDTO.ProductName,
+                    Lote = productsDTO.Lote,
+                    ProductCode = productsDTO.Code,
+
+                };
+                _invoiceDTO.Details.Add(details);
+                var detalles = _invoiceDTO.Details;
+                // Adding the Total
+                double total = 0;
+                foreach (var item in detalles)
+                {
+                    total += item.Neto;
+                }
+                lblTotal.Text = "$" + total;
+                lblSubTotal.Text = "$" + total;
+                FillInvoiceExample(details, null);
+                CleanTxt();
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar un producto");
+            }
         }
+
+        // Evento cambio de txt Cantidad
+        private void txtCantidad__TextChanged(object sender, EventArgs e)
+        {
+            txtNeto.Texts = (Convert.ToDouble(txtPrecio.Texts) * Convert.ToInt32(txtCantidad.Texts)).ToString();
+        }
+
+        // Evento cambio de txt Precio
+        private void txtPrecio__TextChanged(object sender, EventArgs e)
+        {
+            txtNeto.Texts = (Convert.ToDouble(txtPrecio.Texts) * Convert.ToInt32(txtCantidad.Texts)).ToString();
+        }
+
+        // Evento seleccion de termino
+        private void cbTerminos_OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+            string termino = cbTerminos.SelectedItem.ToString();
+            lblTerminos.Text = termino;
+            lblTerminos.Visible = true;
+        }
+        // Evento seleccion de vendedor
+        private void cbFacturaDe_OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+            string vendedor = cbFacturaDe.SelectedItem.ToString();
+            lblVendedor.Text = vendedor;
+            lblVendedor.Visible = true;
+        }
+
+        #endregion
+
+        #region Others Methods
+        private void FillInvoiceExample(InvoiceDetailsDTO detail, ClientDTO client)
+        {
+            if (detail != null)
+            {
+                lblCodigoPr.Text = detail.ProductCode;
+                lblDescrPr.Text = detail.ProductName;
+                lblLote.Text = detail.Lote.ToString();
+                lblCantidad.Text = detail.Quantity.ToString();
+                lblPrecio.Text = detail.Price.ToString();
+                lblNeto.Text = detail.Neto.ToString();
+                // Visible
+                lblCodigoPr.Visible = true;
+                lblDescrPr.Visible = true;
+                lblLote.Visible = true;
+                lblCantidad.Visible = true;
+                lblPrecio.Visible = true;
+                lblNeto.Visible = true;
+
+            }
+            if (client != null)
+            {
+                lblCodigo.Text = client.Code.ToString();
+                lblNombre.Text = client.ClientName;
+                lblDireccion.Text = client.Address;
+                lblCiudad.Text = client.City;
+                lblTelefono.Text = client.PhoneNumber;
+
+                // Visible
+                lblCodigo.Visible = true;
+                lblNombre.Visible = true;
+                lblDireccion.Visible = true;
+                lblCiudad.Visible = true;
+                lblTelefono.Visible = true;
+            }
+        }
+
+        private void CleanTxt()
+        {
+            cbProductNombre.Texts = "";
+            txtCantidad.Texts = "";
+            txtPrecio.Texts = "";
+            txtNeto.Texts = "";
+            cbProductNombre.SelectedItem = null;
+        }
+        #endregion
+
+        //------
+
+        #region ComboBoxSettings
 
         private void ComboBoxSettings()
         {
+            var clientData = _clientService.GetAllCLientName();
+            var productData = _productService.GetInvoiceProducts();
+
             // ComboBox client Names
-            cbFacturaPara.DataSource = _clientService.GetAllCLientName();
+            cbFacturaPara.DataSource = clientData;
             cbFacturaPara.DisplayMember = "ClientName";
             cbFacturaPara.ValueMember = "ClientId";
+            cbFacturaPara.Texts = "";
 
             // ComboBox product Names
-            cbProductNombre.DataSource = _productService.GetInvoiceProducts();
+            cbProductNombre.DataSource = productData;
             cbProductNombre.DisplayMember = "ProductName";
             cbProductNombre.ValueMember = "ProductsId";
+            cbProductNombre.Texts = "";
+            cbProductNombre.SelectedItem = null;
+
+            // Assigning the selectedIndexChanged Event
+            cbFacturaPara.OnSelectedIndexChanged += cbFacturaPara_OnSelectedIndexChanged;
+            cbProductNombre.OnSelectedIndexChanged += cbProductNombre_OnSelectedIndexChanged;
         }
 
         private void cbFacturaPara_OnSelectedIndexChanged(object sender, EventArgs e)
         {
-            int selectedClient = cbFacturaPara.SelectedIndex;
+            int selectedClient = (int)cbFacturaPara.SelectedValue;
             var clientDTO = _clientService.GetByIdClient(selectedClient);
+            ClientDTO client = new()
+            {
+                ClientName = clientDTO.ClientName,
+                Code = clientDTO.Code,
+                Address = clientDTO.Address,
+                City = clientDTO.City,
+                PhoneNumber = clientDTO.PhoneNumber,
+
+            };
+            FillInvoiceExample(null, client);
         }
 
         private void cbProductNombre_OnSelectedIndexChanged(object sender, EventArgs e)
         {
-            int selectedProduct = cbProductNombre.SelectedIndex;
+            cbProductNombre.SelectedValue = cbFacturaPara.SelectedValue;
+            int selectedProduct = (int)cbProductNombre.SelectedValue;
             var productDTO = _productService.GetByIdProduct(selectedProduct);
             txtPrecio.Texts = productDTO.Price.ToString();
             txtCantidad.Texts = productDTO.Quantity.ToString();
+            txtNeto.Texts = (Convert.ToDouble(txtPrecio.Texts) * Convert.ToInt32(txtCantidad.Texts)).ToString();
+            //txtCantidad._TextChanged += txtCantidad__TextChanged;
+            //txtPrecio._TextChanged += txtPrecio__TextChanged;
+
         }
 
-        private void txtCantidad__TextChanged(object sender, EventArgs e)
-        {
-            txtNeto.Texts = (Convert.ToInt32(txtPrecio.Texts) * Convert.ToInt32(txtCantidad.Texts)).ToString();
-        }
+        #endregion
+
+
     }
 }

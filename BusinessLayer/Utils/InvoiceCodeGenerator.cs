@@ -14,13 +14,13 @@ namespace BusinessLayer.Utils
         public string InvoiceNumber()
         {
             int newCode;
-            bool isUnique = false;
+            bool isUnique = true;
 
             do
             {
                 newCode = new Random().Next(1000,9999);
-                _invoiceRepository.ExistCode(newCode,"numero");
-            } while (!isUnique);
+                isUnique = _invoiceRepository.ExistCode(newCode,"numero");
+            } while (isUnique == true);
             return newCode.ToString();
         }
 
@@ -32,8 +32,8 @@ namespace BusinessLayer.Utils
             do
             {
                 newCode = new Random().Next(1000, 9999);
-                _invoiceRepository.ExistCode(newCode, "num_pedido");
-            } while (!isUnique);
+                isUnique = _invoiceRepository.ExistCode(newCode, "num_pedido");
+            } while (isUnique == true);
             return newCode.ToString();
         }
     }

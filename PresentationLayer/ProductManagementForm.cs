@@ -30,15 +30,11 @@ namespace PresentationLayer
             addProduct.MaximizeBox = false;
             addProduct.MinimizeBox = false;
             var result = addProduct.ShowDialog();
-            if(result == DialogResult.OK)
+            if (result == DialogResult.OK)
             {
                 DataGridSettings();
                 LoadData();
                 MessageBox.Show("DataGrid Actualizado");
-            }
-            else
-            {
-                MessageBox.Show(result.ToString());
             }
 
         }
@@ -176,7 +172,7 @@ namespace PresentationLayer
                 dataGridView1.FirstDisplayedScrollingRowIndex = newValue;
             }
         }
-        #endregion
 
+#endregion
     }
 }
