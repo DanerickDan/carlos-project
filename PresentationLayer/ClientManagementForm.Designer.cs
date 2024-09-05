@@ -286,12 +286,12 @@
             // 
             materialScrollBar1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             materialScrollBar1.Depth = 0;
-            materialScrollBar1.Location = new Point(783, 133);
+            materialScrollBar1.Location = new Point(787, 133);
             materialScrollBar1.MouseState = MaterialSkin.MouseState.HOVER;
             materialScrollBar1.Name = "materialScrollBar1";
             materialScrollBar1.Orientation = MaterialSkin.Controls.MaterialScrollOrientation.Vertical;
-            materialScrollBar1.ScrollbarSize = 17;
-            materialScrollBar1.Size = new Size(17, 341);
+            materialScrollBar1.ScrollbarSize = 13;
+            materialScrollBar1.Size = new Size(13, 341);
             materialScrollBar1.TabIndex = 3;
             materialScrollBar1.Text = "materialScrollBar1";
             materialScrollBar1.Scroll += materialScrollBar1_Scroll;

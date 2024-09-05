@@ -28,10 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddInvoice));
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
             panelEjemplo = new Panel();
+            lblFax = new Label();
+            lblEmail = new Label();
+            lblRnc = new Label();
             label17 = new Label();
             label16 = new Label();
             label15 = new Label();
@@ -83,7 +87,7 @@
             cbProductNombre = new CustomComponents.MainFormComponents.CustomComboBox();
             txtPrecio = new CustomComponents.MainFormComponents.CustomTextBox();
             txtCantidad = new CustomComponents.MainFormComponents.CustomTextBox();
-            test = new ComboBox();
+            lblClienteId = new Label();
             panelEjemplo.SuspendLayout();
             SuspendLayout();
             // 
@@ -120,6 +124,10 @@
             // panelEjemplo
             // 
             panelEjemplo.BackColor = Color.Silver;
+            panelEjemplo.Controls.Add(lblClienteId);
+            panelEjemplo.Controls.Add(lblFax);
+            panelEjemplo.Controls.Add(lblEmail);
+            panelEjemplo.Controls.Add(lblRnc);
             panelEjemplo.Controls.Add(label17);
             panelEjemplo.Controls.Add(label16);
             panelEjemplo.Controls.Add(label15);
@@ -162,6 +170,35 @@
             panelEjemplo.Name = "panelEjemplo";
             panelEjemplo.Size = new Size(341, 402);
             panelEjemplo.TabIndex = 1;
+            // 
+            // lblFax
+            // 
+            lblFax.AutoSize = true;
+            lblFax.Location = new Point(76, 97);
+            lblFax.Name = "lblFax";
+            lblFax.Size = new Size(25, 15);
+            lblFax.TabIndex = 11;
+            lblFax.Text = "Fax";
+            // 
+            // lblEmail
+            // 
+            lblEmail.AutoSize = true;
+            lblEmail.Location = new Point(19, 129);
+            lblEmail.Name = "lblEmail";
+            lblEmail.Size = new Size(36, 15);
+            lblEmail.TabIndex = 12;
+            lblEmail.Text = "Email";
+            lblEmail.Visible = false;
+            // 
+            // lblRnc
+            // 
+            lblRnc.AutoSize = true;
+            lblRnc.Location = new Point(19, 112);
+            lblRnc.Name = "lblRnc";
+            lblRnc.Size = new Size(31, 15);
+            lblRnc.TabIndex = 11;
+            lblRnc.Text = "RNC";
+            lblRnc.Visible = false;
             // 
             // label17
             // 
@@ -255,27 +292,27 @@
             lblTotal.AutoSize = true;
             lblTotal.Location = new Point(282, 360);
             lblTotal.Name = "lblTotal";
-            lblTotal.Size = new Size(34, 15);
+            lblTotal.Size = new Size(28, 15);
             lblTotal.TabIndex = 1;
-            lblTotal.Text = "$0.00";
+            lblTotal.Text = "0.00";
             // 
             // label14
             // 
             label14.AutoSize = true;
             label14.Location = new Point(282, 347);
             label14.Name = "label14";
-            label14.Size = new Size(34, 15);
+            label14.Size = new Size(28, 15);
             label14.TabIndex = 1;
-            label14.Text = "$0.00";
+            label14.Text = "0.00";
             // 
             // lblSubTotal
             // 
             lblSubTotal.AutoSize = true;
             lblSubTotal.Location = new Point(281, 332);
             lblSubTotal.Name = "lblSubTotal";
-            lblSubTotal.Size = new Size(34, 15);
+            lblSubTotal.Size = new Size(28, 15);
             lblSubTotal.TabIndex = 1;
-            lblSubTotal.Text = "$0.00";
+            lblSubTotal.Text = "0.00";
             // 
             // lblDireccion
             // 
@@ -629,7 +666,7 @@
             // 
             btnAgregarProd.FlatAppearance.BorderSize = 0;
             btnAgregarProd.FlatStyle = FlatStyle.Flat;
-            btnAgregarProd.Image = Properties.Resources.icons8_añadir_40;
+            btnAgregarProd.Image = (Image)resources.GetObject("btnAgregarProd.Image");
             btnAgregarProd.Location = new Point(484, 205);
             btnAgregarProd.Name = "btnAgregarProd";
             btnAgregarProd.Size = new Size(41, 40);
@@ -749,20 +786,21 @@
             txtCantidad.Texts = "";
             txtCantidad.UnderlinedStyle = false;
             // 
-            // test
+            // lblClienteId
             // 
-            test.FormattingEnabled = true;
-            test.Location = new Point(288, 154);
-            test.Name = "test";
-            test.Size = new Size(121, 23);
-            test.TabIndex = 11;
+            lblClienteId.AutoSize = true;
+            lblClienteId.Location = new Point(113, 129);
+            lblClienteId.Name = "lblClienteId";
+            lblClienteId.Size = new Size(44, 15);
+            lblClienteId.TabIndex = 13;
+            lblClienteId.Text = "label26";
+            lblClienteId.Visible = false;
             // 
             // AddInvoice
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(973, 450);
-            Controls.Add(test);
             Controls.Add(txtCantidad);
             Controls.Add(txtPrecio);
             Controls.Add(btnCrear);
@@ -846,6 +884,9 @@
         private Label label17;
         private Label label16;
         private Label label15;
-        private ComboBox test;
+        private Label lblEmail;
+        private Label lblRnc;
+        private Label lblFax;
+        private Label lblClienteId;
     }
 }

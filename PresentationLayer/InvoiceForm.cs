@@ -219,6 +219,8 @@ namespace PresentationLayer
             var invoice = mapping.GetInvoiceView();
             InvoiceBindingList = new BindingList<InvoiceViewDTO>(invoice);
             dataGridView1.DataSource = InvoiceBindingList;
+            lblTotalRegistros.Text = invoice.Count.ToString();
+            lblFiltrados.Text = invoice.Count.ToString();
 
         }
 

@@ -121,6 +121,8 @@ namespace PresentationLayer
                 var products = productService.GetAllProduct();
                 ProductBindingList = new BindingList<ProductsDTO>(products);
                 dataGridView1.DataSource = ProductBindingList;
+                lblTotalFiltrados.Text = products.Count.ToString();
+                lblFiltrados.Text = products.Count.ToString();
             }
         }
 

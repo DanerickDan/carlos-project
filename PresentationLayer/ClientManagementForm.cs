@@ -121,6 +121,8 @@ namespace PresentationLayer
                 var client = clientService.GetAllCLient();
                 ClientBindingList = new BindingList<ClientDTO>(client);
                 dataGridView1.DataSource = ClientBindingList;
+                lblFiltrados.Text = client.Count.ToString();
+                lblTotalRegistros.Text = client.Count.ToString();
             }
         }
 

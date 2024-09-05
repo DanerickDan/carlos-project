@@ -1,4 +1,6 @@
-﻿using BusinessLayer.Interfaces.IServices;
+﻿using BusinessLayer.DTOs;
+using BusinessLayer.Interfaces.IServices;
+using BusinessLayer.InvoiceManagment;
 using BusinessLayer.Model;
 using BusinessLayer.Services;
 using BusinessLayer.Utils;
@@ -10,9 +12,11 @@ namespace PresentationLayer.AddForms
         private readonly InvoiceCodeGenerator _invoiceCodeGenerator;
         private readonly IProductService _productService;
         private readonly IClientService _clientService;
-        private readonly InvoiceDTO _invoiceDTO;
-        private readonly List<InvoiceDTO> _invoiceList;
-
+        private InvoiceDTO _invoiceDTO;
+        private List<InvoiceDTO> _invoiceList;
+        private readonly IInvoiceServices _invoiceServices;
+        private readonly PdfService pdfService;
+        private readonly PrintService printService;
 
         public AddInvoice()
         {
@@ -22,6 +26,9 @@ namespace PresentationLayer.AddForms
             _invoiceCodeGenerator = new InvoiceCodeGenerator();
             _invoiceDTO = new();
             _invoiceList = new();
+            _invoiceServices = new InvoiceServices();
+            printService = new();
+            pdfService = new();
             lblNumFactura.Text = _invoiceCodeGenerator.InvoiceNumber();
             lblNumFactura.Visible = true;
             lblFecha.Text = DateTime.Now.ToString("dd/MM/yyyy");
@@ -89,6 +96,98 @@ namespace PresentationLayer.AddForms
         // Evento crear factura
         private void btnCrear_Click(object sender, EventArgs e)
         {
+            InvoiceDTO invoice = new()
+            {
+                Number = Convert.ToInt32(lblNumFactura.Text),
+                Date = Convert.ToDateTime(lblFecha.Text),
+                NCF = lblFecha.Text,
+                Description = txtDescrip.Text,
+                Terms = txtDescrip.Texts,
+                OrderNumber = Convert.ToInt32(lblPedido.Text),
+                SellerName = lblVendedor.Text,
+                ClientID = Convert.ToInt32(lblClienteId.Text),
+                Details = _invoiceDTO.Details
+            };
+            //_invoiceServices.AddInvoice(invoice);
+            ClientDTO clientDTO = new()
+            {
+                ClientName = lblNombre.Text,
+                Code = Convert.ToInt32(lblCodigo.Text),
+                Address = lblDireccion.Text,
+                City = lblCiudad.Text,
+                PhoneNumber = lblTelefono.Text,
+                Email = lblEmail.Text,
+                Rnc = lblRnc.Text,
+                Fax = lblFax.Text
+            };
+            DialogResult result = MessageBox.Show("¿Deseas imprimir la factura?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+
+                // Cargar la plantilla HTML y llenar los datos de la factura
+                string templatePath = Path.Combine(Application.StartupPath, "index.html");
+
+                string templateHtml = File.ReadAllText(templatePath);
+                string filledHtml = FillTemplate(templateHtml, invoice, clientDTO);
+
+                // Generar el PDF
+                byte[] pdfBytes = pdfService.GeneratePdf(filledHtml);
+
+                // Imprimir el PDF
+                printService.Print(pdfBytes);
+            }
+            else if (result == DialogResult.No)
+            {
+                MessageBox.Show("Factura agregada correctamente");
+            }
+
+            Close();
+        }
+
+        private string FillTemplate(string template, InvoiceDTO invoice, ClientDTO client)
+        {
+            // Reemplazar los marcadores de posición en la plantilla con los datos de la factura
+            template = template.Replace("{{ClientName}}", client.ClientName)
+                               .Replace("{{ClientCode}}", client.Code.ToString())
+                               .Replace("{{ClientAddress}}", client.Address)
+                               .Replace("{{ClientCity}}", client.City)
+                               .Replace("{{ClientPhone}}", client.PhoneNumber)
+                               .Replace("{{ClientRNC}}", client.Rnc)
+                               .Replace("{{SellerName}}", invoice.SellerName)
+                               .Replace("{{NCF}}", invoice.NCF)
+                               .Replace("{{Terms}}", invoice.Terms)
+                               .Replace("{{OrderNumber}}", invoice.OrderNumber.ToString())
+                               .Replace("{{InvoiceNumber}}", invoice.Number.ToString())
+                               .Replace("{{Date}}", invoice.Date.ToString("dd/MM/yyyy"));
+
+            // Reemplazar los productos
+            string productTemplate = @"
+            <tr>
+                <th scope=""row"">{{ProductCode}}</th>
+                <td>{{ProductName}}</td>
+                <td>{{Lote}}</td>
+                <td>{{Quantity}}</td>
+                <td>${{Price}}</td>
+                <td>{{Neto}}</td>
+                <td>{{SubTotal}}</td>
+                <td>{{Total}}</td>
+            </tr>";
+            string productsHtml = "";
+            foreach (var product in invoice.Details)
+            {
+                string productHtml = productTemplate.Replace("{{ProductCode}}", product.ProductCode.ToString())
+                                                    .Replace("{{ProductName}}", product.ProductName)
+                                                    .Replace("{{Lote}}", product.Lote.ToString())
+                                                    .Replace("{{Quantity}}", product.Quantity.ToString())
+                                                    .Replace("{{Price}}", product.Price.ToString("F2"))
+                                                    .Replace("{{Neto}}", product.Neto.ToString("F2"))
+                                                    .Replace("{{SubTotal}}", product.SubTotal.ToString("F2"))
+                                                    .Replace("{{Total}}", product.Total.ToString("F2"));
+                productsHtml += productHtml;
+            }
+            template = template.Replace("<!-- Products -->", productsHtml);
+
+            return template;
 
         }
 
@@ -115,6 +214,7 @@ namespace PresentationLayer.AddForms
                     ProductName = productsDTO.ProductName,
                     Lote = productsDTO.Lote,
                     ProductCode = productsDTO.Code,
+                    Total = Convert.ToDouble(lblTotal.Text)
 
                 };
                 _invoiceDTO.Details.Add(details);
@@ -125,8 +225,8 @@ namespace PresentationLayer.AddForms
                 {
                     total += item.Neto;
                 }
-                lblTotal.Text = "$" + total;
-                lblSubTotal.Text = "$" + total;
+                lblTotal.Text = total.ToString();
+                lblSubTotal.Text = total.ToString();
                 FillInvoiceExample(details, null);
                 CleanTxt();
             }
@@ -187,11 +287,15 @@ namespace PresentationLayer.AddForms
             }
             if (client != null)
             {
+                lblClienteId.Text = client.ClientId.ToString();
                 lblCodigo.Text = client.Code.ToString();
                 lblNombre.Text = client.ClientName;
                 lblDireccion.Text = client.Address;
                 lblCiudad.Text = client.City;
                 lblTelefono.Text = client.PhoneNumber;
+                lblRnc.Text = client.Rnc;
+                lblEmail.Text = client.Email;
+                lblFax.Text = client.Fax;
 
                 // Visible
                 lblCodigo.Visible = true;
@@ -199,6 +303,8 @@ namespace PresentationLayer.AddForms
                 lblDireccion.Visible = true;
                 lblCiudad.Visible = true;
                 lblTelefono.Visible = true;
+                lblRnc.Visible = true;
+                lblFax.Visible = true;
             }
         }
 
@@ -261,12 +367,15 @@ namespace PresentationLayer.AddForms
             var clientDTO = _clientService.GetByIdClient(selectedClient);
             ClientDTO client = new()
             {
+                ClientId = selectedClient,
                 ClientName = clientDTO.ClientName,
                 Code = clientDTO.Code,
                 Address = clientDTO.Address,
                 City = clientDTO.City,
                 PhoneNumber = clientDTO.PhoneNumber,
-
+                Email = clientDTO.Email,
+                Rnc = clientDTO.Rnc,
+                Fax = clientDTO.Fax
             };
             FillInvoiceExample(null, client);
         }
@@ -284,8 +393,6 @@ namespace PresentationLayer.AddForms
 
         }
 
-        #endregion
-
-
+#endregion
     }
 }
