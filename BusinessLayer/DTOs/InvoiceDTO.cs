@@ -10,6 +10,8 @@
         public string Terms { get; set; } // Crédito o Contado
         public int OrderNumber { get; set; }
         public string? SellerName { get; set; }
+        public double SubTotal { get; set; }
+        public double Total { get; set; }
         public List<InvoiceDetailsDTO> Details { get; set; } = new();
         public int ClientID { get; set; }
     }

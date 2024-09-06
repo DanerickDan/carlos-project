@@ -29,8 +29,6 @@ namespace BusinessLayer.Services
                     ProductCode = item.ProductCode,
                     Price = item.Price,
                     Neto = item.Neto,
-                    SubTotal = item.SubTotal,
-                    Total = item.Total,
                     
                 });
             }
@@ -52,8 +50,6 @@ namespace BusinessLayer.Services
                 ProductCode = invoiceDetails.ProductCode,
                 Price = invoiceDetails.Price,
                 Neto = invoiceDetails.Neto,
-                SubTotal = invoiceDetails.SubTotal,
-                Total = invoiceDetails.Total,
             };
             return invoiceDetailsDTO;
         }

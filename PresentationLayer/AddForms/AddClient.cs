@@ -10,6 +10,7 @@ namespace PresentationLayer.AddForms
     {
         private readonly IClientService _clientService;
         private readonly ClientCodeGenerator _clientCodeGenerator;
+
         public AddClient()
         {
             _clientCodeGenerator = new ClientCodeGenerator();
@@ -43,23 +44,30 @@ namespace PresentationLayer.AddForms
 
         private void agregarBtn_Click(object sender, EventArgs e)
         {
-            ClientDTO clientDTO = new()
+            if (nombreTxt.Texts != "" && direccionTxt.Texts != "" && ciudadTxt.Texts != "" && telefonoTxt.Texts != "" && emailTxt.Texts != "" && rncTxt.Texts != "")
             {
-                ClientName = nombreTxt.Texts,
-                Address = direccionTxt.Texts,
-                City = ciudadTxt.Texts,
-                Email = emailTxt.Texts,
-                PhoneNumber = telefonoTxt.Texts,
-                Fax = faxTxt.Texts,
-                Rnc = rncTxt.Texts,
-                Code = Convert.ToInt32(codigoTxt.Texts)
-            };
-            _clientService.AddClient(clientDTO);
-            // Adding to the list Box
-            materialListBox1.Items.Clear();
-            LoadListBoxView();
-            CleanTextBox();
-            MessageBox.Show("Cliente agregado correctamente");
+                ClientDTO clientDTO = new()
+                {
+                    ClientName = nombreTxt.Texts,
+                    Address = direccionTxt.Texts,
+                    City = ciudadTxt.Texts,
+                    Email = emailTxt.Texts,
+                    PhoneNumber = telefonoTxt.Texts,
+                    Fax = faxTxt.Texts,
+                    Rnc = rncTxt.Texts,
+                    Code = Convert.ToInt32(codigoTxt.Texts)
+                };
+                _clientService.AddClient(clientDTO);
+                // Adding to the list Box
+                materialListBox1.Items.Clear();
+                LoadListBoxView();
+                CleanTextBox();
+                MessageBox.Show("Cliente agregado correctamente");
+            }
+            else
+            {
+                MessageBox.Show("Debe llenar todos los campos");
+            }
         }
 
         private void CleanTextBox()

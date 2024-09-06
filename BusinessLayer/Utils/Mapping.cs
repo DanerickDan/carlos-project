@@ -29,6 +29,7 @@ namespace BusinessLayer.Utils
                         ClientId = invoice.ClientID,
                         OrderNumber = invoice.OrderNumber,
                         SellerName = invoice.SellerName,
+                        InvoiceDescription = invoice.Description,
                         Number = invoice.Number,
                         NCF = invoice.NCF,
                         DetalleId = detail.InvoiceDetailsId,
@@ -36,8 +37,8 @@ namespace BusinessLayer.Utils
                         Quantity = detail.Quantity,
                         Price = detail.Price,
                         Lote = detail.Lote,
-                        Total = detail.Total,
-                        SubTotal = detail.SubTotal,
+                        Total = invoice.Total,
+                        SubTotal = invoice.SubTotal,
                         ProductCode = detail.ProductCode,
                         Neto = detail.Neto
                     };

@@ -25,20 +25,27 @@ namespace PresentationLayer.UpdateForms
 
         private void updateBtn_Click(object sender, EventArgs e)
         {
-            ClientDTO client = new()
+            if (nombreTxt.Texts != "" && rncTxt.Texts != "" && ciudadTxt.Texts != "" && telefonoTxt.Texts != "" && emailTxt.Texts != "" && direccionTxt.Texts != "")
             {
-                ClientId = _id,
-                Fax = faxTxt.Texts,
-                ClientName = nombreTxt.Texts,
-                Address = direccionTxt.Texts,
-                City = direccionTxt.Texts,
-                PhoneNumber = telefonoTxt.Texts,
-                Email = emailTxt.Texts,
-                Rnc = rncTxt.Texts,
-            };
-            _clientService.UpdateClient(client);
-            MessageBox.Show("Cliente actualizado correctamente");
-            this.Close();
+                ClientDTO client = new()
+                {
+                    ClientId = _id,
+                    Fax = faxTxt.Texts,
+                    ClientName = nombreTxt.Texts,
+                    Address = direccionTxt.Texts,
+                    City = direccionTxt.Texts,
+                    PhoneNumber = telefonoTxt.Texts,
+                    Email = emailTxt.Texts,
+                    Rnc = rncTxt.Texts,
+                };
+                _clientService.UpdateClient(client);
+                MessageBox.Show("Cliente actualizado correctamente");
+                Close();
+            }
+            else
+            {
+                MessageBox.Show("Ha dejado uno o más campos vacíos");
+            }
         }
     }
 }

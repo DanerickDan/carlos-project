@@ -24,20 +24,28 @@ namespace PresentationLayer.UpdateForms
 
         private void customButton1_Click(object sender, EventArgs e)
         {
-            ProductsDTO productsDTO = new()
+            if (nombreTxt.Texts != "" && codigoTxt.Texts != "" && vencimientoTxt.Texts != "" && precioTxt.Texts != "" && loteTxt.Texts != "")
             {
-                ProductsId = _id,
-                ProductName = nombreTxt.Texts,
-                Code = codigoTxt.Texts,
-                Description = descripTxt.Texts,
-                ExpirationDate = Convert.ToDateTime(vencimientoTxt.Texts),
-                Price = Convert.ToDouble(precioTxt.Texts),
-                Lote = Convert.ToInt32(loteTxt.Texts),
-                Quantity = Convert.ToInt32(cantidadTxt.Texts)
-            };
-            _productService.UpdateProduct(productsDTO);
-            MessageBox.Show("Producto actualizado correctamente");
-            Close();
+                ProductsDTO productsDTO = new()
+                {
+                    ProductsId = _id,
+                    ProductName = nombreTxt.Texts,
+                    Code = codigoTxt.Texts,
+                    Description = descripTxt.Texts,
+                    ExpirationDate = Convert.ToDateTime(vencimientoTxt.Texts),
+                    Price = Convert.ToDouble(precioTxt.Texts),
+                    Lote = Convert.ToInt32(loteTxt.Texts),
+                    Quantity = Convert.ToInt32(cantidadTxt.Texts),
+                    ProductNeto = Convert.ToInt32(cantidadTxt.Texts) * Convert.ToDouble(precioTxt.Texts)
+                };
+                _productService.UpdateProduct(productsDTO);
+                MessageBox.Show("Producto actualizado correctamente");
+                Close();
+            }
+            else
+            {
+                MessageBox.Show("Ha dejado uno o más campos vacíos");
+            }
         }
     }
 }

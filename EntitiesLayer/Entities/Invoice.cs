@@ -11,6 +11,8 @@
         public int OrderNumber { get; set; }
         public string? SellerName { get; set; }
         public int ClientID { get; set; }
+        public double SubTotal { get; set; }
+        public double Total { get; set; }
         public List<InvoiceDetails> Details { get; set; } = new();
         Client Client { get; set; } = new();
     }

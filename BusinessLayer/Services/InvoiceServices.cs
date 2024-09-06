@@ -26,6 +26,8 @@ namespace BusinessLayer.Services
                 OrderNumber = invoiceDTO.OrderNumber,
                 SellerName = invoiceDTO.SellerName,
                 ClientID = invoiceDTO.ClientID,
+                SubTotal = invoiceDTO.SubTotal,
+                Total = invoiceDTO.Total
             };
             _repository.AddInvoice(invoice);
         }
@@ -42,6 +44,8 @@ namespace BusinessLayer.Services
                 OrderNumber = invoiceDTO.OrderNumber,
                 SellerName = invoiceDTO.SellerName,
                 ClientID = invoiceDTO.ClientID,
+                SubTotal = invoiceDTO.SubTotal,
+                Total = invoiceDTO.Total
             };
             _repository.AddInvoice(invoice);
         }
@@ -66,6 +70,9 @@ namespace BusinessLayer.Services
                     Terms = item.Terms,
                     OrderNumber = item.OrderNumber,
                     SellerName = item.SellerName,
+                    Description = item.Description,
+                    Total = item.Total,
+                    SubTotal = item.SubTotal,
                     ClientID = item.ClientID,
                     Details = item.Details.Select(detail => new InvoiceDetailsDTO
                     {
@@ -75,8 +82,6 @@ namespace BusinessLayer.Services
                         Quantity = detail.Quantity,
                         Price = detail.Price,
                         Lote = detail.Lote,
-                        Total = detail.Total,
-                        SubTotal = detail.SubTotal,
                         ProductCode = detail.ProductCode,
                         Neto = detail.Neto
                     }).ToList()
@@ -97,6 +102,9 @@ namespace BusinessLayer.Services
                 Terms = invoice.Terms,
                 OrderNumber = invoice.OrderNumber,
                 SellerName = invoice.SellerName,
+                Total = invoice.Total,
+                Description = invoice.Description,
+                SubTotal = invoice.SubTotal,
                 ClientID = invoice.ClientID,
                 Details = invoice.Details.Select(detail => new InvoiceDetailsDTO
                 {
@@ -106,8 +114,6 @@ namespace BusinessLayer.Services
                     Quantity = detail.Quantity,
                     Price = detail.Price,
                     Lote = detail.Lote,
-                    Total = detail.Total,
-                    SubTotal = detail.SubTotal,
                     ProductCode = detail.ProductCode,
                     Neto = detail.Neto
                 }).ToList()

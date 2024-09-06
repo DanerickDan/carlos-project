@@ -461,7 +461,7 @@
             customButton1.ForeColor = Color.FromArgb(64, 64, 64);
             customButton1.Image = (Image)resources.GetObject("customButton1.Image");
             customButton1.ImageAlign = ContentAlignment.MiddleLeft;
-            customButton1.Location = new Point(641, 480);
+            customButton1.Location = new Point(653, 480);
             customButton1.Margin = new Padding(8, 3, 3, 3);
             customButton1.Name = "customButton1";
             customButton1.Size = new Size(135, 37);

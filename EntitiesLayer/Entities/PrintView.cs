@@ -6,6 +6,7 @@
         public int ProductoId { get; set; }
         public int ClienteId { get; set; }
         public string NombreCliente { get; set; }
+        public string InvoiceDescription { get; set; }
         public int CodigoCliente { get; set; }
         public string ClienteDireccion { get; set; }
         public string ClienteCiudad { get; set; }

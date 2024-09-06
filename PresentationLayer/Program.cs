@@ -1,3 +1,5 @@
+using BusinessLayer.Model;
+using DocumentFormat.OpenXml.Drawing.Diagrams;
 using PresentationLayer.AddForms;
 using PresentationLayer.UpdateForms;
 
@@ -14,7 +16,9 @@ namespace PresentationLayer
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
+            ProductsDTO test = new();
             Application.Run(new MainForm());
         }
+        
     }
 }

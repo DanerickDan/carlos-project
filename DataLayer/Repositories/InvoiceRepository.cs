@@ -23,8 +23,8 @@ namespace DataLayer.Repositories
                 var connectionT = new SQLiteConnection(connectionManager.GetConnection());
                 connectionT.Open();
                 string query =
-                        "INSERT INTO Facturas (fecha, terminos, cliente_id, num_pedido, vendedor, NCF) " +
-                        "VALUES (@Fecha, @Terminos, @ClienteId, @NumPedido, @Vendedor, @NCF); " +
+                        "INSERT INTO Facturas (fecha, terminos, cliente_id, num_pedido, vendedor, NCF, numero, descripcion,sub_total,total) " +
+                        "VALUES (@Fecha, @Terminos, @ClienteId, @NumPedido, @Vendedor, @NCF,@NumeroFactura,@Descripcion,@SubTotal,@Total); " +
                         "SELECT last_insert_rowid();";
                 using (var transaction = connectionT.BeginTransaction())
                 {
@@ -38,6 +38,10 @@ namespace DataLayer.Repositories
                             command.Parameters.AddWithValue("@NumPedido", invoice.OrderNumber);
                             command.Parameters.AddWithValue("@Vendedor", invoice.SellerName);
                             command.Parameters.AddWithValue("@NCF", invoice.NCF);
+                            command.Parameters.AddWithValue("@NumeroFactura", invoice.Number);
+                            command.Parameters.AddWithValue("@Descripcion", invoice.Description);
+                            command.Parameters.AddWithValue("@Total", invoice.Total);
+                            command.Parameters.AddWithValue("@SubTotal", invoice.SubTotal);
 
                             invoice.InvoiceID = Convert.ToInt32(command.ExecuteScalar());
                         }
@@ -45,17 +49,15 @@ namespace DataLayer.Repositories
                         foreach (var detail in invoice.Details)
                         {
                             using (var command = new SQLiteCommand(
-                                "INSERT INTO Detalle_Factura (factura_id, producto_id, cantidad, precio_unitario, lote, total, " +
-                                "sub_total, codigo, neto)" +
-                                "VALUES (@FacturaID, @ProductoID, @Cantidad, @PrecioUnitario, @Lote, @Total, @SubTotal, @Codigo, @Neto)", connectionT))
+                                "INSERT INTO Detalle_Factura (factura_id, producto_id, cantidad, precio_unitario, lote, " +
+                                "codigo, neto)" +
+                                "VALUES (@FacturaID, @ProductoID, @Cantidad, @PrecioUnitario, @Lote, @Codigo, @Neto)", connectionT))
                             {
                                 command.Parameters.AddWithValue("@FacturaID", invoice.InvoiceID);
                                 command.Parameters.AddWithValue("@ProductoID", detail.ProductId);
                                 command.Parameters.AddWithValue("@Lote", detail.Quantity);
                                 command.Parameters.AddWithValue("@Cantidad", detail.Price);
                                 command.Parameters.AddWithValue("@Precio", detail.Lote);
-                                command.Parameters.AddWithValue("@Neto", detail.Total);
-                                command.Parameters.AddWithValue("@SubTotal", detail.SubTotal);
                                 command.Parameters.AddWithValue("@Codigo", detail.ProductCode);
                                 command.Parameters.AddWithValue("@Neto", detail.Neto);
 
@@ -101,7 +103,10 @@ namespace DataLayer.Repositories
                             command.Parameters.AddWithValue("@NumFactura", invoice.Number);
                             command.Parameters.AddWithValue("@ncf", invoice.NCF);
                             command.Parameters.AddWithValue("@Terminos", invoice.Terms);
+                            command.Parameters.AddWithValue("@Descripcion", invoice.Description);
                             command.Parameters.AddWithValue("@NumPedido", invoice.OrderNumber);
+                            command.Parameters.AddWithValue("@Total", invoice.Total);
+                            command.Parameters.AddWithValue("@SubTotal", invoice.SubTotal);
                             command.Parameters.AddWithValue("@Vendedor", invoice.SellerName);
                             command.Parameters.AddWithValue("@ClienteID", invoice.ClientID);
 
@@ -125,8 +130,6 @@ namespace DataLayer.Repositories
                                     command3.Parameters.AddWithValue("@Cantidad", details.Quantity);
                                     command3.Parameters.AddWithValue("@PrecioUnitario", details.Price);
                                     command3.Parameters.AddWithValue("@Lote", details.Lote);
-                                    command3.Parameters.AddWithValue("@Total", details.Total);
-                                    command3.Parameters.AddWithValue("@SubTotal", details.SubTotal);
                                     command3.Parameters.AddWithValue("@Codigo", details.ProductCode);
                                     command3.Parameters.AddWithValue("@Neto", details.Neto);
 
@@ -205,9 +208,9 @@ namespace DataLayer.Repositories
                     connectionManager.OpenConnection(connection);
 
                     string query = @"SELECT f.factura_id as InvoiceId, f.fecha as Fecha, f.terminos as Terminos, f.cliente_id as ClienteId, f.numero as Number,
-                            f.num_pedido as NumPedido, f.vendedor as Vendedor, f.NCF as ncf, d.detalle_id as DetalleId, d.factura_id as FacturaId,
+                            f.num_pedido as NumPedido, f.vendedor as Vendedor, f.NCF as ncf, f.descripcion as Descripcion,d.detalle_id as DetalleId, d.factura_id as FacturaId,
                             d.producto_id as ProductoId, d.cantidad as Cantidad, d.precio_unitario as Precio, d.lote as Lote,
-                            d.total as Total, d.sub_total as SubTotal, d.neto as Neto, d.codigo as Codigo
+                            f.total as Total, f.sub_total as SubTotal, d.neto as Neto, d.codigo as Codigo
                             FROM Facturas AS f
                             INNER JOIN Detalle_Factura AS d ON f.factura_id = d.factura_id
                             ORDER BY f.factura_id;";
@@ -235,6 +238,9 @@ namespace DataLayer.Repositories
                                         SellerName = reader.GetString(reader.GetOrdinal("Vendedor")),
                                         Number = reader.GetInt32(reader.GetOrdinal("Number")),
                                         NCF = reader.GetString(reader.GetOrdinal("NCF")),
+                                        Description = reader.GetString(reader.GetOrdinal("Descripcion")),
+                                        Total = reader.GetDouble(reader.GetOrdinal("Total")),
+                                        SubTotal = reader.GetDouble(reader.GetOrdinal("SubTotal")),
                                         Details = new List<InvoiceDetails>() // Initialize a new Details list for the invoice
                                     };
                                     invoices.Add(currentInvoice); // Add the new invoice to the list
@@ -249,8 +255,6 @@ namespace DataLayer.Repositories
                                     Quantity = reader.GetInt32(reader.GetOrdinal("Cantidad")),
                                     Price = reader.GetDouble(reader.GetOrdinal("Precio")),
                                     Lote = reader.GetInt32(reader.GetOrdinal("Lote")), // Corrected type
-                                    Total = reader.GetDouble(reader.GetOrdinal("Total")),
-                                    SubTotal = reader.GetDouble(reader.GetOrdinal("SubTotal")),
                                     ProductCode = reader.GetString(reader.GetOrdinal("Codigo")), // Added for Codigo
                                     Neto = reader.GetDouble(reader.GetOrdinal("Neto"))
                                 };
@@ -281,9 +285,9 @@ namespace DataLayer.Repositories
                     connectionManager.OpenConnection(connection);
                     string query = @"
                         SELECT f.factura_id as InvoiceId, f.fecha as Fecha, f.terminos as Terminos, f.cliente_id as ClienteId, f.numero as Number,
-                        f.num_pedido as NumPedido, f.vendedor as Vendedor, f.NCF as ncf, d.detalle_id as DetalleId, d.factura_id as FacturaId,
+                        f.num_pedido as NumPedido, f.vendedor as Vendedor, f.NCF as ncf, f.descripcion as Descripcion ,d.detalle_id as DetalleId, d.factura_id as FacturaId,
                         d.producto_id as ProductoId, d.cantidad as Cantidad, d.precio_unitario as Precio, d.lote as Lote,
-                        d.total as Total, d.sub_total as SubTotal, d.neto as Neto, d.codigo as Codigo
+                        f.total as Total, f.sub_total as SubTotal, d.neto as Neto, d.codigo as Codigo
                         FROM Facturas AS f
                         INNER JOIN Detalle_Factura AS d ON f.factura_id = d.factura_id
                         WHERE f.factura_id = @Id
@@ -309,6 +313,9 @@ namespace DataLayer.Repositories
                                         SellerName = reader.GetString(reader.GetOrdinal("Vendedor")),
                                         Number = reader.GetInt32(reader.GetOrdinal("Number")),
                                         NCF = reader.GetString(reader.GetOrdinal("NCF")),
+                                        Description = reader.GetString(reader.GetOrdinal("Descripcion")),
+                                        Total = reader.GetDouble(reader.GetOrdinal("Total")),
+                                        SubTotal = reader.GetDouble(reader.GetOrdinal("SubTotal")),
                                         Details = new List<InvoiceDetails>()
                                     };
                                 }
@@ -321,8 +328,6 @@ namespace DataLayer.Repositories
                                     Quantity = reader.GetInt32(reader.GetOrdinal("Cantidad")),
                                     Price = reader.GetDouble(reader.GetOrdinal("Precio")),
                                     Lote = reader.GetInt32(reader.GetOrdinal("Lote")),
-                                    Total = reader.GetDouble(reader.GetOrdinal("Total")),
-                                    SubTotal = reader.GetDouble(reader.GetOrdinal("SubTotal")),
                                     Neto = reader.GetDouble(reader.GetOrdinal("Neto")),
                                     ProductCode = reader.GetString(reader.GetOrdinal("Codigo"))
                                 };

@@ -6,6 +6,7 @@
         public DateTime Date { get; set; }
         public string Terms { get; set; }
         public int ClientId { get; set; }
+        public string InvoiceDescription { get; set; }
         public int OrderNumber { get; set; }
         public string SellerName { get; set; }
         public int Number { get; set; }

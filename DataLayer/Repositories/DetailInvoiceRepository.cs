@@ -62,9 +62,6 @@ namespace DataLayer.Repositories
                                     Quantity = reader.GetInt32(reader.GetOrdinal("Cantiadad")),
                                     Price = reader.GetDouble(reader.GetOrdinal("Precio")),
                                     Lote = reader.GetInt32(reader.GetOrdinal("Lote")),
-                                    Total = reader.GetDouble(reader.GetOrdinal("Total")),
-                                    SubTotal = reader.GetDouble(reader.GetOrdinal("SubTotal")),
-                                    ProductCode = reader.GetString(reader.GetOrdinal("Codigo")),
                                     Neto = reader.GetDouble(reader.GetOrdinal("Neto"))
                                 });
                             }
@@ -102,8 +99,6 @@ namespace DataLayer.Repositories
                                     Quantity = reader.GetInt32(reader.GetOrdinal("Cantiadad")),
                                     Price = reader.GetDouble(reader.GetOrdinal("Precio")),
                                     Lote = reader.GetInt32(reader.GetOrdinal("Lote")),
-                                    Total = reader.GetDouble(reader.GetOrdinal("Total")),
-                                    SubTotal = reader.GetDouble(reader.GetOrdinal("SubTotal")),
                                     ProductCode = reader.GetString(reader.GetOrdinal("Codigo")),
                                     Neto = reader.GetDouble(reader.GetOrdinal("Neto"))
                                 };

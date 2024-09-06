@@ -4,7 +4,6 @@ using BusinessLayer.Services;
 using BusinessLayer.Utils;
 using MaterialSkin;
 using MaterialSkin.Controls;
-using System.Diagnostics;
 using System.Globalization;
 
 namespace PresentationLayer.AddForms
@@ -27,22 +26,29 @@ namespace PresentationLayer.AddForms
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            ProductsDTO productsDTO = new()
+            if (nombreTxt.Texts != "" && codigoTxt.Texts != "" && cantidadTxt.Texts != "" && vencimientoTxt.Texts != "" && loteTxt.Texts != "" && precioTxt.Texts != "")
             {
-                ProductName = nombreTxt.Texts,
-                Code = codigoTxt.Texts,
-                Description = descriptxt.Texts,
-                Quantity = Convert.ToInt32(cantidadTxt.Texts),
-                ExpirationDate = DateTime.ParseExact(vencimientoTxt.Texts, "dd/MM/yyyy", CultureInfo.InvariantCulture),
-                Lote = Convert.ToInt32(loteTxt.Texts),
-                Price = Convert.ToDouble(precioTxt.Texts),
-                ProductNeto = Convert.ToInt32(cantidadTxt.Texts) * Convert.ToDouble(precioTxt.Texts)
-            };
-            _productService.AddProduct(productsDTO);
-            CleanTextBox();
-            materialListBox1.Items.Clear();
-            LoadListBoxView();
-            MessageBox.Show("Producto agregado correctamente");
+                ProductsDTO productsDTO = new()
+                {
+                    ProductName = nombreTxt.Texts,
+                    Code = codigoTxt.Texts,
+                    Description = descriptxt.Texts,
+                    Quantity = Convert.ToInt32(cantidadTxt.Texts),
+                    ExpirationDate = DateTime.ParseExact(vencimientoTxt.Texts, "dd/MM/yyyy", CultureInfo.InvariantCulture),
+                    Lote = Convert.ToInt32(loteTxt.Texts),
+                    Price = Convert.ToDouble(precioTxt.Texts),
+                    ProductNeto = Convert.ToInt32(cantidadTxt.Texts) * Convert.ToDouble(precioTxt.Texts)
+                };
+                _productService.AddProduct(productsDTO);
+                CleanTextBox();
+                materialListBox1.Items.Clear();
+                LoadListBoxView();
+                MessageBox.Show("Producto agregado correctamente");
+            }
+            else
+            {
+                MessageBox.Show("Debe llenar todos los campos");
+            }
         }
 
         private void CleanTextBox()

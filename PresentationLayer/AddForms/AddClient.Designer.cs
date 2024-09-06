@@ -347,7 +347,6 @@
             nombreTxt.TabIndex = 1;
             nombreTxt.Texts = "";
             nombreTxt.UnderlinedStyle = true;
-            nombreTxt._TextChanged += customTextBox1__TextChanged;
             // 
             // faxTxt
             // 

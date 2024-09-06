@@ -1,145 +1,303 @@
-<!DOCTYPE html>
-<html lang="en">
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+        <title>Factura</title>
+        <style>
+            @media print {
+                @page {
+                    margin: 0;
+                }
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice V2</title>
+                .roboto-mono body {
+                    font-family: "Roboto Mono", monospace;
+                    font-optical-sizing: auto;
+                    font-weight: 100;
+                    font-style: normal;
+                }
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+                html {
+                    background-color: #FAFAFA;
+                    font-family: "Roboto Mono", monospace;
+                }
 
-    <link rel="stylesheet" type="text/css" href="C:\Users\Erick\source\repos\carlos-project\BusinessLayer\InvoiceManagment\styles.css">
+                body {
+                    margin: 0;
+                    padding: 0;
+                    height: 100vh;
+                    display: flex;
+                    flex-direction: column;
+                    box-sizing: border-box;
+                }
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-</head>
+                .factura {
+                    margin: 0;
+                    padding: 0;
+                    width: 100vw;
+                    height: 100vh;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    page-break-inside: avoid;
+                }
 
-<body>
+                .header, .content, .detalle, .footer {
+                    font-family: "Montserrat", sans-serif;
+                    margin: 0;
+                    flex: none;
+                }
 
-    <section id="invoice">
-        <div class="container my-5 py-5">
+                .detalle {
+                    flex-grow: 1;
+                    overflow: hidden;
+                }
 
-            <div class="text-center pb-5">
-                <img src="images/logo_dark.png" alt="">
-            </div>
+                .pie-pagina {
+                    border-top: 1px solid #ddd;
+                    padding-top: 5px;
+                    font-size: 12px;
+                    text-align: center;
+                    margin-top: auto;
+                    position: relative;
+                }
 
-            <div class="d-md-flex justify-content-between my-5">
-                <div>
-                    <p class="fw-bold text-primary">Facturado A</p>
-                    <h4>Nombre: {{ClientName}}</h4>
-                    <ul class="list-unstyled m-0">
-                        <li>Código: {{ClientCode}}</li>
-                        <li>Dirección: {{ClientAddress}}</li>
-                        <li>Ciuidad: {{ClientCity}}</li>
-                        <li>Teléfono: {{ClientPhone}}</li>
-                        <li>RNC: {{ClientRNC}}</li>
-                    </ul>
+                .totales {
+                    font-size: 12px;
+                }
+            }
+
+            html {
+                background-color: #FAFAFA;
+                font-family: "Roboto Mono", monospace;
+            }
+
+            .montserrat {
+                font-family: "Montserrat", sans-serif;
+                font-optical-sizing: auto;
+                font-weight: 100;
+                font-style: normal;
+            }
+
+            .roboto-mono body {
+                font-family: "Roboto Mono", monospace;
+                font-optical-sizing: auto;
+                font-weight: 100;
+                font-style: normal;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+                height: 100vh;
+                width: 100vw;
+                display: flex;
+                justify-content: center;
+                align-items: stretch;
+                box-sizing: border-box;
+            }
+
+            .factura {
+                margin: 0;
+                padding: 0;
+                width: 100vw;
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                box-sizing: border-box;
+            }
+
+            .header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .logo {
+                max-width: 100px;
+            }
+
+            .header-center {
+                font-family: "Montserrat", sans-serif;
+                text-align: center;
+                flex: 1;
+            }
+
+                .header-center h2 {
+                    font-family: "Montserrat", sans-serif;
+                    margin: 0;
+                    font-size: 20px;
+                }
+
+                .header-center p {
+                    margin: 0;
+                    font-size: 14px;
+                }
+
+            .content {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                padding: 10px 0;
+                gap: 20px;
+            }
+
+            .info-left, .info-right {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start; /* Alinea el contenido al inicio */
+                max-width: 45%; /* Limita el ancho para mantener consistencia */
+                word-wrap: break-word; /* Ajusta automáticamente las palabras largas */
+                word-break: break-all;
+            }
+
+                .info-left p, .info-right p {
+                    margin: 4px 0;
+                    font-size: 14px;
+                }
+
+            .info-right {
+                text-align: right;
+            }
+
+            .detalle {
+                width: 100%;
+                border-collapse: collapse;
+                border: 1px solid #ddd;
+                margin-top: 20px;
+            }
+
+                .detalle th, .detalle td {
+                    border: 1px solid #ddd;
+                    padding: 8px;
+                    text-align: left;
+                    font-size: 14px;
+                }
+
+                .detalle th {
+                    background-color: #f4f4f4;
+                }
+
+            .footer {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .signatures {
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                font-size: 14px;
+            }
+
+                .signatures p {
+                    margin: 0 20px 0 0;
+                    padding: 0;
+                    white-space: nowrap;
+                }
+
+            .totales {
+                text-align: right;
+                padding-right: 10px;
+                font-size: 12px;
+            }
+
+            .pie-pagina {
+                font-family: "Montserrat", sans-serif;
+                border-top: 1px solid #ddd;
+                padding-top: 5px;
+                font-size: 12px;
+                text-align: center;
+                margin-top: auto;
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+            }
+        </style>
+
+    </head>
+    <body>
+        <div class="factura">
+            <header class="header">
+                <div class="header-left">
+                    <img src="logo.png" alt="Logo ABC" class="logo">
                 </div>
-                <div class="mt-5 mt-md-0">
-                    <p class="fw-bold text-primary">Factura para consumo</p>
-                    <h4>Vendedor: {{SellerName}}</h4>
-                    <ul class="list-unstyled m-0">
-                        <li>NCF: {{NCF}}</li>
-                        <br />
-                        <li>Termino: {{Terms}}</li>
-                        <li>Pedido: {{OrderNumber}}</li>
-                    </ul>
+                <div class="header-center">
+                    <h2>DISTRIBUIDORA FARMACEUTICA, ABC, S.R.L</h2>
+                    <p>MEDICAMENTOS ESPECIALIZADOS</p>
+                </div>
+            </header>
+
+            <div class="content">
+                <div class="info-left">
+                    <p><strong>FACTURADO A:</strong> {{ClientName}}</p>
+                    <p><strong>Código:</strong> {{ClientCode}}</p>
+                    <p><strong>Dirección:</strong> {{ClientAddress}}</p>
+                    <p><strong>Ciudad:</strong> {{ClientCity}}</p>
+                    <p><strong>Teléfono:</strong> {{ClientPhone}}</p>
+                    <p><strong>RNC:</strong> {{ClientRNC}}</p>
+                </div>
+
+                <div class="info-right">
+                    <p><strong>Factura para Consumo</strong></p>
+                    <p><strong>Factura No:</strong> {{InvoiceNumber}}</p>
+                    <p><strong>NCF:</strong> {{NCF}}</p>
+                    <p><strong>Fecha:</strong> {{Date}}</p>
+                    <p><strong>Término:</strong> {{Terms}}</p>
+                    <p><strong>Pedido:</strong> {{OrderNumber}}</p>
+                    <p><strong>Vendedor:</strong> {{SellerName}}</p>
                 </div>
             </div>
 
-            <div class=" d-md-flex justify-content-between align-items-center border-top border-bottom border-primary my-5 py-3">
-                <h2 class="display-6 fw-bold m-0">Factura </h2>
-                <div>
-                    <p class="m-0"> <span class="fw-medium">Factura No:</span> {{InoiceNumber}}</p>
-                    <p class="m-0"> <span class="fw-medium">Fecha:</span>{{Date}}</p>
+            <table class="detalle">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Descripción</th>
+                        <th>Lote</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                        <th>Neto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Products -->
+                    <tr>
+                        <td>{{ProductCode}}</td>
+                        <td>{{ProductName}}</td>
+                        <td>{{Lote}}</td>
+                        <td>{{Quantity}}</td>
+                        <td>{{Price}}</td>
+                        <td>{{Neto}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="footer">
+                <div class="signatures">
+                    <p>Recibido por: ____________________________</p>
+                    <p>Entregado por: ___________________________</p>
+                    <p>Firma</p>
                 </div>
 
+                <div class="totales">
+                    <p>Sub-Total: ${{SubTotal}}</p>
+                    <p>ITBIS: 0.00</p>
+                    <p>Neto: ${{Total}}</p>
+                </div>
             </div>
 
-            <div class="py-1">
-                <table class="table table-striped border my-5">
-                    <thead>
-                        <tr>
-                            <th scope="col">Código</th>
-                            <th scope="col">Descripción</th>
-                            <th scope="col">Lote</th>
-                            <th scope="col">Cantidad</th>
-                            <th scope="col">Precio</th>
-                            <th scope="col">Neto</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Products -->
-                        <tr>
-                            <th scope="row">{ProductCode}</th>
-                            <td>{{ProductName}}</td>
-                            <td>{{Lote}}</td>
-                            <td>{{Quantity}}</td>
-                            <td>${{Price}}</td>
-                            <td>{{Neto}}</td>
-                        </tr>
-
-                        <tr>
-                            <th></th>
-                            <td></td>
-                            <td></td>
-                            <td class="">Sub-Total</td>
-                            <td>${{SubTotal}}</td>
-                        </tr>
-                        <tr>
-                            <th></th>
-                            <td></td>
-                            <td></td>
-                            <td class="">ITBIS</td>
-                            <td>$0</td>
-                        </tr>
-                        <tr>
-                            <th></th>
-                            <td></td>
-                            <td></td>
-                            <td class="text-primary fs-5 fw-bold">Neto</td>
-                            <td class="text-primary fs-5 fw-bold">${{Total}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
+            <footer class="pie-pagina">
+                <p>C / Luis Pérez García # 65, Ens. La Agustina, Santo Domingo, R.D. - Tel: 809-540-6133 - Fax: 809-565-0135</p>
+                <p>E-mail: servicio@farmaceuticaabc.com - RNC: 101-59134-1</p>
+            </footer>
         </div>
-
-
-        <div id="footer-bottom">
-            <div class="container border-top border-primary">
-                <div class="row mt-3">
-                    <div class="col-6">
-                        <p class="fw-bold">Recibido por:</p>
-                        <p>___________________________</p>
-                    </div>
-                    <div class="col-6">
-                        <p class="fw-bold">Entregado por:</p>
-                        <p>___________________________</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!--Informacion de la empresa-->
-
-        <div class="d-md-flex justify-content-center my-5">
-
-            <p>Direccion: Telefono: Fax: Email: RNC:</p>
-
-        </div>
-
-    </section>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
-            crossorigin="anonymous"></script>
-    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
-
-</body>
-
-</html>
+    </body>
+    </html>

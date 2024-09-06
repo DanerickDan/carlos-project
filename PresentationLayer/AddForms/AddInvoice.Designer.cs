@@ -33,6 +33,7 @@
             label2 = new Label();
             label3 = new Label();
             panelEjemplo = new Panel();
+            lblClienteId = new Label();
             lblFax = new Label();
             lblEmail = new Label();
             lblRnc = new Label();
@@ -87,7 +88,6 @@
             cbProductNombre = new CustomComponents.MainFormComponents.CustomComboBox();
             txtPrecio = new CustomComponents.MainFormComponents.CustomTextBox();
             txtCantidad = new CustomComponents.MainFormComponents.CustomTextBox();
-            lblClienteId = new Label();
             panelEjemplo.SuspendLayout();
             SuspendLayout();
             // 
@@ -171,10 +171,20 @@
             panelEjemplo.Size = new Size(341, 402);
             panelEjemplo.TabIndex = 1;
             // 
+            // lblClienteId
+            // 
+            lblClienteId.AutoSize = true;
+            lblClienteId.Location = new Point(113, 129);
+            lblClienteId.Name = "lblClienteId";
+            lblClienteId.Size = new Size(44, 15);
+            lblClienteId.TabIndex = 13;
+            lblClienteId.Text = "label26";
+            lblClienteId.Visible = false;
+            // 
             // lblFax
             // 
             lblFax.AutoSize = true;
-            lblFax.Location = new Point(76, 97);
+            lblFax.Location = new Point(132, 97);
             lblFax.Name = "lblFax";
             lblFax.Size = new Size(25, 15);
             lblFax.TabIndex = 11;
@@ -203,7 +213,7 @@
             // label17
             // 
             label17.AutoSize = true;
-            label17.Location = new Point(214, 97);
+            label17.Location = new Point(226, 97);
             label17.Name = "label17";
             label17.Size = new Size(66, 15);
             label17.TabIndex = 8;
@@ -612,7 +622,6 @@
             // cbFacturaPara
             // 
             cbFacturaPara.AutoCompleteMode = AutoCompleteMode.Suggest;
-            cbFacturaPara.AutoCompleteSource = AutoCompleteSource.ListItems;
             cbFacturaPara.BackColor = Color.WhiteSmoke;
             cbFacturaPara.BorderColor = SystemColors.Control;
             cbFacturaPara.BorderSize = 1;
@@ -785,16 +794,6 @@
             txtCantidad.TabIndex = 10;
             txtCantidad.Texts = "";
             txtCantidad.UnderlinedStyle = false;
-            // 
-            // lblClienteId
-            // 
-            lblClienteId.AutoSize = true;
-            lblClienteId.Location = new Point(113, 129);
-            lblClienteId.Name = "lblClienteId";
-            lblClienteId.Size = new Size(44, 15);
-            lblClienteId.TabIndex = 13;
-            lblClienteId.Text = "label26";
-            lblClienteId.Visible = false;
             // 
             // AddInvoice
             // 
