@@ -13,9 +13,11 @@ namespace PresentationLayer.AddForms
 
         public AddClient()
         {
+            InitializeComponent();
             _clientCodeGenerator = new ClientCodeGenerator();
             _clientService = new ClientServices();
-            InitializeComponent();
+            rncTxt.KeyPress += ValidarSoloNumeros;
+            ciudadTxt._TextChanged += ValidarSoloTexto;
         }
 
         private void customTextBox1__TextChanged(object sender, EventArgs e)
@@ -26,6 +28,34 @@ namespace PresentationLayer.AddForms
         private void AddClient_Load(object sender, EventArgs e)
         {
             LoadListBoxView();
+        }
+
+        private void ValidarSoloNumeros(object sender, KeyPressEventArgs e)
+        {
+            // Permite la entrada de teclas numéricas y el retroceso
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
+            {
+                // Si la tecla presionada no es un dígito ni una tecla de retroceso, se bloquea
+                e.Handled = true;
+                // Muestra un mensaje de error si se desea
+                MessageBox.Show("Este campo solo debe contener números.", "Entrada Inválida", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+        private void ValidarSoloTexto(object sender, EventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            if (textBox != null)
+            {
+                // Verifica si el texto contiene solo letras y espacios
+                if (!System.Text.RegularExpressions.Regex.IsMatch(textBox.Text, @"^[a-zA-Z\s]*$"))
+                {
+                    // Muestra un mensaje de error y limpia el texto si no es válido
+                    MessageBox.Show("Este campo solo debe contener texto (letras y espacios).", "Entrada Inválida", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    textBox.Text = string.Empty;
+                }
+            }
         }
 
         private void LoadListBoxView()

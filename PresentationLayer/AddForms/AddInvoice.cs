@@ -37,12 +37,28 @@ namespace PresentationLayer.AddForms
             lblNumFactura.Visible = true;
             lblFecha.Text = DateTime.Now.ToString("dd/MM/yyyy");
             lblPedido.Text = _invoiceCodeGenerator.OrderNumber();
+            txtPrecio.KeyPress += ValidarSoloNumeros;
+            txtCantidad.KeyPress += ValidarSoloNumeros;
             ComboBoxSettings();
         }
 
 
 
         #region Events settings
+
+        // Validations
+
+        private void ValidarSoloNumeros(object sender, KeyPressEventArgs e)
+        {
+            // Permite la entrada de teclas numéricas y el retroceso
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
+            {
+                // Si la tecla presionada no es un dígito ni una tecla de retroceso, se bloquea
+                e.Handled = true;
+                // Muestra un mensaje de error si se desea
+                MessageBox.Show("Este campo solo debe contener números.", "Entrada Inválida", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
         // Evento crear factura
         private void btnCrear_Click(object sender, EventArgs e)
