@@ -112,5 +112,29 @@ namespace BusinessLayer.Services
 
             return list;
         }
+
+        public IEnumerable<ClientDTO> SearchClient(string searchTerms)
+        {
+            var clientDTO = new List<ClientDTO>();
+            var matches = _clientRepository.SearchCLint(searchTerms);
+
+            foreach (var clients in matches)
+            {
+                clientDTO.Add(new ClientDTO
+                {
+                    ClientId = clients.ClientId,
+                    ClientName = clients.ClientName,
+                    Address = clients.Address,
+                    City = clients.City,
+                    PhoneNumber = clients.PhoneNumber,
+                    Fax = clients.Fax,
+                    Rnc = clients.Rnc,
+                    Code = clients.Code,
+                    Email = clients.Email
+
+                });
+            }
+            return clientDTO;
+        }
     }
 }

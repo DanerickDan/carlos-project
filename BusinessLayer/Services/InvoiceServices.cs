@@ -16,9 +16,22 @@ namespace BusinessLayer.Services
 
         public void AddInvoice(InvoiceDTO invoiceDTO)
         {
+            List<InvoiceDetails> details = invoiceDTO.Details.Select(p => new InvoiceDetails
+            {
+                InvoiceId = p.InvoiceId,
+                ProductId = p.ProductId,
+                Lote = p.Lote,
+                Quantity = p.Quantity,
+                Price = p.Price,
+                ProductCode = p.ProductCode,
+                Neto = p.Neto,
+            }).ToList();
+
+
             var invoice = new Invoice
             {
                 InvoiceID = invoiceDTO.InvoiceID,
+                Description = invoiceDTO.Description,
                 Date = invoiceDTO.Date,
                 Number = invoiceDTO.Number,
                 NCF = invoiceDTO.NCF,
@@ -27,6 +40,7 @@ namespace BusinessLayer.Services
                 SellerName = invoiceDTO.SellerName,
                 ClientID = invoiceDTO.ClientID,
                 SubTotal = invoiceDTO.SubTotal,
+                Details = details,
                 Total = invoiceDTO.Total
             };
             _repository.AddInvoice(invoice);

@@ -1,7 +1,4 @@
 using BusinessLayer.Model;
-using DocumentFormat.OpenXml.Drawing.Diagrams;
-using PresentationLayer.AddForms;
-using PresentationLayer.UpdateForms;
 
 namespace PresentationLayer
 {
@@ -17,7 +14,7 @@ namespace PresentationLayer
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             ClientDTO test = new();
-            Application.Run(new AddInvoice());
+            Application.Run(new MainForm());
         }
         
     }

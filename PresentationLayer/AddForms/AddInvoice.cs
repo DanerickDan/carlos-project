@@ -39,6 +39,7 @@ namespace PresentationLayer.AddForms
             lblPedido.Text = _invoiceCodeGenerator.OrderNumber();
             txtPrecio.KeyPress += ValidarSoloNumeros;
             txtCantidad.KeyPress += ValidarSoloNumeros;
+            
             ComboBoxSettings();
         }
 
@@ -70,7 +71,7 @@ namespace PresentationLayer.AddForms
                     Number = Convert.ToInt32(lblNumFactura.Text),
                     Date = Convert.ToDateTime(lblFecha.Text),
                     NCF = lblNcf.Text,
-                    Description = txtDescrip.Text,
+                    Description = txtDescrip.Texts,
                     Terms = lblTerminos.Text,
                     OrderNumber = Convert.ToInt32(lblPedido.Text),
                     SellerName = lblVendedor.Text,
@@ -79,7 +80,7 @@ namespace PresentationLayer.AddForms
                     Total = Convert.ToDouble(lblTotal.Text),
                     SubTotal = Convert.ToDouble(lblSubTotal.Text),
                 };
-                //_invoiceServices.AddInvoice(invoice);
+                _invoiceServices.AddInvoice(invoice);
                 ClientDTO clientDTO = new()
                 {
                     ClientName = lblNombre.Text,
@@ -91,7 +92,7 @@ namespace PresentationLayer.AddForms
                     Rnc = lblRnc.Text,
                     Fax = lblFax.Text
                 };
-                DialogResult result = MessageBox.Show("¿Deseas imprimir la factura?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = MessageBox.Show("¿Deseas crear un pdf de la factura?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
 
@@ -109,6 +110,17 @@ namespace PresentationLayer.AddForms
                 }
                 else if (result == DialogResult.No)
                 {
+                    // Cargar la plantilla HTML y llenar los datos de la factura
+                    string templatePath = Path.Combine(Application.StartupPath, "index.html");
+
+                    string templateHtml = File.ReadAllText(templatePath);
+                    string filledHtml = FillTemplate(templateHtml, invoice, clientDTO);
+
+                    // Generar el PDF
+                    byte[] pdfBytes = pdfService.GeneratePdf(filledHtml);
+
+                    // Imprimir el PDF
+                    printService.Print(pdfBytes, false);
                     MessageBox.Show("Factura agregada correctamente");
                 }
 
@@ -184,8 +196,18 @@ namespace PresentationLayer.AddForms
         // Evento cambio de txt Cantidad
         private void txtCantidad__TextChanged(object sender, EventArgs e)
         {
+            if(txtCantidad.Texts == "")
+            {
+                txtCantidad.Texts = 0.ToString();
+            }
+            else if (txtPrecio.Texts == "")
+            {
+                txtPrecio.Texts = 0.ToString();
+            }
             txtNeto.Texts = (Convert.ToDouble(txtPrecio.Texts) * Convert.ToInt32(txtCantidad.Texts)).ToString();
         }
+
+
 
         // Evento cambio de txt Precio
         private void txtPrecio__TextChanged(object sender, EventArgs e)
@@ -284,14 +306,16 @@ namespace PresentationLayer.AddForms
             string productsHtml = "";
             foreach (var product in invoice.Details)
             {
-                string productHtml = productTemplate.Replace("{{ProductCode}}", product.ProductCode.ToString())
-                                                    .Replace("{{ProductName}}", product.ProductName)
-                                                    .Replace("{{Lote}}", product.Lote.ToString())
-                                                    .Replace("{{Quantity}}", product.Quantity.ToString())
-                                                    .Replace("{{Price}}", product.Price.ToString("F2"))
-                                                    .Replace("{{Neto}}", product.Neto.ToString("F2"));
-                                                    
-                productsHtml += productHtml;
+                if (!string.IsNullOrEmpty(product.ProductCode) && !string.IsNullOrEmpty(product.ProductName))
+                {
+                    string productHtml = productTemplate.Replace("{{ProductCode}}", product.ProductCode.ToString())
+                                                        .Replace("{{ProductName}}", product.ProductName)
+                                                        .Replace("{{Lote}}", product.Lote.ToString())
+                                                        .Replace("{{Quantity}}", product.Quantity.ToString())
+                                                        .Replace("{{Price}}", product.Price.ToString("F2"))
+                                                        .Replace("{{Neto}}", product.Neto.ToString("F2"));
+                    productsHtml += productHtml;
+                }
             }
             template = template.Replace("<!-- Products -->", productsHtml);
 
@@ -383,7 +407,8 @@ namespace PresentationLayer.AddForms
             txtPrecio.Texts = productDTO.Price.ToString();
             txtCantidad.Texts = productDTO.Quantity.ToString();
             txtNeto.Texts = (Convert.ToDouble(txtPrecio.Texts) * Convert.ToInt32(txtCantidad.Texts)).ToString();
-            //txtCantidad._TextChanged += txtCantidad__TextChanged;
+            txtCantidad._TextChanged += txtCantidad__TextChanged;
+            
             //txtPrecio._TextChanged += txtPrecio__TextChanged;
 
         }

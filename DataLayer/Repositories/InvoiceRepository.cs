@@ -3,6 +3,7 @@ using DataLayer.IRepository;
 using DomainLayer.Entities;
 using System.Data.SQLite;
 using System.Globalization;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DataLayer.Repositories
 {
@@ -55,9 +56,9 @@ namespace DataLayer.Repositories
                             {
                                 command.Parameters.AddWithValue("@FacturaID", invoice.InvoiceID);
                                 command.Parameters.AddWithValue("@ProductoID", detail.ProductId);
-                                command.Parameters.AddWithValue("@Lote", detail.Quantity);
-                                command.Parameters.AddWithValue("@Cantidad", detail.Price);
-                                command.Parameters.AddWithValue("@Precio", detail.Lote);
+                                command.Parameters.AddWithValue("@Lote", detail.Lote);
+                                command.Parameters.AddWithValue("@Cantidad", detail.Quantity);
+                                command.Parameters.AddWithValue("@PrecioUnitario", detail.Price);
                                 command.Parameters.AddWithValue("@Codigo", detail.ProductCode);
                                 command.Parameters.AddWithValue("@Neto", detail.Neto);
 
@@ -78,7 +79,6 @@ namespace DataLayer.Repositories
             {
                 throw new SQLiteException(ex.Message);
             }
-
         }
 
 
@@ -224,6 +224,8 @@ namespace DataLayer.Repositories
                             while (reader.Read())
                             {
                                 int invoiceId = reader.GetInt32(reader.GetOrdinal("InvoiceId"));
+                                // DateTime date = DateTime.ParseExact(reader.GetString(reader.GetOrdinal("Fecha")), "dd-MM-yyyy", CultureInfo.InvariantCulture);
+
 
                                 // Check if it's a new invoice or the same one as before
                                 if (currentInvoice == null || currentInvoice.InvoiceID != invoiceId)
@@ -237,14 +239,18 @@ namespace DataLayer.Repositories
                                         OrderNumber = reader.GetInt32(reader.GetOrdinal("NumPedido")),
                                         SellerName = reader.GetString(reader.GetOrdinal("Vendedor")),
                                         Number = reader.GetInt32(reader.GetOrdinal("Number")),
-                                        NCF = reader.GetString(reader.GetOrdinal("NCF")),
-                                        Description = reader.GetString(reader.GetOrdinal("Descripcion")),
+                                        NCF = reader.GetString(reader.GetOrdinal("ncf")),
+                                        Description = reader.IsDBNull(reader.GetOrdinal("Descripcion"))
+                                                    ? string.Empty
+                                                    : reader.GetString(reader.GetOrdinal("Descripcion")),
                                         Total = reader.GetDouble(reader.GetOrdinal("Total")),
                                         SubTotal = reader.GetDouble(reader.GetOrdinal("SubTotal")),
                                         Details = new List<InvoiceDetails>() // Initialize a new Details list for the invoice
                                     };
                                     invoices.Add(currentInvoice); // Add the new invoice to the list
                                 }
+
+                                int Quantity = reader.GetInt32(reader.GetOrdinal("Cantidad"));
 
                                 // Create a new InvoiceDetails object for each detail record
                                 InvoiceDetails detail = new InvoiceDetails

@@ -58,12 +58,14 @@
                 }
 
                 .pie-pagina {
+                    position: fixed; /* Cambiado a fixed */
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
                     border-top: 1px solid #ddd;
                     padding-top: 5px;
                     font-size: 12px;
                     text-align: center;
-                    margin-top: auto;
-                    position: relative;
                 }
 
                 .totales {
@@ -210,14 +212,14 @@
             }
 
             .pie-pagina {
-                font-family: "Montserrat", sans-serif;
+                position: fixed; /* Cambiado a fixed */
+                bottom: 0;
+                left: 0;
+                right: 0;
                 border-top: 1px solid #ddd;
                 padding-top: 5px;
                 font-size: 12px;
                 text-align: center;
-                margin-top: auto;
-                position: absolute;
-                bottom: 0;
                 width: 100%;
             }
         </style>
@@ -269,14 +271,7 @@
                 </thead>
                 <tbody>
                     <!-- Products -->
-                    <tr>
-                        <td>{{ProductCode}}</td>
-                        <td>{{ProductName}}</td>
-                        <td>{{Lote}}</td>
-                        <td>{{Quantity}}</td>
-                        <td>{{Price}}</td>
-                        <td>{{Neto}}</td>
-                    </tr>
+                    
                 </tbody>
             </table>
 
@@ -291,6 +286,7 @@
                     <p>Sub-Total: ${{SubTotal}}</p>
                     <p>ITBIS: 0.00</p>
                     <p>Neto: ${{Total}}</p>
+
                 </div>
             </div>
 

@@ -1,9 +1,4 @@
 ﻿using DomainLayer.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataLayer.IRepository
 {
@@ -15,6 +10,7 @@ namespace DataLayer.IRepository
         List<Client> GetAllCLient();
         Client GetByIdClient(int id);
         IEnumerable<Client> GetAllNameClient();
-        public bool ExistCode(int code, string type);
+        bool ExistCode(int code, string type);
+        IEnumerable<Client> SearchCLint(string searchTerm);
     }
 }

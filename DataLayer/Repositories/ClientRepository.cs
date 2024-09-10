@@ -1,7 +1,6 @@
 ﻿using DataLayer.Connection;
 using DataLayer.IRepository;
 using DomainLayer.Entities;
-using System.Data;
 using System.Data.SQLite;
 
 namespace DataLayer.Repositories
@@ -257,6 +256,53 @@ namespace DataLayer.Repositories
             {
                 throw new SQLiteException($"Error in ExistCode: {ex.Message}", ex);
             }
+        }
+
+        public IEnumerable<Client> SearchCLint(string searchTerm)
+        {
+            List<Client> clientMatches = new List<Client>();
+
+            try
+            {
+                using(var connection = connectionManager.GetConnection())
+                {
+                    connectionManager.OpenConnection(connection);
+                    string query = @"
+                        SELECT * FROM Clientes
+                        WHERE nombre LIKE @searchTerm
+                        OR codigo LIKE @searchTerm
+                        OR RNC LIKE @searchTerm
+                    ";
+                    using(var command = new SQLiteCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@searchTerm", "%" + searchTerm + "%");
+                        using(var reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                clientMatches.Add(new Client()
+                                {
+                                    ClientId = reader.GetInt32(0),
+                                    ClientName = reader.GetString(1),
+                                    Address = reader.GetString(2),
+                                    City = reader.GetString(3),
+                                    PhoneNumber = reader.GetString(4),
+                                    Fax = reader.GetString(5),
+                                    Rnc = reader.GetString(6),
+                                    Code = reader.GetInt32(7),
+                                    Email = reader.GetString(8)
+                                });
+                            }
+                        }
+                        return clientMatches;
+                    }
+                }
+            }
+            catch (SQLiteException ex)
+            {
+                throw new SQLiteException($"Error in ExistCode: {ex.Message}", ex);
+            }
+            
         }
     }
 }

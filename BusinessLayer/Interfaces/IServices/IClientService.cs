@@ -4,11 +4,14 @@ namespace BusinessLayer.Interfaces.IServices
 {
     public interface IClientService
     {
-        public void AddClient(ClientDTO clientDTO);
-        public void UpdateClient(ClientDTO clientDTO);
-        public void DeleteClient(int id);
-        public List<ClientDTO> GetAllCLient();
-        public ClientDTO GetByIdClient(int id);
-        public IEnumerable<ClientDTO> GetAllCLientName();
+        void AddClient(ClientDTO clientDTO);
+        void UpdateClient(ClientDTO clientDTO);
+        void DeleteClient(int id);
+        List<ClientDTO> GetAllCLient();
+        ClientDTO GetByIdClient(int id);
+        IEnumerable<ClientDTO> GetAllCLientName();
+
+        IEnumerable<ClientDTO> SearchClient(string searchTerms);
+
     }
 }

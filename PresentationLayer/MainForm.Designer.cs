@@ -57,7 +57,7 @@
             txtBuscar.BorderStyle = BorderStyle.None;
             txtBuscar.Location = new Point(16, 6);
             txtBuscar.Name = "txtBuscar";
-            txtBuscar.Size = new Size(100, 16);
+            txtBuscar.Size = new Size(100, 20);
             txtBuscar.TabIndex = 0;
             // 
             // panelNav
@@ -70,17 +70,19 @@
             panelNav.Controls.Add(btnClientes);
             panelNav.Dock = DockStyle.Left;
             panelNav.Location = new Point(0, 0);
+            panelNav.Margin = new Padding(3, 4, 3, 4);
             panelNav.Name = "panelNav";
-            panelNav.Size = new Size(112, 639);
+            panelNav.Size = new Size(140, 852);
             panelNav.TabIndex = 5;
             // 
             // panel1
             // 
             panel1.Controls.Add(pictureBox1);
             panel1.Dock = DockStyle.Top;
-            panel1.Location = new Point(3, 3);
+            panel1.Location = new Point(3, 4);
+            panel1.Margin = new Padding(3, 4, 3, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(105, 69);
+            panel1.Size = new Size(120, 92);
             panel1.TabIndex = 0;
             // 
             // pictureBox1
@@ -88,10 +90,10 @@
             pictureBox1.Dock = DockStyle.Fill;
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
             pictureBox1.Location = new Point(0, 0);
-            pictureBox1.Margin = new Padding(3, 10, 3, 3);
+            pictureBox1.Margin = new Padding(3, 13, 3, 4);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Padding = new Padding(0, 10, 0, 0);
-            pictureBox1.Size = new Size(105, 69);
+            pictureBox1.Padding = new Padding(0, 13, 0, 0);
+            pictureBox1.Size = new Size(120, 92);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
@@ -108,10 +110,10 @@
             btnInicio.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnInicio.IconSize = 25;
             btnInicio.ImageAlign = ContentAlignment.MiddleLeft;
-            btnInicio.Location = new Point(0, 115);
-            btnInicio.Margin = new Padding(0, 40, 0, 15);
+            btnInicio.Location = new Point(0, 153);
+            btnInicio.Margin = new Padding(0, 53, 0, 20);
             btnInicio.Name = "btnInicio";
-            btnInicio.Size = new Size(100, 34);
+            btnInicio.Size = new Size(138, 45);
             btnInicio.TabIndex = 1;
             btnInicio.Text = " Inicio";
             btnInicio.TextAlign = ContentAlignment.MiddleRight;
@@ -131,10 +133,10 @@
             btnProdutos.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnProdutos.IconSize = 25;
             btnProdutos.ImageAlign = ContentAlignment.MiddleLeft;
-            btnProdutos.Location = new Point(0, 164);
-            btnProdutos.Margin = new Padding(0, 0, 0, 15);
+            btnProdutos.Location = new Point(0, 218);
+            btnProdutos.Margin = new Padding(0, 0, 0, 20);
             btnProdutos.Name = "btnProdutos";
-            btnProdutos.Size = new Size(113, 34);
+            btnProdutos.Size = new Size(138, 45);
             btnProdutos.TabIndex = 2;
             btnProdutos.Text = "Productos";
             btnProdutos.TextAlign = ContentAlignment.MiddleRight;
@@ -154,11 +156,11 @@
             btnFacturas.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnFacturas.IconSize = 25;
             btnFacturas.ImageAlign = ContentAlignment.MiddleLeft;
-            btnFacturas.Location = new Point(0, 213);
-            btnFacturas.Margin = new Padding(0, 0, 0, 15);
+            btnFacturas.Location = new Point(0, 283);
+            btnFacturas.Margin = new Padding(0, 0, 0, 20);
             btnFacturas.Name = "btnFacturas";
             btnFacturas.Padding = new Padding(2, 0, 0, 0);
-            btnFacturas.Size = new Size(105, 34);
+            btnFacturas.Size = new Size(138, 45);
             btnFacturas.TabIndex = 3;
             btnFacturas.Text = "Facturas";
             btnFacturas.TextAlign = ContentAlignment.MiddleRight;
@@ -178,9 +180,10 @@
             btnClientes.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnClientes.IconSize = 25;
             btnClientes.ImageAlign = ContentAlignment.MiddleLeft;
-            btnClientes.Location = new Point(3, 265);
+            btnClientes.Location = new Point(3, 352);
+            btnClientes.Margin = new Padding(3, 4, 3, 4);
             btnClientes.Name = "btnClientes";
-            btnClientes.Size = new Size(100, 34);
+            btnClientes.Size = new Size(135, 45);
             btnClientes.TabIndex = 4;
             btnClientes.Text = "Clientes";
             btnClientes.TextAlign = ContentAlignment.MiddleRight;
@@ -196,9 +199,10 @@
             CenterPanel.Controls.Add(panel6);
             CenterPanel.Controls.Add(panel4);
             CenterPanel.Controls.Add(panel3);
-            CenterPanel.Location = new Point(128, 0);
+            CenterPanel.Location = new Point(156, 0);
+            CenterPanel.Margin = new Padding(3, 4, 3, 4);
             CenterPanel.Name = "CenterPanel";
-            CenterPanel.Size = new Size(933, 639);
+            CenterPanel.Size = new Size(1056, 852);
             CenterPanel.TabIndex = 14;
             // 
             // panel2
@@ -207,8 +211,9 @@
             panel2.BackColor = Color.White;
             panel2.Controls.Add(label1);
             panel2.Location = new Point(3, 0);
+            panel2.Margin = new Padding(3, 4, 3, 4);
             panel2.Name = "panel2";
-            panel2.Size = new Size(930, 38);
+            panel2.Size = new Size(1053, 51);
             panel2.TabIndex = 2;
             // 
             // label1
@@ -216,9 +221,9 @@
             label1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(789, 3);
+            label1.Location = new Point(892, 4);
             label1.Name = "label1";
-            label1.Size = new Size(129, 32);
+            label1.Size = new Size(162, 41);
             label1.TabIndex = 0;
             label1.Text = "DashBoard";
             // 
@@ -229,10 +234,11 @@
             customDatePicker1.BorderSize = 0;
             customDatePicker1.CalendarForeColor = Color.Black;
             customDatePicker1.Font = new Font("Segoe UI", 9.5F);
-            customDatePicker1.Location = new Point(708, 197);
-            customDatePicker1.MinimumSize = new Size(0, 35);
+            customDatePicker1.Location = new Point(799, 263);
+            customDatePicker1.Margin = new Padding(3, 4, 3, 4);
+            customDatePicker1.MinimumSize = new Size(4, 35);
             customDatePicker1.Name = "customDatePicker1";
-            customDatePicker1.Size = new Size(200, 35);
+            customDatePicker1.Size = new Size(228, 35);
             customDatePicker1.SkinColor = Color.White;
             customDatePicker1.TabIndex = 1;
             customDatePicker1.TextColor = Color.Black;
@@ -241,39 +247,43 @@
             // 
             panel6.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel6.BackColor = Color.Silver;
-            panel6.Location = new Point(21, 270);
+            panel6.Location = new Point(24, 360);
+            panel6.Margin = new Padding(3, 4, 3, 4);
             panel6.Name = "panel6";
-            panel6.Size = new Size(900, 352);
+            panel6.Size = new Size(1019, 469);
             panel6.TabIndex = 0;
             // 
             // panel4
             // 
             panel4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             panel4.BackColor = Color.Silver;
-            panel4.Location = new Point(505, 60);
-            panel4.MaximumSize = new Size(950, 200);
+            panel4.Location = new Point(567, 80);
+            panel4.Margin = new Padding(3, 4, 3, 4);
+            panel4.MaximumSize = new Size(1086, 267);
             panel4.Name = "panel4";
-            panel4.Size = new Size(416, 122);
+            panel4.Size = new Size(475, 163);
             panel4.TabIndex = 0;
             // 
             // panel3
             // 
             panel3.BackColor = Color.Silver;
-            panel3.Location = new Point(21, 60);
-            panel3.MaximumSize = new Size(950, 200);
+            panel3.Location = new Point(24, 80);
+            panel3.Margin = new Padding(3, 4, 3, 4);
+            panel3.MaximumSize = new Size(1086, 267);
             panel3.Name = "panel3";
-            panel3.Size = new Size(420, 122);
+            panel3.Size = new Size(480, 163);
             panel3.TabIndex = 0;
             panel3.Paint += panel3_Paint;
             // 
             // MainForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(215, 217, 221);
-            ClientSize = new Size(1061, 639);
+            ClientSize = new Size(1213, 852);
             Controls.Add(CenterPanel);
             Controls.Add(panelNav);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "DashBoard";

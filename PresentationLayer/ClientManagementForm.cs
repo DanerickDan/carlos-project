@@ -178,11 +178,38 @@ namespace PresentationLayer
             }
         }
 
-#endregion
+        #endregion
 
         private void customButton1_Click(object sender, EventArgs e)
         {
             _createCSV.ExportarDataGridViewAExcel(dataGridView1);
         }
+
+        private void customTextBox1__TextChanged(object sender, EventArgs e)
+        {
+            // Obtén el término de búsqueda del TextBox
+            string searchTerm = txtSearch.Texts.Trim();
+
+            // Filtra los datos en memoria usando LINQ sobre ClientBindingList
+            var filteredClients = ClientBindingList
+                .Where(c => c.ClientName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                            c.Email.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                            c.PhoneNumber.Contains(searchTerm))
+                .ToList();
+
+            // Actualiza el DataGridView con los resultados filtrados
+            UpdateDataGridView(filteredClients);
+
+        }
+
+        private void UpdateDataGridView(List<ClientDTO> filteredClients)
+        {
+            // Asigna los resultados filtrados al DataGridView
+            dataGridView1.DataSource = new BindingList<ClientDTO>(filteredClients);
+
+            // Actualiza los labels de conteo
+            lblFiltrados.Text = filteredClients.Count.ToString();
+        }
+
     }
 }
