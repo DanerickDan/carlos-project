@@ -15,9 +15,10 @@
 
   <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.102.3" />
-    <PackageReference Include="DinkToPdf" Version="1.0.8" />
     <PackageReference Include="FontAwesome.Sharp" Version="6.3.0" />
     <PackageReference Include="MaterialSkin.2" Version="2.3.1" />
+    <PackageReference Include="PdfPig" Version="0.1.8" />
+    <PackageReference Include="PDFsharp" Version="6.1.1" />
   </ItemGroup>
 
   <ItemGroup>

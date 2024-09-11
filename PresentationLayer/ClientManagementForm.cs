@@ -193,7 +193,7 @@ namespace PresentationLayer
             // Filtra los datos en memoria usando LINQ sobre ClientBindingList
             var filteredClients = ClientBindingList
                 .Where(c => c.ClientName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
-                            c.Email.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                            c.Rnc.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
                             c.PhoneNumber.Contains(searchTerm))
                 .ToList();
 

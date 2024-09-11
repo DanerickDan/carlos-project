@@ -258,6 +258,7 @@ namespace DataLayer.Repositories
             }
         }
 
+        // Right now i dont using this method but is here btw
         public IEnumerable<Client> SearchCLint(string searchTerm)
         {
             List<Client> clientMatches = new List<Client>();

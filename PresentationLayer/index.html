@@ -58,14 +58,16 @@
                 }
 
                 .pie-pagina {
-                    position: fixed; /* Cambiado a fixed */
+                    position: relative; /* Cambiado de fixed a relative */
                     bottom: 0;
                     left: 0;
                     right: 0;
                     border-top: 1px solid #ddd;
                     padding-top: 5px;
+                    margin-top: 10px; /* Agregado para separar del contenido anterior */
                     font-size: 12px;
                     text-align: center;
+                    width: 100%;
                 }
 
                 .totales {
@@ -153,9 +155,8 @@
                 flex: 1;
                 display: flex;
                 flex-direction: column;
-                align-items: flex-start; /* Alinea el contenido al inicio */
-                max-width: 45%; /* Limita el ancho para mantener consistencia */
-                word-wrap: break-word; /* Ajusta automáticamente las palabras largas */
+                max-width: 45%;
+                word-wrap: break-word;
                 word-break: break-all;
             }
 
@@ -169,10 +170,7 @@
             }
 
             .detalle {
-                width: 100%;
-                border-collapse: collapse;
-                border: 1px solid #ddd;
-                margin-top: 20px;
+                margin-bottom: 10px; /* Agrega espacio inferior para evitar que toque el footer */
             }
 
                 .detalle th, .detalle td {
@@ -212,12 +210,13 @@
             }
 
             .pie-pagina {
-                position: fixed; /* Cambiado a fixed */
+                position: relative; /* Cambiado de fixed a relative */
                 bottom: 0;
                 left: 0;
                 right: 0;
                 border-top: 1px solid #ddd;
                 padding-top: 5px;
+                margin-top: 10px; /* Agregado para separar del contenido anterior */
                 font-size: 12px;
                 text-align: center;
                 width: 100%;
@@ -232,7 +231,7 @@
                     <img src="logo.png" alt="Logo ABC" class="logo">
                 </div>
                 <div class="header-center">
-                    <h2>DISTRIBUIDORA FARMACEUTICA, ABC, S.R.L</h2>
+                    <h2>CJ RODRIGUEZ PHARMA</h2>
                     <p>MEDICAMENTOS ESPECIALIZADOS</p>
                 </div>
             </header>
@@ -291,7 +290,7 @@
             </div>
 
             <footer class="pie-pagina">
-                <p>C / Luis Pérez García # 65, Ens. La Agustina, Santo Domingo, R.D. - Tel: 809-540-6133 - Fax: 809-565-0135</p>
+                <p>Km 17 aut. Duarte, Calle Palmarejo #2b, Santo Domingo, R.D. - Tel: 809-452-4574 - Fax: 000-000-0000</p>
                 <p>E-mail: servicio@farmaceuticaabc.com - RNC: 101-59134-1</p>
             </footer>
         </div>

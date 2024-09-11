@@ -184,5 +184,32 @@ namespace PresentationLayer
         {
             _createCSV.ExportarDataGridViewAExcel(dataGridView1);
         }
+
+        private void txtSearch__TextChanged(object sender, EventArgs e)
+        {
+            // Obtén el término de búsqueda del TextBox
+            string searchTerm = txtSearch.Texts.Trim();
+
+            // Filtra los datos en memoria usando LINQ sobre ClientBindingList
+            var filteredProducts = ProductBindingList
+                .Where(p => p.ProductName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                            p.ExpirationDate.ToString().Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                            p.Lote.ToString().Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                            p.Description.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                            p.Code.Contains(searchTerm))
+                .ToList();
+
+            // Actualiza el DataGridView con los resultados filtrados
+            UpdateDataGridView(filteredProducts);
+        }
+
+        private void UpdateDataGridView(List<ProductsDTO> filteredProducts)
+        {
+            // Asigna los resultados filtrados al DataGridView
+            dataGridView1.DataSource = new BindingList<ProductsDTO>(filteredProducts);
+
+            // Actualiza los labels de conteo
+            lblFiltrados.Text = filteredProducts.Count.ToString();
+        }
     }
 }

@@ -11,7 +11,7 @@ using PdfSharp.Pdf.IO;
 using PdfSharp.Drawing;
 
 
-namespace PresentationLayer
+namespace PresentationLayer.Print
 {
     public class PrintService : IPrintService
     {
@@ -22,65 +22,14 @@ namespace PresentationLayer
             printRepository = new PrintRepository();
         }
 
-        public void Print(byte[] pdfBytes)
+        public void Print(byte[] pdfBytes, bool download)
         {
             var tempPath = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.pdf");
             File.WriteAllBytes(tempPath, pdfBytes);
 
-            // Descargar el PDF para que el usuario lo vea antes de imprimir
-            SaveFileDialog saveFileDialog = new SaveFileDialog
+            if (download)
             {
-                Filter = "PDF files (*.pdf)|*.pdf",
-                Title = "Guardar PDF",
-                FileName = "Factura.pdf"
-            };
-
-            if (saveFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                File.Copy(tempPath, saveFileDialog.FileName, true);
-
-                // Abrir el PDF para que el usuario lo vea
-                Process.Start(new ProcessStartInfo(saveFileDialog.FileName) { UseShellExecute = true });
-            }
-
-            // Preguntar al usuario si desea proceder con la impresión
-            DialogResult result = MessageBox.Show("¿Desea imprimir el documento?", "Confirmar Impresión", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
-            {
-                using (PdfDocument document = PdfReader.Open(tempPath, PdfDocumentOpenMode.Import))
-                {
-                    using (PrintDocument printDocument = new PrintDocument())
-                    {
-                        printDocument.PrintPage += (sender, e) =>
-                        {
-                            XGraphics gfx = XGraphics.FromPdfPage(document.Pages[0]);
-                            gfx.DrawImage(XImage.FromFile(tempPath), 0, 0);
-                        };
-
-                        using (PrintDialog printDialog = new PrintDialog())
-                        {
-                            printDialog.Document = printDocument;
-
-                            if (printDialog.ShowDialog() == DialogResult.OK)
-                            {
-                                printDocument.Print();
-                            }
-                        }
-                    }
-                }
-            }
-
-            File.Delete(tempPath);
-        }
-
-        public void Print(byte[] pdfBytes, bool descargar)
-        {
-            var tempPath = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.pdf");
-            File.WriteAllBytes(tempPath, pdfBytes);
-
-            if (descargar == true)
-            {
-                // Descargar el PDF para que el usuario lo vea antes de imprimir
+                // Descargar el PDF para que el usuario lo vea
                 SaveFileDialog saveFileDialog = new SaveFileDialog
                 {
                     Filter = "PDF files (*.pdf)|*.pdf",
@@ -91,7 +40,6 @@ namespace PresentationLayer
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     File.Copy(tempPath, saveFileDialog.FileName, true);
-
                     // Abrir el PDF para que el usuario lo vea
                     Process.Start(new ProcessStartInfo(saveFileDialog.FileName) { UseShellExecute = true });
                 }
@@ -101,31 +49,72 @@ namespace PresentationLayer
             DialogResult result = MessageBox.Show("¿Desea imprimir el documento?", "Confirmar Impresión", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                using (PdfDocument document = PdfReader.Open(tempPath, PdfDocumentOpenMode.Import))
-                {
-                    using (PrintDocument printDocument = new PrintDocument())
-                    {
-                        printDocument.PrintPage += (sender, e) =>
-                        {
-                            XGraphics gfx = XGraphics.FromPdfPage(document.Pages[0]);
-                            gfx.DrawImage(XImage.FromFile(tempPath), 0, 0);
-                        };
-
-                        using (PrintDialog printDialog = new PrintDialog())
-                        {
-                            printDialog.Document = printDocument;
-
-                            if (printDialog.ShowDialog() == DialogResult.OK)
-                            {
-                                printDocument.Print();
-                            }
-                        }
-                    }
-                }
+                PrintDocument(tempPath);
             }
 
             File.Delete(tempPath);
         }
+
+        private void PrintDocument(string pdfPath)
+        {
+            // Aquí se puede usar una librería compatible para imprimir el PDF
+            // Por ejemplo, PdfiumViewer o alguna otra librería que funcione con .NET 8.0
+            throw new NotImplementedException("Implementa la impresión del PDF aquí.");
+        }
+
+        //public void Print(byte[] pdfBytes, bool descargar)
+        //{
+        //    var tempPath = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.pdf");
+        //    File.WriteAllBytes(tempPath, pdfBytes);
+
+        //    if (descargar == true)
+        //    {
+        //        // Descargar el PDF para que el usuario lo vea antes de imprimir
+        //        SaveFileDialog saveFileDialog = new SaveFileDialog
+        //        {
+        //            Filter = "PDF files (*.pdf)|*.pdf",
+        //            Title = "Guardar PDF",
+        //            FileName = "Factura.pdf"
+        //        };
+
+        //        if (saveFileDialog.ShowDialog() == DialogResult.OK)
+        //        {
+        //            File.Copy(tempPath, saveFileDialog.FileName, true);
+
+        //            // Abrir el PDF para que el usuario lo vea
+        //            Process.Start(new ProcessStartInfo(saveFileDialog.FileName) { UseShellExecute = true });
+        //        }
+        //    }
+
+        //    // Preguntar al usuario si desea proceder con la impresión
+        //    DialogResult result = MessageBox.Show("¿Desea imprimir el documento?", "Confirmar Impresión", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+        //    if (result == DialogResult.Yes)
+        //    {
+        //        using (PdfDocument document = PdfReader.Open(tempPath, PdfDocumentOpenMode.Import))
+        //        {
+        //            using (PrintDocument printDocument = new PrintDocument())
+        //            {
+        //                printDocument.PrintPage += (sender, e) =>
+        //                {
+        //                    XGraphics gfx = XGraphics.FromPdfPage(document.Pages[0]);
+        //                    gfx.DrawImage(XImage.FromFile(tempPath), 0, 0);
+        //                };
+
+        //                using (PrintDialog printDialog = new PrintDialog())
+        //                {
+        //                    printDialog.Document = printDocument;
+
+        //                    if (printDialog.ShowDialog() == DialogResult.OK)
+        //                    {
+        //                        printDocument.Print();
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //    File.Delete(tempPath);
+        //}
 
 
         public PrintViewDTO GetInvoicePrintById(int id)

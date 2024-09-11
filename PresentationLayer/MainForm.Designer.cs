@@ -218,10 +218,10 @@
             // 
             // label1
             // 
-            label1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label1.Anchor = AnchorStyles.Right;
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(892, 4);
+            label1.Location = new Point(888, 4);
             label1.Name = "label1";
             label1.Size = new Size(162, 41);
             label1.TabIndex = 0;
