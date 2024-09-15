@@ -4,8 +4,10 @@ using BusinessLayer.InvoiceManagment;
 using BusinessLayer.Model;
 using BusinessLayer.Services;
 using BusinessLayer.Utils;
+using DomainLayer.Entities;
 using PresentationLayer.AddForms;
 using PresentationLayer.Features;
+using PresentationLayer.Print;
 using System.ComponentModel;
 
 namespace PresentationLayer
@@ -84,30 +86,33 @@ namespace PresentationLayer
 
 
         // Print Invoice
-        private void btnImprimir_Click(object sender, EventArgs e)
+        private async Task btnImprimir_ClickAsync(object sender, EventArgs e)
         {
-            try
+            // Preguntar si desea crear un PDF de la factura
+            DialogResult result = MessageBox.Show("¿Deseas crear un PDF de la factura?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            // Cargar la plantilla HTML y llenar los datos de la factura y cliente
+            string templatePath = Path.Combine(Application.StartupPath, "InvoiceTemplate/index.html");
+            string templateHtml = File.ReadAllText(templatePath);
+            string filledHtml = FillTemplate(templateHtml, invoice, clientDTO);
+
+            // Inicializar los servicios para PDF y impresión
+            var pdfService = new PdfService();
+            var printService = new PrintService();
+
+            // Generar el PDF con los estilos correctos
+            byte[] pdfBytes = await pdfService.GeneratePdfAsync(filledHtml);
+
+            // Verificar la decisión del usuario sobre la creación del PDF
+            if (result == DialogResult.Yes)
             {
-                DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
-                int id = Convert.ToInt32(selectedRow.Cells[0].Value);
-
-
-                // Cargar la plantilla HTML y llenar los datos de la factura
-                string templatePath = Path.Combine(Application.StartupPath, "index.html");
-
-                string templateHtml = File.ReadAllText(templatePath);
-                var data = printService.GetInvoicePrintById(id);
-                string filledHtml = FillTemplate(templateHtml, data);
-
-                // Generar el PDF
-                byte[] pdfBytes = pdfService.GeneratePdf(filledHtml);
-
-                // Imprimir el PDF
-                printService.Print(pdfBytes);
+                // El usuario desea crear el PDF y se le muestra la opción de guardar e imprimir
+                await printService.PrintAsync(pdfBytes);
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show($"Error al imprimir la factura: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Solo se muestra mensaje de confirmación de adición de factura
+                MessageBox.Show("Factura agregada correctamente");
             }
         }
 

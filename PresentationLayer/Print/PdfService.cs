@@ -1,24 +1,33 @@
-﻿using System;
+﻿using PuppeteerSharp;
+using PuppeteerSharp.Media;
+using System;
 using System.IO;
-using System.Text;
-using UglyToad.PdfPig;
-using UglyToad.PdfPig.Content;
+using System.Threading.Tasks;
 
 namespace BusinessLayer.InvoiceManagment
 {
     public class PdfService
     {
-        public byte[] GeneratePdf(string htmlContent)
+        public async Task<byte[]> GeneratePdfAsync(string htmlContent)
         {
-            // Usa PdfPig para generar el PDF a partir del HTML
-            var pdfBytes = ConvertHtmlToPdf(htmlContent); // Implementa este método según tu necesidad
-            return pdfBytes;
-        }
+            //// Descargar Chromium si es necesario
+            //await new BrowserFetcher().DownloadAsync();
 
-        private byte[] ConvertHtmlToPdf(string htmlContent)
-        {
-            // Implementa aquí la conversión de HTML a PDF usando PdfPig o una librería compatible
-            throw new NotImplementedException("Implementa la conversión de HTML a PDF aquí.");
+            // Iniciar el navegador
+            using var browser = await Puppeteer.LaunchAsync(new LaunchOptions { Headless = true });
+            using var page = await browser.NewPageAsync();
+
+            // Cargar el contenido HTML
+            await page.SetContentAsync(htmlContent);
+
+            // Generar el PDF con los estilos aplicados
+            var pdfBytes = await page.PdfDataAsync(new PdfOptions
+            {
+                Format = PaperFormat.A4,
+                PrintBackground = true // Esto asegura que los estilos CSS se rendericen correctamente
+            });
+
+            return pdfBytes;
         }
     }
 }

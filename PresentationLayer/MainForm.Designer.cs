@@ -44,6 +44,7 @@
             panel6 = new Panel();
             panel4 = new Panel();
             panel3 = new Panel();
+            panel5 = new Panel();
             panelNav.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -62,7 +63,7 @@
             // 
             // panelNav
             // 
-            panelNav.BackColor = Color.White;
+            panelNav.BackColor = Color.FromArgb(255, 247, 237);
             panelNav.Controls.Add(panel1);
             panelNav.Controls.Add(btnInicio);
             panelNav.Controls.Add(btnProdutos);
@@ -208,7 +209,7 @@
             // panel2
             // 
             panel2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            panel2.BackColor = Color.White;
+            panel2.BackColor = Color.FromArgb(255, 247, 237);
             panel2.Controls.Add(label1);
             panel2.Location = new Point(3, 0);
             panel2.Margin = new Padding(3, 4, 3, 4);
@@ -275,12 +276,22 @@
             panel3.TabIndex = 0;
             panel3.Paint += panel3_Paint;
             // 
+            // panel5
+            // 
+            panel5.BackColor = Color.FromArgb(255, 247, 237);
+            panel5.Location = new Point(140, 0);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(19, 51);
+            panel5.TabIndex = 15;
+            panel5.Paint += panel5_Paint;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(215, 217, 221);
             ClientSize = new Size(1213, 852);
+            Controls.Add(panel5);
             Controls.Add(CenterPanel);
             Controls.Add(panelNav);
             Margin = new Padding(3, 4, 3, 4);
@@ -314,5 +325,6 @@
         private CustomComponents.MainFormComponents.CustomDatePicker customDatePicker1;
         private Panel panel2;
         private Label label1;
+        private Panel panel5;
     }
 }

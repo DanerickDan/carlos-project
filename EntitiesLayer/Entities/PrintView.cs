@@ -1,6 +1,6 @@
 ﻿namespace DomainLayer.Entities
 {
-    public class PrintView
+    public class PrintView 
     {
         public int FacturaId { get; set; }
         public int ProductoId { get; set; }

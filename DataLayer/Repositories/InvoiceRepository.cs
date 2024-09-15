@@ -77,7 +77,7 @@ namespace DataLayer.Repositories
             }
             catch (SQLiteException ex)
             {
-                throw new SQLiteException(ex.Message);
+                throw new SQLiteException($"Error in AddInvoice: {ex.Message} at {ex.StackTrace}", ex);
             }
         }
 

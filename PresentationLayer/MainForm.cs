@@ -32,7 +32,7 @@
 
         private void btnInicio_Click(object sender, EventArgs e)
         {
-            if(ActiveForm != null)
+            if (ActiveForm != null)
             {
                 ActiveForm.Close();
             }
@@ -72,6 +72,11 @@
         }
 
         private void panel3_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panel5_Paint(object sender, PaintEventArgs e)
         {
 
         }

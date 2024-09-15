@@ -4,6 +4,7 @@ using BusinessLayer.InvoiceManagment;
 using BusinessLayer.Model;
 using BusinessLayer.Services;
 using BusinessLayer.Utils;
+using PresentationLayer.Print;
 
 namespace PresentationLayer.AddForms
 {
@@ -62,10 +63,12 @@ namespace PresentationLayer.AddForms
         }
 
         // Evento crear factura
-        private void btnCrear_Click(object sender, EventArgs e)
+        private async void btnCrear_Click(object sender, EventArgs e)
         {
-            if(invoiceFrom == true && invoiceTo == true && productSelected == true && termSelected == true)
+            // Verificar que los campos necesarios estén seleccionados
+            if (invoiceFrom && invoiceTo && productSelected && termSelected)
             {
+                // Crear la factura con los datos ingresados
                 InvoiceDTO invoice = new()
                 {
                     Number = Convert.ToInt32(lblNumFactura.Text),
@@ -80,7 +83,11 @@ namespace PresentationLayer.AddForms
                     Total = Convert.ToDouble(lblTotal.Text),
                     SubTotal = Convert.ToDouble(lblSubTotal.Text),
                 };
-                _invoiceServices.AddInvoice(invoice);
+
+                // Agregar la factura a los servicios de la base de datos
+                //_invoiceServices.AddInvoice(invoice);
+
+                // Crear el cliente con los datos ingresados
                 ClientDTO clientDTO = new()
                 {
                     ClientName = lblNombre.Text,
@@ -92,57 +99,59 @@ namespace PresentationLayer.AddForms
                     Rnc = lblRnc.Text,
                     Fax = lblFax.Text
                 };
-                DialogResult result = MessageBox.Show("¿Deseas crear un pdf de la factura?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                // Preguntar si desea crear un PDF de la factura
+                DialogResult result = MessageBox.Show("¿Deseas crear un PDF de la factura?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                // Cargar la plantilla HTML y llenar los datos de la factura y cliente
+                string templatePath = Path.Combine(Application.StartupPath, "InvoiceTemplate/index.html");
+                string templateHtml = File.ReadAllText(templatePath);
+                string filledHtml = FillTemplate(templateHtml, invoice, clientDTO);
+
+                // Inicializar los servicios para PDF y impresión
+                var pdfService = new PdfService();
+                var printService = new PrintService();
+
+                // Generar el PDF con los estilos correctos
+                byte[] pdfBytes = await pdfService.GeneratePdfAsync(filledHtml);
+
+                // Verificar la decisión del usuario sobre la creación del PDF
                 if (result == DialogResult.Yes)
                 {
-
-                    // Cargar la plantilla HTML y llenar los datos de la factura
-                    string templatePath = Path.Combine(Application.StartupPath, "index.html");
-
-                    string templateHtml = File.ReadAllText(templatePath);
-                    string filledHtml = FillTemplate(templateHtml, invoice, clientDTO);
-
-                    // Generar el PDF
-                    byte[] pdfBytes = pdfService.GeneratePdf(filledHtml);
-
-                    // Imprimir el PDF
-                    printService.Print(pdfBytes);
+                    // El usuario desea crear el PDF y se le muestra la opción de guardar e imprimir
+                    await printService.PrintAsync(pdfBytes);
                 }
-                else if (result == DialogResult.No)
+                else
                 {
-                    // Cargar la plantilla HTML y llenar los datos de la factura
-                    string templatePath = Path.Combine(Application.StartupPath, "index.html");
-
-                    string templateHtml = File.ReadAllText(templatePath);
-                    string filledHtml = FillTemplate(templateHtml, invoice, clientDTO);
-
-                    // Generar el PDF
-                    byte[] pdfBytes = pdfService.GeneratePdf(filledHtml);
-
-                    // Imprimir el PDF
-                    printService.Print(pdfBytes, false);
+                    // Solo se muestra mensaje de confirmación de adición de factura
                     MessageBox.Show("Factura agregada correctamente");
                 }
 
+                // Cerrar el formulario
                 Close();
             }
-            else if(invoiceFrom == false)
+            else
             {
-                MessageBox.Show("Debe seleccionar el remitente");
-            }
-            else if(invoiceTo == false)
-            {
-                MessageBox.Show("Debe seleccionar el destinatario");
-            }
-            else if (productSelected == false)
-            {
-                MessageBox.Show("No ha agregado ningun producto");
-            }
-            else if(termSelected == false)
-            {
-                MessageBox.Show("No ha seleccionado el termino");
+                // Validaciones en caso de que no se hayan seleccionado los campos necesarios
+                if (!invoiceFrom)
+                {
+                    MessageBox.Show("Debe seleccionar el remitente");
+                }
+                else if (!invoiceTo)
+                {
+                    MessageBox.Show("Debe seleccionar el destinatario");
+                }
+                else if (!productSelected)
+                {
+                    MessageBox.Show("No ha agregado ningún producto");
+                }
+                else if (!termSelected)
+                {
+                    MessageBox.Show("No ha seleccionado el término");
+                }
             }
         }
+
 
         // Evento agregar Producto
         private void btnAgregarProd_Click(object sender, EventArgs e)
@@ -296,13 +305,14 @@ namespace PresentationLayer.AddForms
             // Reemplazar los productos
             string productTemplate = @"
                 <tr>
-                    <td>{{ProductCode}}</td>
-                    <td>{{ProductName}}</td>
-                    <td>{{Lote}}</td>
-                    <td>{{Quantity}}</td>
-                    <td>${{Price}}</td>
-                    <td>{{Neto}}</td>
+                <td class=""border-b py-3 pl-3"">{{ProductCode}}</td>
+                <td class=""border-b py-3 pl-2"">{{ProductName}}</td>
+                <td class=""border-b py-3 pl-2 text-right"">{{Lote}}</td>
+                <td class=""border-b py-3 pl-2 text-center"">{{Quantity}}</td>
+                <td class=""border-b py-3 pl-2 text-center"">${{Price}}</td>
+                <td class=""border-b py-3 pl-2 text-right"">{{Neto}}</td
                 </tr>";
+
             string productsHtml = "";
             foreach (var product in invoice.Details)
             {
@@ -317,7 +327,7 @@ namespace PresentationLayer.AddForms
                     productsHtml += productHtml;
                 }
             }
-            template = template.Replace("<!-- Products -->", productsHtml);
+            template = template.Replace("<!-- Productos -->", productsHtml);
 
             template = template.Replace("{{SubTotal}}", invoice.SubTotal.ToString("F2"))
                                .Replace("{{Total}}", invoice.Total.ToString("F2"));

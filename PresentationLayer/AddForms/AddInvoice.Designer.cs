@@ -594,7 +594,7 @@
             cbFacturaDe.MinimumSize = new Size(171, 40);
             cbFacturaDe.Name = "cbFacturaDe";
             cbFacturaDe.Padding = new Padding(1);
-            cbFacturaDe.Size = new Size(194, 40);
+            cbFacturaDe.Size = new Size(203, 40);
             cbFacturaDe.TabIndex = 2;
             cbFacturaDe.Texts = "";
             cbFacturaDe.OnSelectedIndexChanged += cbFacturaDe_OnSelectedIndexChanged;
