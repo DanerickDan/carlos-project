@@ -1,4 +1,5 @@
-﻿using BusinessLayer.Model;
+﻿using BusinessLayer.DTOs;
+using BusinessLayer.Model;
 
 namespace BusinessLayer.Interfaces.IServices
 {
@@ -9,5 +10,6 @@ namespace BusinessLayer.Interfaces.IServices
         public void DeleteInvoice(int id);
         public List<InvoiceDTO> GetAllInvoices();
         public InvoiceDTO GetInvoiceById(int id);
+        List<InvoiceGridViewDTO> GetInvoicesGrid();
     }
 }

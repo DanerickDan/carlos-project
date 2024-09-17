@@ -3,6 +3,7 @@ using DataLayer.IRepository;
 using DomainLayer.Entities;
 using System.Data.SQLite;
 using System.Globalization;
+using System.Security;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DataLayer.Repositories
@@ -24,8 +25,8 @@ namespace DataLayer.Repositories
                 var connectionT = new SQLiteConnection(connectionManager.GetConnection());
                 connectionT.Open();
                 string query =
-                        "INSERT INTO Facturas (fecha, terminos, cliente_id, num_pedido, vendedor, NCF, numero, descripcion,sub_total,total) " +
-                        "VALUES (@Fecha, @Terminos, @ClienteId, @NumPedido, @Vendedor, @NCF,@NumeroFactura,@Descripcion,@SubTotal,@Total); " +
+                        "INSERT INTO Facturas (fecha, terminos, cliente_id, num_pedido, vendedor, NCF, numero, descripcion,sub_total,total, activo) " +
+                        "VALUES (@Fecha, @Terminos, @ClienteId, @NumPedido, @Vendedor, @NCF,@NumeroFactura,@Descripcion,@SubTotal,@Total, @Activo); " +
                         "SELECT last_insert_rowid();";
                 using (var transaction = connectionT.BeginTransaction())
                 {
@@ -43,6 +44,7 @@ namespace DataLayer.Repositories
                             command.Parameters.AddWithValue("@Descripcion", invoice.Description);
                             command.Parameters.AddWithValue("@Total", invoice.Total);
                             command.Parameters.AddWithValue("@SubTotal", invoice.SubTotal);
+                            command.Parameters.AddWithValue("@Activo", 1);
 
                             invoice.InvoiceID = Convert.ToInt32(command.ExecuteScalar());
                         }
@@ -280,6 +282,49 @@ namespace DataLayer.Repositories
             }
         }
 
+        public IEnumerable<InvoiceGridView> GetInvoicesGrid()
+        {
+            List<InvoiceGridView> invoices = new();
+            try
+            {
+                connectionManager.GetConnection();
+                using (var connection = connectionManager.GetConnection())
+                {
+                    connection.Open();
+                    string query = "SELECT * FROM VerFacturas";
+                    using(var command = new SQLiteCommand(query,connection))
+                    {
+                        using (var reader = command.ExecuteReader())
+                        {
+
+                            while(reader.Read())
+                            {
+                                InvoiceGridView invoice = new()
+                                {
+                                    InvoiceId = reader.GetInt32(0),
+                                    ClientId = reader.GetInt32(1),
+                                    DetailId = reader.GetInt32(2),
+                                    InvoiceNumber = reader.GetInt32(3),
+                                    ClientName = reader.GetString(4),
+                                    Date = DateTime.ParseExact(reader.GetString(reader.GetOrdinal("Fecha")), "dd-MM-yyyy", CultureInfo.InvariantCulture),
+                                    SellerName = reader.GetString(6),
+                                    Terms = reader.GetString(7),
+                                    Description = reader.GetString(8),
+                                    OrderNumber = reader.GetInt32(9),
+                                    Total = reader.GetDouble(10),
+                                };
+                                invoices.Add(invoice);
+                            }
+                        }
+                        return invoices;
+                    }
+                }
+            }
+            catch (SQLiteException ex)
+            {
+                throw new SQLiteException($"Exception in GeInvoicesGrid {ex.Message} {ex.StackTrace}");
+            }
+        }
 
         public Invoice GetInvoiceById(int id)
         {
@@ -360,12 +405,12 @@ namespace DataLayer.Repositories
                 {
                     connectionManager.OpenConnection(connection);
                     string query = "SELECT COUNT(1) FROM Facturas WHERE @Tipo = @Codigo";
-                    using (var command = new SQLiteCommand(query,connection))
+                    using (var command = new SQLiteCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@Tipo", type);
                         command.Parameters.AddWithValue("@Codigo", code);
                         var count = Convert.ToInt32(command.ExecuteScalar());
-                        if(count != 0)
+                        if (count != 0)
                         {
                             return true;
                         }

@@ -15,7 +15,7 @@ namespace BusinessLayer.Services
         public List<InvoiceDetailsDTO> GetAllInvoiceDetail()
         {
             var invoiceDetailsDTO = new List<InvoiceDetailsDTO>();
-            var invoiceDetails = _repository.GetAllInvoiceDetail();
+            var invoiceDetails = _repository.GetAllInvoiceDetail(1);
 
             foreach (var item in invoiceDetails)
             {
@@ -36,22 +36,5 @@ namespace BusinessLayer.Services
 
         }
 
-        public InvoiceDetailsDTO GetInvoiceDetailById(int id)
-        {
-            var invoiceDetails = _repository.GetInvoiceDetailById(id);
-
-            var invoiceDetailsDTO = new InvoiceDetailsDTO
-            {
-                InvoiceDetailsId = invoiceDetails.InvoiceDetailsId,
-                InvoiceId = invoiceDetails.InvoiceId,
-                ProductId = invoiceDetails.ProductId,
-                Lote = invoiceDetails.Lote,
-                Quantity = invoiceDetails.Quantity,
-                ProductCode = invoiceDetails.ProductCode,
-                Price = invoiceDetails.Price,
-                Neto = invoiceDetails.Neto,
-            };
-            return invoiceDetailsDTO;
-        }
     }
 }

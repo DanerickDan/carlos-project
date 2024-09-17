@@ -15,10 +15,10 @@ namespace PresentationLayer
     public partial class InvoiceForm : Form
     {
         private readonly IInvoiceServices invoiceServices;
-        private readonly Mapping mapping;
-        private BindingList<InvoiceViewDTO> InvoiceBindingList;
-        private readonly PdfService pdfService;
         private readonly PrintService printService;
+        private readonly Mapping mapping;
+        private BindingList<InvoiceGridViewDTO> InvoiceBindingList;
+        private readonly PdfService pdfService;
         private readonly CreateCSV _createCSV;
 
         public InvoiceForm()
@@ -86,33 +86,55 @@ namespace PresentationLayer
 
 
         // Print Invoice
-        private async Task btnImprimir_ClickAsync(object sender, EventArgs e)
+        private async void btnImprimir_ClickAsync(object sender, EventArgs e)
         {
-            // Preguntar si desea crear un PDF de la factura
-            DialogResult result = MessageBox.Show("¿Deseas crear un PDF de la factura?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            // Cargar la plantilla HTML y llenar los datos de la factura y cliente
-            string templatePath = Path.Combine(Application.StartupPath, "InvoiceTemplate/index.html");
-            string templateHtml = File.ReadAllText(templatePath);
-            string filledHtml = FillTemplate(templateHtml, invoice, clientDTO);
-
-            // Inicializar los servicios para PDF y impresión
-            var pdfService = new PdfService();
-            var printService = new PrintService();
-
-            // Generar el PDF con los estilos correctos
-            byte[] pdfBytes = await pdfService.GeneratePdfAsync(filledHtml);
-
-            // Verificar la decisión del usuario sobre la creación del PDF
-            if (result == DialogResult.Yes)
+            if (dataGridView1.SelectedRows.Count > 0)
             {
-                // El usuario desea crear el PDF y se le muestra la opción de guardar e imprimir
-                await printService.PrintAsync(pdfBytes);
+                int rowIndex = dataGridView1.SelectedRows[0].Index;
+                int inoviceId = (int)dataGridView1.SelectedRows[0].Cells["InvoiceId"].Value; // Ajusta "" según tu columna
+
+                // Preguntar si desea crear un PDF de la factura
+                DialogResult result = MessageBox.Show("¿Deseas crear un PDF de la factura?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                // Cargar la plantilla HTML y llenar los datos de la factura y cliente
+
+                var invoice = printService.GetInvoicePrintById(inoviceId);
+                ClientDTO clientDTO = new()
+                {
+                    ClientId = invoice.ClientId,
+                    ClientName = invoice.ClientName,
+                    Address = invoice.ClientAddress,
+                    City = invoice.ClientCity,
+                    Email = invoice.ClientEmail,
+                    PhoneNumber = invoice.ClientPhone,
+                    Rnc = invoice.ClientRNC,
+                    Code = invoice.ClientCode,
+
+                };
+
+                string templatePath = Path.Combine(Application.StartupPath, "InvoiceTemplate/index.html");
+                string templateHtml = File.ReadAllText(templatePath);
+                string filledHtml = FillTemplate(templateHtml, invoice);
+
+                // Inicializar los servicios para PDF y impresión
+
+                // Generar el PDF con los estilos correctos
+                byte[] pdfBytes = await pdfService.GeneratePdfAsync(filledHtml);
+
+
+                // Verificar la decisión del usuario sobre la creación del PDF
+                if (result == DialogResult.Yes)
+                {
+                    // El usuario desea crear el PDF y se le muestra la opción de guardar e imprimir
+                    await printService.PrintAsync(pdfBytes, true);
+                }
+                else
+                {
+                    await printService.PrintAsync(pdfBytes, false);
+                }
             }
             else
             {
-                // Solo se muestra mensaje de confirmación de adición de factura
-                MessageBox.Show("Factura agregada correctamente");
+                MessageBox.Show("Debe seleccionar una factura");
             }
         }
 
@@ -120,43 +142,43 @@ namespace PresentationLayer
         {
 
             // Reemplazar los marcadores de posición en la plantilla con los datos de la factura
-            template = template.Replace("{{ClientName}}", data.NombreCliente)
-                               .Replace("{{ClientCode}}", data.CodigoCliente.ToString())
-                               .Replace("{{ClientAddress}}", data.ClienteDireccion.ToString())
-                               .Replace("{{ClientCity}}", data.ClienteCiudad.ToString())
-                               .Replace("{{ClientPhone}}", data.ClienteTelefono.ToString())
-                               .Replace("{{ClientRNC}}", data.ClienteRNC.ToString())
-                               .Replace("{{SellerName}}", data.Vendedor)
+            template = template.Replace("{{ClientName}}", data.ClientName)
+                               .Replace("{{ClientCode}}", data.ClientCode.ToString())
+                               .Replace("{{ClientAddress}}", data.ClientAddress.ToString())
+                               .Replace("{{ClientCity}}", data.ClientCity.ToString())
+                               .Replace("{{ClientPhone}}", data.ClientPhone.ToString())
+                               .Replace("{{ClientRNC}}", data.ClientRNC.ToString())
+                               .Replace("{{SellerName}}", data.SellerName)
                                .Replace("{{NCF}}", data.NCF)
-                               .Replace("{{Terms}}", data.Terminos)
-                               .Replace("{{OrderNumber}}", data.NumeroPedido.ToString())
-                               .Replace("{{InvoiceNumber}}", data.NumeroFactura.ToString())
-                               .Replace("{{Date}}", data.Fecha.ToString("dd/MM/yyyy"))
+                               .Replace("{{Terms}}", data.InvoiceTerms)
+                               .Replace("{{OrderNumber}}", data.OrderNumber.ToString())
+                               .Replace("{{InvoiceNumber}}", data.InvoiceNumber.ToString())
+                               .Replace("{{Date}}", data.Date.ToString("dd/MM/yyyy"))
                                .Replace("{{SubTotal}}", data.SubTotal.ToString("F2"))
                                .Replace("{{Total}}", data.Total.ToString("F2"));
 
             // Reemplazar los productos
             string productTemplate = @"
             <tr>
-                <th scope=""row"">{{ProductCode}}</th>
-                <td>{{ProductName}}</td>
-                <td>{{Lote}}</td>
-                <td>{{Quantity}}</td>
-                <td>${{Price}}</td>
-                <td>{{Neto}}</td>
-            </tr>";
+                <td class=""border-b py-3 pl-3"">{{ProductCode}}</td>
+                <td class=""border-b py-3 pl-2 text-center"">{{ProductName}}</td>
+                <td class=""border-b py-3 pl-2 text-center"">{{Lote}}</td>
+                <td class=""border-b py-3 pl-2 text-center"">{{Quantity}}</td>
+                <td class=""border-b py-3 pl-2 text-center"">${{Price}}</td>
+                <td class=""border-b py-3 pl-2 text-right"">${{Neto}}</td
+                </tr>";
             string productsHtml = "";
             foreach (var product in data.products)
             {
-                string productHtml = productTemplate.Replace("{{ProductCode}}", data.CodigoProducto.ToString())
-                                                    .Replace("{{ProductName}}", data.NombreProducto.ToString())
-                                                    .Replace("{{Lote}}", data.LoteProducto.ToString())
-                                                    .Replace("{{Quantity}}", data.Cantidad.ToString())
-                                                    .Replace("{{Price}}", data.PrecioUnitario.ToString("F2"))
-                                                    .Replace("{{Neto}}", data.Neto.ToString("F2"));
+                string productHtml = productTemplate.Replace("{{ProductCode}}", product.Code.ToString())
+                                                    .Replace("{{ProductName}}", product.ProductName.ToString())
+                                                    .Replace("{{Lote}}", product.Lote.ToString())
+                                                    .Replace("{{Quantity}}", product.Quantity.ToString())
+                                                    .Replace("{{Price}}", product.Price.ToString("F2"))
+                                                    .Replace("{{Neto}}", product.ProductNeto.ToString("F2"));
                 productsHtml += productHtml;
             }
-            template = template.Replace("<!-- Products -->", productsHtml);
+            template = template.Replace("<!-- Productos -->", productsHtml);
 
             return template;
 
@@ -165,8 +187,8 @@ namespace PresentationLayer
         // Get all invoices
         private void GetAllInvoice()
         {
-            var invoice = mapping.GetInvoiceView();
-            InvoiceBindingList = new BindingList<InvoiceViewDTO>(invoice);
+            var invoice = invoiceServices.GetInvoicesGrid();
+            InvoiceBindingList = new BindingList<InvoiceGridViewDTO>(invoice);
             dataGridView1.DataSource = InvoiceBindingList;
             lblTotalRegistros.Text = invoice.Count.ToString();
             lblFiltrados.Text = invoice.Count.ToString();
@@ -247,7 +269,8 @@ namespace PresentationLayer
             var filteredInvoice = InvoiceBindingList
                 .Where(i => i.Terms.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
                             i.SellerName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
-                            i.Number.ToString().Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                            i.ClientName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                            i.InvoiceNumber.ToString().Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
                             i.Date.ToString().Contains(searchTerm))
                 .ToList();
 
@@ -255,10 +278,10 @@ namespace PresentationLayer
             UpdateDataGridView(filteredInvoice);
         }
 
-        private void UpdateDataGridView(List<InvoiceViewDTO> filteredInvoice)
+        private void UpdateDataGridView(List<InvoiceGridViewDTO> filteredInvoice)
         {
             // Asigna los resultados filtrados al DataGridView
-            dataGridView1.DataSource = new BindingList<InvoiceViewDTO>(filteredInvoice);
+            dataGridView1.DataSource = new BindingList<InvoiceGridViewDTO>(filteredInvoice);
 
             // Actualiza los labels de conteo
             lblFiltrados.Text = filteredInvoice.Count.ToString();

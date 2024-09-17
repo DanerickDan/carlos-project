@@ -85,7 +85,7 @@ namespace PresentationLayer.AddForms
                 };
 
                 // Agregar la factura a los servicios de la base de datos
-                //_invoiceServices.AddInvoice(invoice);
+                _invoiceServices.AddInvoice(invoice);
 
                 // Crear el cliente con los datos ingresados
                 ClientDTO clientDTO = new()
@@ -119,10 +119,11 @@ namespace PresentationLayer.AddForms
                 if (result == DialogResult.Yes)
                 {
                     // El usuario desea crear el PDF y se le muestra la opción de guardar e imprimir
-                    await printService.PrintAsync(pdfBytes);
+                    await printService.PrintAsync(pdfBytes, true);
                 }
                 else
                 {
+                    await printService.PrintAsync(pdfBytes, false);
                     // Solo se muestra mensaje de confirmación de adición de factura
                     MessageBox.Show("Factura agregada correctamente");
                 }

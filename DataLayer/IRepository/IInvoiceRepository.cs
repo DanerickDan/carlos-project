@@ -10,5 +10,6 @@ namespace DataLayer.IRepository
         List<Invoice> GetAllInvoices();
         Invoice GetInvoiceById(int id);
         bool ExistCode(int code, string type);
+        IEnumerable<InvoiceGridView> GetInvoicesGrid();
     }
 }

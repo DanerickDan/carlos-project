@@ -4,12 +4,12 @@ using DomainLayer.Entities;
 using System.Data.SQLite;
 using System.Data.SqlTypes;
 
-namespace DataLayer.Repositories 
+namespace DataLayer.Repositories
 {
     public class DetailInvoiceRepository : IDetailInvoiceRepository
     {
         private readonly ConnectionManager connectionManager;
-        public DetailInvoiceRepository() 
+        public DetailInvoiceRepository()
         {
             connectionManager = new();
         }
@@ -39,51 +39,15 @@ namespace DataLayer.Repositories
 
 
 
-        public List<InvoiceDetails> GetAllInvoiceDetail()
+        public List<InvoiceDetails> GetAllInvoiceDetail(int id)
         {
-            var details = new List<InvoiceDetails>();
-            try
-            {
-                using(var connection = connectionManager.GetConnection())
-                {
-                    connectionManager.OpenConnection(connection);
-                    string query = "SELECT * FROM Detalle_Factura;";
-                    using(var command = new SQLiteCommand(query, connection))
-                    {
-                        using (var reader = command.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                details.Add(new InvoiceDetails
-                                {
-                                    InvoiceDetailsId = reader.GetInt32(reader.GetOrdinal("DetalleId")),
-                                    InvoiceId = reader.GetInt32(reader.GetOrdinal("FacturaId")),
-                                    ProductId = reader.GetInt32(reader.GetOrdinal("ProductoId")),
-                                    Quantity = reader.GetInt32(reader.GetOrdinal("Cantiadad")),
-                                    Price = reader.GetDouble(reader.GetOrdinal("Precio")),
-                                    Lote = reader.GetInt32(reader.GetOrdinal("Lote")),
-                                    Neto = reader.GetDouble(reader.GetOrdinal("Neto"))
-                                });
-                            }
-                        }
-                        return details;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
-        public InvoiceDetails GetInvoiceDetailById(int id)
-        {
+            List<InvoiceDetails> detailsList = new List<InvoiceDetails>();
             try
             {
                 using (var connection = connectionManager.GetConnection())
                 {
                     connectionManager.OpenConnection(connection);
-                    string query = "SELECT * FROM Detalle_Factura WHEREN detalle_id = @Id;";
+                    string query = "SELECT * FROM DetalleFactura WHERE factura_id = @Id;";
                     using (var command = new SQLiteCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@Id", id);
@@ -91,21 +55,21 @@ namespace DataLayer.Repositories
                         {
                             while (reader.Read())
                             {
-                                return new InvoiceDetails
+                                InvoiceDetails details = new InvoiceDetails
                                 {
-                                    InvoiceDetailsId = reader.GetInt32(reader.GetOrdinal("DetalleId")),
-                                    InvoiceId = reader.GetInt32(reader.GetOrdinal("FacturaId")),
-                                    ProductId = reader.GetInt32(reader.GetOrdinal("ProductoId")),
-                                    Quantity = reader.GetInt32(reader.GetOrdinal("Cantiadad")),
-                                    Price = reader.GetDouble(reader.GetOrdinal("Precio")),
-                                    Lote = reader.GetInt32(reader.GetOrdinal("Lote")),
-                                    ProductCode = reader.GetString(reader.GetOrdinal("Codigo")),
-                                    Neto = reader.GetDouble(reader.GetOrdinal("Neto"))
+                                    InvoiceId = reader.GetInt32(0),
+                                    Quantity = reader.GetInt32(1),
+                                    Price = reader.GetDouble(2),
+                                    Lote = reader.GetInt32(3),
+                                    ProductCode = reader.GetString(4),
+                                    Neto = reader.GetDouble(5),
+                                    ProductName = reader.GetString(6)
                                 };
+                                detailsList.Add(details);
                             }
                         }
+                        return detailsList;
                     }
-                    return null;
                 }
             }
             catch (Exception ex)

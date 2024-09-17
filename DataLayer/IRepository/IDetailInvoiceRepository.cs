@@ -4,8 +4,7 @@ namespace DataLayer.IRepository
 {
     public interface IDetailInvoiceRepository
     {
-        List<InvoiceDetails> GetAllInvoiceDetail();
-        InvoiceDetails GetInvoiceDetailById(int id);
+        List<InvoiceDetails> GetAllInvoiceDetail(int id);
         void DeleteInvoice(int id);
     }
 }

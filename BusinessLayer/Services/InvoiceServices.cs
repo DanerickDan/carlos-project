@@ -1,8 +1,11 @@
-﻿using BusinessLayer.Interfaces.IServices;
+﻿using BusinessLayer.DTOs;
+using BusinessLayer.Interfaces.IServices;
 using BusinessLayer.Model;
 using DataLayer.IRepository;
 using DataLayer.Repositories;
 using DomainLayer.Entities;
+using System.Globalization;
+using System.Reflection.PortableExecutable;
 
 namespace BusinessLayer.Services
 {
@@ -133,6 +136,32 @@ namespace BusinessLayer.Services
                 }).ToList()
             };
             return invoiceDTO;
+        }
+
+        public List<InvoiceGridViewDTO> GetInvoicesGrid()
+        {
+            List<InvoiceGridViewDTO> invoices = new();
+            var invoiceGrid = _repository.GetInvoicesGrid();
+
+            foreach (var item in invoiceGrid)
+            {
+                InvoiceGridViewDTO invoiceGridViewDTO = new()
+                {
+                    InvoiceId = item.InvoiceId,
+                    ClientId = item.ClientId,
+                    DetailId = item.DetailId,
+                    InvoiceNumber = item.InvoiceNumber,
+                    ClientName = item.ClientName,
+                    Date = item.Date,
+                    SellerName = item.SellerName,
+                    Terms = item.Terms,
+                    Description = item.Description,
+                    OrderNumber = item.OrderNumber,
+                    Total = item.Total,
+                };
+                invoices.Add(invoiceGridViewDTO);
+            }
+            return invoices;
         }
     }
 }
