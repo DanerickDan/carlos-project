@@ -25,8 +25,8 @@ namespace DataLayer.Repositories
                 var connectionT = new SQLiteConnection(connectionManager.GetConnection());
                 connectionT.Open();
                 string query =
-                        "INSERT INTO Facturas (fecha, terminos, cliente_id, num_pedido, vendedor, NCF, numero, descripcion,sub_total,total, activo) " +
-                        "VALUES (@Fecha, @Terminos, @ClienteId, @NumPedido, @Vendedor, @NCF,@NumeroFactura,@Descripcion,@SubTotal,@Total, @Activo); " +
+                        "INSERT INTO Facturas (fecha, terminos, cliente_id, num_pedido, vendedor, NCF, numero, descripcion,sub_total,total, lote_ncf_id,activo) " +
+                        "VALUES (@Fecha, @Terminos, @ClienteId, @NumPedido, @Vendedor, @NCF,@NumeroFactura,@Descripcion,@SubTotal,@Total, @LoteNcfId,@Activo); " +
                         "SELECT last_insert_rowid();";
                 using (var transaction = connectionT.BeginTransaction())
                 {
@@ -44,6 +44,7 @@ namespace DataLayer.Repositories
                             command.Parameters.AddWithValue("@Descripcion", invoice.Description);
                             command.Parameters.AddWithValue("@Total", invoice.Total);
                             command.Parameters.AddWithValue("@SubTotal", invoice.SubTotal);
+                            command.Parameters.AddWithValue("@LoteNcfId", invoice.NcfLoteId);
                             command.Parameters.AddWithValue("@Activo", 1);
 
                             invoice.InvoiceID = Convert.ToInt32(command.ExecuteScalar());
@@ -210,7 +211,7 @@ namespace DataLayer.Repositories
                     connectionManager.OpenConnection(connection);
 
                     string query = @"SELECT f.factura_id as InvoiceId, f.fecha as Fecha, f.terminos as Terminos, f.cliente_id as ClienteId, f.numero as Number,
-                            f.num_pedido as NumPedido, f.vendedor as Vendedor, f.NCF as ncf, f.descripcion as Descripcion,d.detalle_id as DetalleId, d.factura_id as FacturaId,
+                            f.num_pedido as NumPedido, f.vendedor as Vendedor, f.NCF as ncf, f.descripcion as Descripcion, f.lote_ncf_Id as Ncf_id,d.detalle_id as DetalleId, d.factura_id as FacturaId,
                             d.producto_id as ProductoId, d.cantidad as Cantidad, d.precio_unitario as Precio, d.lote as Lote,
                             f.total as Total, f.sub_total as SubTotal, d.neto as Neto, d.codigo as Codigo
                             FROM Facturas AS f
@@ -242,6 +243,7 @@ namespace DataLayer.Repositories
                                         SellerName = reader.GetString(reader.GetOrdinal("Vendedor")),
                                         Number = reader.GetInt32(reader.GetOrdinal("Number")),
                                         NCF = reader.GetString(reader.GetOrdinal("ncf")),
+                                        NcfLoteId = reader.GetInt32(reader.GetOrdinal("Ncf_id")),
                                         Description = reader.IsDBNull(reader.GetOrdinal("Descripcion"))
                                                     ? string.Empty
                                                     : reader.GetString(reader.GetOrdinal("Descripcion")),
@@ -302,16 +304,16 @@ namespace DataLayer.Repositories
                                 InvoiceGridView invoice = new()
                                 {
                                     InvoiceId = reader.GetInt32(0),
-                                    ClientId = reader.GetInt32(1),
-                                    DetailId = reader.GetInt32(2),
-                                    InvoiceNumber = reader.GetInt32(3),
-                                    ClientName = reader.GetString(4),
+                                    ClientId = reader.GetInt32(2),
+                                    DetailId = reader.GetInt32(3),
+                                    InvoiceNumber = reader.GetInt32(4),
+                                    ClientName = reader.GetString(5),
                                     Date = DateTime.ParseExact(reader.GetString(reader.GetOrdinal("Fecha")), "dd-MM-yyyy", CultureInfo.InvariantCulture),
-                                    SellerName = reader.GetString(6),
-                                    Terms = reader.GetString(7),
-                                    Description = reader.GetString(8),
-                                    OrderNumber = reader.GetInt32(9),
-                                    Total = reader.GetDouble(10),
+                                    SellerName = reader.GetString(7),
+                                    Terms = reader.GetString(8),
+                                    Description = reader.GetString(9),
+                                    OrderNumber = reader.GetInt32(10),
+                                    Total = reader.GetDouble(11),
                                 };
                                 invoices.Add(invoice);
                             }
@@ -336,7 +338,7 @@ namespace DataLayer.Repositories
                     connectionManager.OpenConnection(connection);
                     string query = @"
                         SELECT f.factura_id as InvoiceId, f.fecha as Fecha, f.terminos as Terminos, f.cliente_id as ClienteId, f.numero as Number,
-                        f.num_pedido as NumPedido, f.vendedor as Vendedor, f.NCF as ncf, f.descripcion as Descripcion ,d.detalle_id as DetalleId, d.factura_id as FacturaId,
+                        f.num_pedido as NumPedido, f.vendedor as Vendedor, f.NCF as ncf, f.descripcion as Descripcion ,d.detalle_id as DetalleId, f.lote_ncf_Id as Ncf_id,d.factura_id as FacturaId,
                         d.producto_id as ProductoId, d.cantidad as Cantidad, d.precio_unitario as Precio, d.lote as Lote,
                         f.total as Total, f.sub_total as SubTotal, d.neto as Neto, d.codigo as Codigo
                         FROM Facturas AS f
@@ -364,6 +366,7 @@ namespace DataLayer.Repositories
                                         SellerName = reader.GetString(reader.GetOrdinal("Vendedor")),
                                         Number = reader.GetInt32(reader.GetOrdinal("Number")),
                                         NCF = reader.GetString(reader.GetOrdinal("NCF")),
+                                        NcfLoteId = reader.GetInt32(reader.GetOrdinal("Ncf_id")),
                                         Description = reader.GetString(reader.GetOrdinal("Descripcion")),
                                         Total = reader.GetDouble(reader.GetOrdinal("Total")),
                                         SubTotal = reader.GetDouble(reader.GetOrdinal("SubTotal")),
@@ -397,30 +400,25 @@ namespace DataLayer.Repositories
             return invoice;
         }
 
-        public bool ExistCode(int code, string type)
+        public int GetMaxCode(string column)
         {
             try
             {
                 using (var connection = connectionManager.GetConnection())
                 {
                     connectionManager.OpenConnection(connection);
-                    string query = "SELECT COUNT(1) FROM Facturas WHERE @Tipo = @Codigo";
+                    string query = $"SELECT MAX({column}) FROM Facturas";
+
                     using (var command = new SQLiteCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@Tipo", type);
-                        command.Parameters.AddWithValue("@Codigo", code);
-                        var count = Convert.ToInt32(command.ExecuteScalar());
-                        if (count != 0)
-                        {
-                            return true;
-                        }
-                        return false;
+                        object result = command.ExecuteScalar();
+                        return result != DBNull.Value ? Convert.ToInt32(result) : 0;
                     }
                 }
             }
             catch (SQLiteException ex)
             {
-                throw new SQLiteException($"Error in ExistCode: {ex.Message} at {ex.StackTrace}", ex);
+                throw new SQLiteException($"Error in GetMaxCode: {ex.Message} at {ex.StackTrace}", ex);
             }
         }
     }

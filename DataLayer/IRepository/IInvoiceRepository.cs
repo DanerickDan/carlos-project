@@ -9,7 +9,7 @@ namespace DataLayer.IRepository
         void DeleteInvoice(int id);
         List<Invoice> GetAllInvoices();
         Invoice GetInvoiceById(int id);
-        bool ExistCode(int code, string type);
+        int GetMaxCode(string column);
         IEnumerable<InvoiceGridView> GetInvoicesGrid();
     }
 }

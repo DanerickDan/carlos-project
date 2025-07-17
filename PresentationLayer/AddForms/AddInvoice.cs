@@ -18,6 +18,7 @@ namespace PresentationLayer.AddForms
         private readonly IInvoiceServices _invoiceServices;
         private readonly PdfService pdfService;
         private readonly PrintService printService;
+        private readonly INcfService _ncfService;
         private bool invoiceTo = false;
         private bool invoiceFrom = false;
         private bool productSelected = false;
@@ -34,13 +35,14 @@ namespace PresentationLayer.AddForms
             _invoiceServices = new InvoiceServices();
             printService = new();
             pdfService = new();
-            lblNumFactura.Text = _invoiceCodeGenerator.InvoiceNumber();
+            _ncfService = new NcfService();
+            lblNumFactura.Text = _invoiceCodeGenerator.GenerateInvoiceNumber();
             lblNumFactura.Visible = true;
             lblFecha.Text = DateTime.Now.ToString("dd/MM/yyyy");
-            lblPedido.Text = _invoiceCodeGenerator.OrderNumber();
+            lblPedido.Text = _invoiceCodeGenerator.GenerateOrderNumber();
             txtPrecio.KeyPress += ValidarSoloNumeros;
             txtCantidad.KeyPress += ValidarSoloNumeros;
-            
+
             ComboBoxSettings();
         }
 
@@ -65,6 +67,23 @@ namespace PresentationLayer.AddForms
         // Evento crear factura
         private async void btnCrear_Click(object sender, EventArgs e)
         {
+            string actualSequence = "";
+            var ncf_lot = new NcfLotDTO();
+            if (is_ncf.Checked)
+            {
+                try
+                {
+                    ncf_lot = _ncfService.GetFirstAvailableLot("B01");
+                    actualSequence = ncf_lot.TipoNCF + ncf_lot.SecuenciaActual.ToString("D8");
+                    lblNcf.Text = actualSequence;
+                    lblNcfVence.Text = ncf_lot.FechaExpiracion.ToString();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("No hay lotes disponibles para el tipo NCF: B01");
+                    return;
+                }
+            }
             // Verificar que los campos necesarios estén seleccionados
             if (invoiceFrom && invoiceTo && productSelected && termSelected)
             {
@@ -73,7 +92,7 @@ namespace PresentationLayer.AddForms
                 {
                     Number = Convert.ToInt32(lblNumFactura.Text),
                     Date = Convert.ToDateTime(lblFecha.Text),
-                    NCF = lblNcf.Text,
+                    NCF = actualSequence,
                     Description = txtDescrip.Texts,
                     Terms = lblTerminos.Text,
                     OrderNumber = Convert.ToInt32(lblPedido.Text),
@@ -82,6 +101,7 @@ namespace PresentationLayer.AddForms
                     Details = _invoiceDTO.Details,
                     Total = Convert.ToDouble(lblTotal.Text),
                     SubTotal = Convert.ToDouble(lblSubTotal.Text),
+                    NcfLoteId = ncf_lot.Id,
                 };
 
                 // Agregar la factura a los servicios de la base de datos
@@ -99,7 +119,10 @@ namespace PresentationLayer.AddForms
                     Rnc = lblRnc.Text,
                     Fax = lblFax.Text
                 };
-
+                if (ncf_lot.PrefijoNCF != null)
+                {
+                    _ncfService.UpdateLot(ncf_lot);
+                }
                 // Preguntar si desea crear un PDF de la factura
                 DialogResult result = MessageBox.Show("¿Deseas crear un PDF de la factura?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
@@ -127,7 +150,6 @@ namespace PresentationLayer.AddForms
                     // Solo se muestra mensaje de confirmación de adición de factura
                     MessageBox.Show("Factura agregada correctamente");
                 }
-
                 // Cerrar el formulario
                 Close();
             }
@@ -206,7 +228,7 @@ namespace PresentationLayer.AddForms
         // Evento cambio de txt Cantidad
         private void txtCantidad__TextChanged(object sender, EventArgs e)
         {
-            if(txtCantidad.Texts == "")
+            if (txtCantidad.Texts == "")
             {
                 txtCantidad.Texts = 0.ToString();
             }
@@ -289,6 +311,30 @@ namespace PresentationLayer.AddForms
 
         private string FillTemplate(string template, InvoiceDTO invoice, ClientDTO client)
         {
+            string logoPath = Path.Combine(Application.StartupPath, "InvoiceTemplate", "ROCAPHARMA.jpg");
+
+            string base64Logo = Convert.ToBase64String(File.ReadAllBytes(logoPath));
+            string imageSrc = $"data:image/jpeg;base64,{base64Logo}";
+
+            template = template.Replace("{{logo_base64}}", imageSrc);
+
+            string ncfHtml = "";
+
+            if (!string.IsNullOrWhiteSpace(invoice.NCF))
+            {
+                // Buscar fecha de vencimiento del NCF usando el ID del lote
+                var lote = _ncfService.GetNcfLotDTOById(invoice.NcfLoteId); // Asegúrate que este campo esté en InvoiceDTO
+
+                ncfHtml = $@"
+                    <p class=""font-bold"">FACTURA DE CREDITO FISCAL</p>
+                    <p>NCF: {invoice.NCF}</p>
+                    <p>Válida hasta: {lote.FechaExpiracion:dd/MM/yyyy}</p>";
+            }
+            else
+            {
+                ncfHtml = @"<p class=""font-bold"">CONSUMIDOR FINAL</p>";
+            }
+
             // Reemplazar los marcadores de posición en la plantilla con los datos de la factura
             template = template.Replace("{{ClientName}}", client.ClientName)
                                .Replace("{{ClientCode}}", client.Code.ToString())
@@ -298,20 +344,22 @@ namespace PresentationLayer.AddForms
                                .Replace("{{ClientRNC}}", client.Rnc)
                                .Replace("{{SellerName}}", invoice.SellerName)
                                .Replace("{{NCF}}", invoice.NCF)
+                               .Replace("{{NCF_Vencimiento}}",lblNcfVence.Text)
                                .Replace("{{Terms}}", invoice.Terms)
-                               .Replace("{{OrderNumber}}", invoice.OrderNumber.ToString())
-                               .Replace("{{InvoiceNumber}}", invoice.Number.ToString())
+                               .Replace("{{OrderNumber}}", invoice.OrderNumber.ToString("D4"))
+                               .Replace("{{InvoiceNumber}}", invoice.Number.ToString("D4"))
+                               .Replace("{{NCF_BLOCK}}", ncfHtml)
                                .Replace("{{Date}}", invoice.Date.ToString("dd/MM/yyyy"));
 
             // Reemplazar los productos
             string productTemplate = @"
                 <tr>
                 <td class=""border-b py-3 pl-3"">{{ProductCode}}</td>
-                <td class=""border-b py-3 pl-2"">{{ProductName}}</td>
-                <td class=""border-b py-3 pl-2 text-right"">{{Lote}}</td>
+                <td class=""border-b py-3 pl-2 text-center"">{{ProductName}}</td>
+                <td class=""border-b py-3 pl-2 text-center"">{{Lote}}</td>
                 <td class=""border-b py-3 pl-2 text-center"">{{Quantity}}</td>
                 <td class=""border-b py-3 pl-2 text-center"">${{Price}}</td>
-                <td class=""border-b py-3 pl-2 text-right"">{{Neto}}</td
+                <td class=""border-b py-3 pl-2 text-right"">${{Neto}}</td
                 </tr>";
 
             string productsHtml = "";
@@ -419,11 +467,29 @@ namespace PresentationLayer.AddForms
             txtCantidad.Texts = productDTO.Quantity.ToString();
             txtNeto.Texts = (Convert.ToDouble(txtPrecio.Texts) * Convert.ToInt32(txtCantidad.Texts)).ToString();
             txtCantidad._TextChanged += txtCantidad__TextChanged;
-            
+
             //txtPrecio._TextChanged += txtPrecio__TextChanged;
 
         }
 
-#endregion
+        #endregion
+
+        private void cbProductNombre_OnSelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            //cbProductNombre.SelectedValue = cbFacturaPara.SelectedValue;
+            int selectedProduct = (int)cbProductNombre.SelectedValue;
+            var productDTO = _productService.GetByIdProduct(selectedProduct);
+            txtPrecio.Texts = productDTO.Price.ToString();
+            txtCantidad.Texts = productDTO.Quantity.ToString();
+            txtNeto.Texts = (Convert.ToDouble(txtPrecio.Texts) * Convert.ToInt32(txtCantidad.Texts)).ToString();
+            txtCantidad._TextChanged += txtCantidad__TextChanged;
+
+            //txtPrecio._TextChanged += txtPrecio__TextChanged;
+        }
+
+        private void AddInvoice_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

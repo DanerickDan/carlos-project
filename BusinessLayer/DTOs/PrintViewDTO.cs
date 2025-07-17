@@ -17,6 +17,7 @@ namespace BusinessLayer.DTOs
         public string ClientEmail { get; set; }
         public string SellerName { get; set; }
         public string NCF { get; set; }
+        public int LoteNcfId { get; set; }
         public string InvoiceTerms { get; set; }
         public int OrderNumber { get; set; }
         public int InvoiceNumber { get; set; }

@@ -38,6 +38,7 @@ namespace BusinessLayer.Services
                 Date = invoiceDTO.Date,
                 Number = invoiceDTO.Number,
                 NCF = invoiceDTO.NCF,
+                NcfLoteId = invoiceDTO.NcfLoteId,
                 Terms = invoiceDTO.Terms,
                 OrderNumber = invoiceDTO.OrderNumber,
                 SellerName = invoiceDTO.SellerName,

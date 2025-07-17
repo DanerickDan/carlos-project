@@ -121,13 +121,25 @@
   <data name="calendarWhite" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\CustomComponents\MainFormComponents\Resources\calendarWhite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="icons8-ajustes-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\CustomComponents\MainFormComponents\Resources\icons8-ajustes-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icons8-ajustes-30" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\CustomComponents\MainFormComponents\Resources\icons8-ajustes-30.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="icons8-microsoft-excel-2019-25" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\CustomComponents\MainFormComponents\Resources\icons8-microsoft-excel-2019-25.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ROCAPHARMA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\CustomComponents\MainFormComponents\Resources\ROCAPHARMA.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="calendarDark" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\CustomComponents\MainFormComponents\Resources\calendarDark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icons8-microsoft-excel-2019-25" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\CustomComponents\MainFormComponents\Resources\icons8-microsoft-excel-2019-25.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icons8-ajustes-40" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\CustomComponents\MainFormComponents\Resources\icons8-ajustes-40.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ROCAPHARMA-removebg-preview" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\CustomComponents\MainFormComponents\Resources\ROCAPHARMA-removebg-preview.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

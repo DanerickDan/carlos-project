@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             txtBuscar = new TextBox();
             panelNav = new FlowLayoutPanel();
             panel1 = new Panel();
@@ -40,7 +39,6 @@
             CenterPanel = new Panel();
             panel2 = new Panel();
             label1 = new Label();
-            customDatePicker1 = new CustomComponents.MainFormComponents.CustomDatePicker();
             panel6 = new Panel();
             panel4 = new Panel();
             panel3 = new Panel();
@@ -89,7 +87,7 @@
             // pictureBox1
             // 
             pictureBox1.Dock = DockStyle.Fill;
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Image = Properties.Resources.ROCAPHARMA_removebg_preview;
             pictureBox1.Location = new Point(0, 0);
             pictureBox1.Margin = new Padding(3, 13, 3, 4);
             pictureBox1.Name = "pictureBox1";
@@ -196,7 +194,6 @@
             // 
             CenterPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             CenterPanel.Controls.Add(panel2);
-            CenterPanel.Controls.Add(customDatePicker1);
             CenterPanel.Controls.Add(panel6);
             CenterPanel.Controls.Add(panel4);
             CenterPanel.Controls.Add(panel3);
@@ -227,22 +224,6 @@
             label1.Size = new Size(162, 41);
             label1.TabIndex = 0;
             label1.Text = "DashBoard";
-            // 
-            // customDatePicker1
-            // 
-            customDatePicker1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-            customDatePicker1.BorderColor = Color.PaleVioletRed;
-            customDatePicker1.BorderSize = 0;
-            customDatePicker1.CalendarForeColor = Color.Black;
-            customDatePicker1.Font = new Font("Segoe UI", 9.5F);
-            customDatePicker1.Location = new Point(799, 263);
-            customDatePicker1.Margin = new Padding(3, 4, 3, 4);
-            customDatePicker1.MinimumSize = new Size(4, 35);
-            customDatePicker1.Name = "customDatePicker1";
-            customDatePicker1.Size = new Size(228, 35);
-            customDatePicker1.SkinColor = Color.White;
-            customDatePicker1.TabIndex = 1;
-            customDatePicker1.TextColor = Color.Black;
             // 
             // panel6
             // 

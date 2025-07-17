@@ -49,21 +49,22 @@ namespace DataLayer.Repositories
                             {
                                 var printView = new PrintView
                                 {
-                                    ClientName = reader.GetString(3),
-                                    ClientCode = reader.GetInt32(4),
-                                    ClientAddress = reader.GetString(5),
-                                    ClientCity = reader.GetString(6),
-                                    ClientPhone = reader.GetString(7),
-                                    ClientRNC = reader.GetString(8),
-                                    ClientEmail = reader.GetString(9),
-                                    SellerName = reader.GetString(10),
-                                    NCF = reader.GetString(11),
-                                    InvoiceTerms = reader.GetString(12),
-                                    OrderNumber = reader.GetInt32(13),
-                                    InvoiceNumber = reader.GetInt32(14),
-                                    Date = Convert.ToDateTime(reader.GetString(15)),
-                                    SubTotal = reader.GetDouble(17),
-                                    Total = reader.GetDouble(18),
+                                    LoteNcfId = reader.GetInt32(2),
+                                    ClientName = reader.GetString(4),
+                                    ClientCode = reader.GetInt32(5),
+                                    ClientAddress = reader.GetString(6),
+                                    ClientCity = reader.GetString(7),
+                                    ClientPhone = reader.GetString(8),
+                                    ClientRNC = reader.GetString(9),
+                                    ClientEmail = reader.GetString(10),
+                                    SellerName = reader.GetString(11),
+                                    NCF = reader.GetString(12),
+                                    InvoiceTerms = reader.GetString(13),
+                                    OrderNumber = reader.GetInt32(14),
+                                    InvoiceNumber = reader.GetInt32(15),
+                                    Date = Convert.ToDateTime(reader.GetString(16)),
+                                    SubTotal = reader.GetDouble(18),
+                                    Total = reader.GetDouble(19),
                                     products = productsList
                                 };
                                 return printView;

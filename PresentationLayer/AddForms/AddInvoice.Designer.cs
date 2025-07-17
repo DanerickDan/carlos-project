@@ -76,18 +76,20 @@
             label13 = new Label();
             label7 = new Label();
             label4 = new Label();
-            cbFacturaDe = new CustomComponents.MainFormComponents.CustomComboBox();
-            cbTerminos = new CustomComponents.MainFormComponents.CustomComboBox();
-            cbFacturaPara = new CustomComponents.MainFormComponents.CustomComboBox();
+            cbFacturaDe = new PresentationLayer.CustomComponents.MainFormComponents.CustomComboBox();
+            cbTerminos = new PresentationLayer.CustomComponents.MainFormComponents.CustomComboBox();
+            cbFacturaPara = new PresentationLayer.CustomComponents.MainFormComponents.CustomComboBox();
             label5 = new Label();
-            txtNeto = new CustomComponents.MainFormComponents.CustomTextBox();
+            txtNeto = new PresentationLayer.CustomComponents.MainFormComponents.CustomTextBox();
             btnAgregarProd = new Button();
             label6 = new Label();
-            txtDescrip = new CustomComponents.MainFormComponents.CustomTextBox();
-            btnCrear = new CustomComponents.MainFormComponents.CustomButton();
-            cbProductNombre = new CustomComponents.MainFormComponents.CustomComboBox();
-            txtPrecio = new CustomComponents.MainFormComponents.CustomTextBox();
-            txtCantidad = new CustomComponents.MainFormComponents.CustomTextBox();
+            txtDescrip = new PresentationLayer.CustomComponents.MainFormComponents.CustomTextBox();
+            btnCrear = new PresentationLayer.CustomComponents.MainFormComponents.CustomButton();
+            cbProductNombre = new PresentationLayer.CustomComponents.MainFormComponents.CustomComboBox();
+            txtPrecio = new PresentationLayer.CustomComponents.MainFormComponents.CustomTextBox();
+            txtCantidad = new PresentationLayer.CustomComponents.MainFormComponents.CustomTextBox();
+            is_ncf = new MaterialSkin.Controls.MaterialCheckbox();
+            lblNcfVence = new Label();
             panelEjemplo.SuspendLayout();
             SuspendLayout();
             // 
@@ -124,6 +126,7 @@
             // panelEjemplo
             // 
             panelEjemplo.BackColor = Color.Silver;
+            panelEjemplo.Controls.Add(lblNcfVence);
             panelEjemplo.Controls.Add(lblClienteId);
             panelEjemplo.Controls.Add(lblFax);
             panelEjemplo.Controls.Add(lblEmail);
@@ -214,7 +217,7 @@
             // label17
             // 
             label17.AutoSize = true;
-            label17.Location = new Point(258, 129);
+            label17.Location = new Point(255, 149);
             label17.Name = "label17";
             label17.Size = new Size(82, 20);
             label17.TabIndex = 8;
@@ -495,7 +498,7 @@
             // lblVendedor
             // 
             lblVendedor.AutoSize = true;
-            lblVendedor.Location = new Point(269, 149);
+            lblVendedor.Location = new Point(268, 169);
             lblVendedor.Name = "lblVendedor";
             lblVendedor.Size = new Size(123, 20);
             lblVendedor.TabIndex = 0;
@@ -505,7 +508,7 @@
             // lblPedido
             // 
             lblPedido.AutoSize = true;
-            lblPedido.Location = new Point(335, 129);
+            lblPedido.Location = new Point(336, 149);
             lblPedido.Name = "lblPedido";
             lblPedido.Size = new Size(41, 20);
             lblPedido.TabIndex = 0;
@@ -514,7 +517,7 @@
             // lblTerminos
             // 
             lblTerminos.AutoSize = true;
-            lblTerminos.Location = new Point(318, 113);
+            lblTerminos.Location = new Point(320, 129);
             lblTerminos.Name = "lblTerminos";
             lblTerminos.Size = new Size(67, 20);
             lblTerminos.TabIndex = 0;
@@ -807,11 +810,39 @@
             txtCantidad.Texts = "";
             txtCantidad.UnderlinedStyle = false;
             // 
+            // is_ncf
+            // 
+            is_ncf.AutoSize = true;
+            is_ncf.BackColor = SystemColors.ButtonFace;
+            is_ncf.Depth = 0;
+            is_ncf.Location = new Point(621, 171);
+            is_ncf.Margin = new Padding(0);
+            is_ncf.MouseLocation = new Point(-1, -1);
+            is_ncf.MouseState = MaterialSkin.MouseState.HOVER;
+            is_ncf.Name = "is_ncf";
+            is_ncf.ReadOnly = false;
+            is_ncf.Ripple = true;
+            is_ncf.Size = new Size(65, 37);
+            is_ncf.TabIndex = 11;
+            is_ncf.Text = "NCF";
+            is_ncf.UseVisualStyleBackColor = false;
+            // 
+            // lblNcfVence
+            // 
+            lblNcfVence.AutoSize = true;
+            lblNcfVence.Location = new Point(246, 122);
+            lblNcfVence.Name = "lblNcfVence";
+            lblNcfVence.Size = new Size(43, 20);
+            lblNcfVence.TabIndex = 14;
+            lblNcfVence.Text = "venci";
+            lblNcfVence.Visible = false;
+            // 
             // AddInvoice
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1112, 600);
+            Controls.Add(is_ncf);
             Controls.Add(txtCantidad);
             Controls.Add(txtPrecio);
             Controls.Add(btnCrear);
@@ -833,6 +864,7 @@
             Margin = new Padding(3, 4, 3, 4);
             Name = "AddInvoice";
             Text = "AddInvoice";
+            Load += AddInvoice_Load;
             panelEjemplo.ResumeLayout(false);
             panelEjemplo.PerformLayout();
             ResumeLayout(false);
@@ -900,5 +932,7 @@
         private Label lblRnc;
         private Label lblFax;
         private Label lblClienteId;
+        private MaterialSkin.Controls.MaterialCheckbox is_ncf;
+        private Label lblNcfVence;
     }
 }

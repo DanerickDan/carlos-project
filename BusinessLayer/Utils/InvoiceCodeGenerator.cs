@@ -6,35 +6,24 @@ namespace BusinessLayer.Utils
     public class InvoiceCodeGenerator
     {
         private readonly IInvoiceRepository _invoiceRepository;
-        public InvoiceCodeGenerator() 
+
+        public InvoiceCodeGenerator()
         {
             _invoiceRepository = new InvoiceRepository();
         }
 
-        public string InvoiceNumber()
+        public string GenerateInvoiceNumber()
         {
-            int newCode;
-            bool isUnique = true;
-
-            do
-            {
-                newCode = new Random().Next(1000,9999);
-                isUnique = _invoiceRepository.ExistCode(newCode,"numero");
-            } while (isUnique == true);
-            return newCode.ToString();
+            int lastNumber = _invoiceRepository.GetMaxCode("numero");
+            int nextNumber = lastNumber + 1;
+            return nextNumber.ToString("D4"); // D4 = 4 dígitos con ceros a la izquierda
         }
 
-        public string OrderNumber()
+        public string GenerateOrderNumber()
         {
-            int newCode;
-            bool isUnique = false;
-
-            do
-            {
-                newCode = new Random().Next(1000, 9999);
-                isUnique = _invoiceRepository.ExistCode(newCode, "num_pedido");
-            } while (isUnique == true);
-            return newCode.ToString();
+            int lastNumber = _invoiceRepository.GetMaxCode("num_pedido");
+            int nextNumber = lastNumber + 1;
+            return nextNumber.ToString("D4");
         }
     }
 }

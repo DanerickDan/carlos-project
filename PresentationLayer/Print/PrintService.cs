@@ -2,11 +2,7 @@
 using BusinessLayer.Interfaces.IServices;
 using BusinessLayer.Model;
 using DataLayer.Repositories;
-using PdfSharp.Drawing;
-using PdfSharp.Pdf;
-using PdfSharp.Pdf.IO;
 using System.Diagnostics;
-using System.Drawing.Printing;
 
 namespace PresentationLayer.Print
 {
@@ -167,6 +163,7 @@ namespace PresentationLayer.Print
                 // Mapear los datos obtenidos a un DTO para la impresión
                 PrintViewDTO printViewDTO = new PrintViewDTO
                 {
+                    LoteNcfId = data.LoteNcfId,
                     ClientName = data.ClientName ?? string.Empty,
                     ClientCode = data.ClientCode,
                     ClientAddress = data.ClientAddress ?? string.Empty,

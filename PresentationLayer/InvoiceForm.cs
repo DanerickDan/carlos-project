@@ -20,6 +20,7 @@ namespace PresentationLayer
         private BindingList<InvoiceGridViewDTO> InvoiceBindingList;
         private readonly PdfService pdfService;
         private readonly CreateCSV _createCSV;
+        private readonly INcfService _ncfService;
 
         public InvoiceForm()
         {
@@ -31,6 +32,7 @@ namespace PresentationLayer
             printService = new PrintService();
             _createCSV = new();
             mapping = new();
+            _ncfService = new NcfService();
         }
 
         // Add Invoice
@@ -46,7 +48,18 @@ namespace PresentationLayer
             }
         }
 
+        // Add Ncf Lots
+        private void add_lot_Click(object sender, EventArgs e)
+        {
+            AddLot addInvoice = new();
+            addInvoice.MaximizeBox = false;
+            addInvoice.MinimizeBox = false;
+            var result = addInvoice.ShowDialog();
+            if (result == DialogResult.OK)
+            {
 
+            }
+        }
 
         // Delete Invoice
         private void btnBorrar_Click(object sender, EventArgs e)
@@ -140,33 +153,56 @@ namespace PresentationLayer
 
         public string FillTemplate(string template, PrintViewDTO data)
         {
+            var Ncf_lote = _ncfService.GetNcfLotDTOById(data.LoteNcfId);
+            string logoPath = Path.Combine(Application.StartupPath, "InvoiceTemplate", "ROCAPHARMA.jpg");
 
-            // Reemplazar los marcadores de posición en la plantilla con los datos de la factura
-            template = template.Replace("{{ClientName}}", data.ClientName)
-                               .Replace("{{ClientCode}}", data.ClientCode.ToString())
-                               .Replace("{{ClientAddress}}", data.ClientAddress.ToString())
-                               .Replace("{{ClientCity}}", data.ClientCity.ToString())
-                               .Replace("{{ClientPhone}}", data.ClientPhone.ToString())
-                               .Replace("{{ClientRNC}}", data.ClientRNC.ToString())
-                               .Replace("{{SellerName}}", data.SellerName)
-                               .Replace("{{NCF}}", data.NCF)
-                               .Replace("{{Terms}}", data.InvoiceTerms)
-                               .Replace("{{OrderNumber}}", data.OrderNumber.ToString())
-                               .Replace("{{InvoiceNumber}}", data.InvoiceNumber.ToString())
-                               .Replace("{{Date}}", data.Date.ToString("dd/MM/yyyy"))
-                               .Replace("{{SubTotal}}", data.SubTotal.ToString("F2"))
-                               .Replace("{{Total}}", data.Total.ToString("F2"));
+            string base64Logo = Convert.ToBase64String(File.ReadAllBytes(logoPath));
+            string imageSrc = $"data:image/jpeg;base64,{base64Logo}";
+
+            template = template.Replace("{{logo_base64}}", imageSrc);
+
+            // Construir bloque condicional del NCF
+            string ncfHtml = "";
+            if (!string.IsNullOrWhiteSpace(data.NCF))
+            {
+                ncfHtml = $@"
+                    <p class=""font-bold"">FACTURA DE CREDITO FISCAL</p>
+                    <p>NCF: {data.NCF}</p>
+                    <p>Válida hasta: {Ncf_lote.FechaExpiracion:dd/MM/yyyy}</p>";
+            }
+            else
+            {
+                ncfHtml = $@"
+                    <p class=""font-bold"">CONSUMIDOR FINAL</p>";
+            }
+
+                // Reemplazar los datos generales en la plantilla
+                template = template.Replace("{{ClientName}}", data.ClientName)
+                                   .Replace("{{ClientCode}}", data.ClientCode.ToString())
+                                   .Replace("{{ClientAddress}}", data.ClientAddress.ToString())
+                                   .Replace("{{ClientCity}}", data.ClientCity.ToString())
+                                   .Replace("{{ClientPhone}}", data.ClientPhone.ToString())
+                                   .Replace("{{ClientRNC}}", data.ClientRNC.ToString())
+                                   .Replace("{{SellerName}}", data.SellerName)
+                                   .Replace("{{Terms}}", data.InvoiceTerms)
+                                   .Replace("{{OrderNumber}}", data.OrderNumber.ToString("D4"))
+                                   .Replace("{{InvoiceNumber}}", data.InvoiceNumber.ToString("D4"))
+                                   .Replace("{{Date}}", data.Date.ToString("dd/MM/yyyy"))
+                                   .Replace("{{SubTotal}}", data.SubTotal.ToString("F2"))
+                                   .Replace("{{Total}}", data.Total.ToString("F2"))
+                                   .Replace("{{NCF_BLOCK}}", ncfHtml); // Reemplaza bloque del NCF
 
             // Reemplazar los productos
             string productTemplate = @"
-            <tr>
-                <td class=""border-b py-3 pl-3"">{{ProductCode}}</td>
-                <td class=""border-b py-3 pl-2 text-center"">{{ProductName}}</td>
-                <td class=""border-b py-3 pl-2 text-center"">{{Lote}}</td>
-                <td class=""border-b py-3 pl-2 text-center"">{{Quantity}}</td>
-                <td class=""border-b py-3 pl-2 text-center"">${{Price}}</td>
-                <td class=""border-b py-3 pl-2 text-right"">${{Neto}}</td
+                <tr>
+                    <td class=""border-b py-3 pl-3"">{{ProductCode}}</td>
+                    <td class=""border-b py-3 pl-2 text-center"">{{ProductName}}</td>
+                    <td class=""border-b py-3 pl-2 text-center"">{{Lote}}</td>
+                    <td class=""border-b py-3 pl-2 text-center"">{{Quantity}}</td>
+                    <td class=""border-b py-3 pl-2 text-center"">${{Price}}</td>
+                    <td class=""border-b py-3 pl-2 text-right"">${{Neto}}</td>
                 </tr>";
+
             string productsHtml = "";
             foreach (var product in data.products)
             {
@@ -178,11 +214,11 @@ namespace PresentationLayer
                                                     .Replace("{{Neto}}", product.ProductNeto.ToString("F2"));
                 productsHtml += productHtml;
             }
+
             template = template.Replace("<!-- Productos -->", productsHtml);
-
             return template;
-
         }
+
 
         // Get all invoices
         private void GetAllInvoice()
@@ -286,6 +322,5 @@ namespace PresentationLayer
             // Actualiza los labels de conteo
             lblFiltrados.Text = filteredInvoice.Count.ToString();
         }
-
     }
 }

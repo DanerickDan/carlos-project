@@ -120,17 +120,23 @@ namespace DataLayer.Repositories
                 using (var connection = connectionManager.GetConnection())
                 {
                     connectionManager.OpenConnection(connection);
+                    //string query = @"
+                    //    SELECT p.producto_id as ProductoId, p.nombre as ProductoNombre, p.codigo as Codigo,
+                    // p.descripcion as Descripcion, p.fecha_vencimiento as Vencimiento, p.precio as ProductoPrecio,
+                    // p.lote as Lote, p.cantidad as Cantidad, p.category_id as ProductoCategoriaId,
+                    // c.category_id as CategoriaId, c.nombre_categoria as CategoriaNombre,
+                    //    p.estado_id as ProductoEstadoId, e.estado_id as EstadoId, e.descripcion as EstadoNombre
+                    //    FROM Productos p
+                    //    INNER JOIN Categorias c ON p.category_id = c.category_id
+                    //    INNER JOIN EstadoPedido e ON p.estado_id = e.estado_id
+                    //    WHERE activo = 1";
                     string query = @"
                         SELECT p.producto_id as ProductoId, p.nombre as ProductoNombre, p.codigo as Codigo,
-	                    p.descripcion as Descripcion, p.fecha_vencimiento as Vencimiento, p.precio as ProductoPrecio,
-	                    p.lote as Lote, p.cantidad as Cantidad, p.category_id as ProductoCategoriaId,
-	                    c.category_id as CategoriaId, c.nombre_categoria as CategoriaNombre,
-                        p.estado_id as ProductoEstadoId, e.estado_id as EstadoId, e.descripcion as EstadoNombre
+                        p.descripcion as Descripcion, p.fecha_vencimiento as Vencimiento, p.precio as ProductoPrecio,
+                        p.lote as Lote, p.cantidad as Cantidad, p.category_id as ProductoCategoriaId
                         FROM Productos p
-                        INNER JOIN Categorias c ON p.category_id = c.category_id
-                        INNER JOIN EstadoPedido e ON p.estado_id = e.estado_id
-                        WHERE activo = 1"
-                    ;
+                        WHERE activo = 1        
+                        ";
                     using (var command = new SQLiteCommand(query, connection))
                     {
                         using (var reader = command.ExecuteReader())
@@ -147,18 +153,18 @@ namespace DataLayer.Repositories
                                     Price = reader.GetDouble(reader.GetOrdinal("ProductoPrecio")),
                                     Lote = reader.GetInt32(reader.GetOrdinal("Lote")),
                                     Quantity = reader.GetInt32(reader.GetOrdinal("Cantidad")),
-                                    CategoryId = reader.GetInt32(reader.GetOrdinal("ProductoCategoriaId")),
-                                    StatusId = reader.GetInt32(reader.GetOrdinal("ProductoEstadoId")),
-                                    Category = new Categories
-                                    {
-                                        CategoryId = reader.GetInt32(reader.GetOrdinal("CategoriaId")),
-                                        CategoryName = reader.GetString(reader.GetOrdinal("CategoriaNombre"))
-                                    },
-                                    Statu = new Status
-                                    {
-                                        StatusId = reader.GetInt32(reader.GetOrdinal("EstadoId")),
-                                        Descripcion = reader.GetString(reader.GetOrdinal("EstadoNombre"))
-                                    }
+                                    //CategoryId = reader.GetInt32(reader.GetOrdinal("ProductoCategoriaId")),
+                                    //StatusId = reader.GetInt32(reader.GetOrdinal("ProductoEstadoId")),
+                                    //Category = new Categories
+                                    //{
+                                    //    CategoryId = reader.GetInt32(reader.GetOrdinal("CategoriaId")),
+                                    //    CategoryName = reader.GetString(reader.GetOrdinal("CategoriaNombre"))
+                                    //},
+                                    //Statu = new Status
+                                    //{
+                                    //    StatusId = reader.GetInt32(reader.GetOrdinal("EstadoId")),
+                                    //    Descripcion = reader.GetString(reader.GetOrdinal("EstadoNombre"))
+                                    //}
                                 });
                             }
                         }
@@ -183,13 +189,9 @@ namespace DataLayer.Repositories
                     connectionManager.OpenConnection(connection);
                     string query = @"
                         SELECT p.producto_id as ProductoId, p.nombre as ProductoNombre, p.codigo as Codigo,
-	                    p.descripcion as Descripcion, p.fecha_vencimiento as Vencimiento, p.precio as ProductoPrecio,
-	                    p.lote as Lote, p.cantidad as Cantidad, p.category_id as ProductoCategoriaId,
-	                    c.category_id as CategoriaId, c.nombre_categoria as CategoriaNombre,
-                        p.estado_id as ProductoEstadoId, e.estado_id as EstadoId, e.descripcion as EstadoNombre
-                        FROM Productos p 
-                        INNER JOIN Categorias c ON p.category_id = c.category_id
-                        INNER JOIN EstadoPedido e ON p.estado_id = e.estado_id
+                        p.descripcion as Descripcion, p.fecha_vencimiento as Vencimiento, p.precio as ProductoPrecio,
+                        p.lote as Lote, p.cantidad as Cantidad, p.category_id as ProductoCategoriaId
+                        FROM Productos p
                         WHERE p.producto_id = @Id and activo = 1;";
                     using (var command = new SQLiteCommand(query, connection))
                     {
@@ -198,7 +200,7 @@ namespace DataLayer.Repositories
                         {
                             if (reader.Read())
                             {
-                                products =  new Products
+                                products = new Products
                                 {
                                     ProductsId = reader.GetInt32(reader.GetOrdinal("ProductoId")),
                                     ProductName = reader.GetString(reader.GetOrdinal("ProductoNombre")),
@@ -207,19 +209,19 @@ namespace DataLayer.Repositories
                                     ExpirationDate = DateTime.ParseExact(reader.GetString(reader.GetOrdinal("Vencimiento")), "dd-MM-yyyy", CultureInfo.InvariantCulture),
                                     Price = reader.GetDouble(reader.GetOrdinal("ProductoPrecio")),
                                     Lote = reader.GetInt32(reader.GetOrdinal("Lote")),
-                                    Quantity = reader.GetInt32(reader.GetOrdinal("Cantidad")),
-                                    CategoryId = reader.GetInt32(reader.GetOrdinal("ProductoCategoriaId")),
-                                    StatusId = reader.GetInt32(reader.GetOrdinal("ProductoEstadoId")),
-                                    Category = new Categories
-                                    {
-                                        CategoryId = reader.GetInt32(reader.GetOrdinal("CategoriaId")),
-                                        CategoryName = reader.GetString(reader.GetOrdinal("CategoriaNombre"))
-                                    },
-                                    Statu = new Status
-                                    {
-                                        StatusId = reader.GetInt32(reader.GetOrdinal("EstadoId")),
-                                        Descripcion = reader.GetString(reader.GetOrdinal("EstadoNombre"))
-                                    }
+                                    Quantity = reader.GetInt32(reader.GetOrdinal("Cantidad"))
+                                    //CategoryId = reader.GetInt32(reader.GetOrdinal("ProductoCategoriaId")),
+                                    //StatusId = reader.GetInt32(reader.GetOrdinal("ProductoEstadoId")),
+                                    //Category = new Categories
+                                    //{
+                                    //    CategoryId = reader.GetInt32(reader.GetOrdinal("CategoriaId")),
+                                    //    CategoryName = reader.GetString(reader.GetOrdinal("CategoriaNombre"))
+                                    //},
+                                    //Statu = new Status
+                                    //{
+                                    //    StatusId = reader.GetInt32(reader.GetOrdinal("EstadoId")),
+                                    //    Descripcion = reader.GetString(reader.GetOrdinal("EstadoNombre"))
+                                    //}
                                 };
                             }
                         }

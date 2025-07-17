@@ -435,8 +435,61 @@
                 print-color-adjust: exact;
                 -webkit-print-color-adjust: exact;
             }
+
+            footer {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                background-color: #f1f5f9;
+                page-break-after: always; /* Para asegurarse que el footer esté al final de la última página */
+            }
+
+            .signature-container {
+                page-break-inside: avoid; /* Asegura que las firmas no se dividan entre páginas */
+            }
+        }
+        /* Asegura que el contenedor principal crezca para que las firmas queden al final */
+        .content {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            justify-content: space-between; /* Empuja el área de firma hacia abajo */
         }
 
+        /* Área de firmas */
+        .signature-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 3.5rem;
+            page-break-inside: avoid; /* Evita que la firma se divida en dos páginas */
+        }
+
+        .signature-block {
+            text-align: center;
+        }
+
+            .signature-block p {
+                margin: 0;
+            }
+
+        .signature-line {
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Ajusta el footer para estar siempre al final de la página */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #f1f5f9;
+            padding: 10px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #525252;
+        }
     </style>
 </head>
 
@@ -448,8 +501,20 @@
                     <tbody>
                         <tr>
                             <td class="w-full align-top">
-                                <div>
-                                    <img src="https://menkoff.com/assets/brand-sample.png" class="h-12" />
+                                <div style="display: flex; align-items: center; gap: 20px;">
+                                    <img src="{{logo_base64}}" style="height: 100px; width: auto;" />
+                                    <div style="display: flex; flex-direction: column;">
+                                        <h1 style="font-family: 'Georgia', serif; font-size: 24px; margin: 0; color: #003de6;">
+                                            CJ RODRIGUEZ PHARMA SRL
+                                        </h1>
+
+                                        <div style="font-size: 12px; color: #525252; line-height: 1.5; margin-top: 4px;">
+                                            <div>Calle 43, Esquina 6, No. 20, Barrio 24 de Abril, Los Alcarrizos</div>
+                                            <div>Tel: 809-452-4574</div>
+                                            <div>RNC: 133348195</div>
+                                            <!--<div>Email: ejemplo@empresa.com</div>-->
+                                        </div>
+                                    </div>
                                 </div>
                             </td>
 
@@ -500,7 +565,7 @@
                                 <div class="text-sm text-neutral-600">
 
                                     <p class="font-bold">Vendedor: {{SellerName}}</p>
-                                    <p>NCF: {{NCF}}</p>
+                                    {{NCF_BLOCK}}
                                     <p>Términos: {{Terms}}</p>
                                     <p>Pedido # {{OrderNumber}}</p>
 
@@ -556,7 +621,7 @@
                                                                 <div class="whitespace-nowrap font-bold text-white">Total:</div>
                                                             </td>
                                                             <td class="bg-main p-3 text-right">
-                                                                <div class="whitespace-nowrap font-bold text-white">{{Total}}</div>
+                                                                <div class="whitespace-nowrap font-bold text-white">${{Total}}</div>
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -578,26 +643,41 @@
               <p>Account Number: 123456678</p>
               <p>Payment Reference: BRA-00335</p>
             </div>-->
-            <div class="px-14 py-10 text-sm text-neutral-700">
-                <p class="italic">------------------------</p>
+            <!--<div class="flex">
+                <div class=" flex px-14 flex pt-6 text-sm text-neutral-700">
+                    <p class="italic">------------------------</p>
 
-                <p class="text-main font-bold">Recibido Por</p>
+                    <p class="text-main font-bold">Recibido Por</p>
+                </div>
+                <br />
+                <div class=" flex px-14  text-sm text-neutral-700">
+                    <p class="italic">------------------------</p>
+
+                    <p class="text-main font-bold">Entregado Por</p>
+                </div>
+            </div>-->
+            <!-- Area de firma -->
+            <div class="signature-container">
+                <div class="signature-block">
+                    <p class="signature-line">------------------------</p>
+                    <p class="text-main font-bold">Recibido Por</p>
+                </div>
+                <div class="signature-block">
+                    <p class="signature-line">------------------------</p>
+                    <p class="text-main font-bold">Entregado Por</p>
+                </div>
             </div>
 
-            <div class="px-14 py-10 text-sm text-neutral-700">
-                <p class="italic">------------------------</p>
 
-                <p class="text-main font-bold">Entregado Por</p>
-            </div>
-
-
-            <footer class="fixed bottom-0 left-0 bg-slate-100 w-full text-neutral-600 text-center text-xs py-3">
-                Km 17 aut. Duarte, Calle Palmarejo #2b, Santo Domingo, R.D.
+            <!--<footer class="fixed bottom-0 left-0 bg-slate-100 w-full text-neutral-600 text-center text-xs py-3">
+                Calle 43 , Esquina 6, no. 20 barrio 24 de Abril , Los Alcarrizos
                 <span class="text-slate-300 px-2">|</span>
-                E-mail: servicio@farmaceuticaabc.com - RNC: 101-59134-1
+                E-mail:
                 <span class="text-slate-300 px-2">|</span>
                 Tel: 809-452-4574
-            </footer>
+                <span class="text-slate-300 px-2">|</span>
+                RNC: 133348195
+            </footer>-->
         </div>
     </div>
 </body>
